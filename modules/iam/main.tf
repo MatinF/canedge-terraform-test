@@ -50,10 +50,18 @@ resource "google_project_iam_member" "function_invoker" {
   member  = "serviceAccount:${google_service_account.function_service_account.email}"
 }
 
-# Allow function service account to receive events from Eventarc
+# Grant permissions for Eventarc
+# The service account needs both eventarc.eventReceiver role and serviceusage.serviceUsageConsumer
 resource "google_project_iam_member" "function_event_receiver" {
   project = var.project
   role    = "roles/eventarc.eventReceiver"
+  member  = "serviceAccount:${google_service_account.function_service_account.email}"
+}
+
+# This role contains the eventarc.events.receiveEvent permission
+resource "google_project_iam_member" "function_service_usage" {
+  project = var.project
+  role    = "roles/serviceusage.serviceUsageConsumer"
   member  = "serviceAccount:${google_service_account.function_service_account.email}"
 }
 

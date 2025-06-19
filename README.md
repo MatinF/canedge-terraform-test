@@ -73,6 +73,12 @@ If you encounter issues:
   - Artifact Registry API
   - Cloud Build API
   - Cloud Storage API
+  - Service Usage API
+- **Permission denied errors**: If you get `Permission denied on 'eventarc.events.receiveEvent'` or similar errors, ensure your IAM service account has all the necessary permissions:
+  - `roles/eventarc.eventReceiver`
+  - `roles/serviceusage.serviceUsageConsumer`
+  - `roles/run.invoker`
+  - `roles/artifactregistry.reader`
 - Verify the function ZIP file is correctly uploaded to your input bucket root
 
 ## One-Click Deployment URL
@@ -84,4 +90,4 @@ https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://githu
 ```
 
 Example:
-./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-5 --id test8
+./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-5 --id test9
