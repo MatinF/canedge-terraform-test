@@ -18,13 +18,7 @@ Before deploying, please ensure you have:
 
 ## Deployment Instructions
 
-1. **Make the deployment script executable**:
-
-   ```bash
-   chmod +x deploy.sh
-   ```
-
-2. **Run the deployment with your project and bucket details**:
+1. **Run the deployment with your project and bucket details**:
 
    ```bash
    ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME
@@ -36,7 +30,7 @@ Before deploying, please ensure you have:
    ./deploy.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp
    ```
 
-3. **When prompted, type `yes` to proceed with the deployment**
+2. **When prompted, type `yes` to proceed with the deployment**
 
 ## Important Notes
 
@@ -46,9 +40,14 @@ Before deploying, please ensure you have:
 
 ## After Deployment
 
-1. Upload an MDF4 file (`.MF4`, `.MFC`, `.MFE`, or `.MFM`) to your input bucket
-2. The Cloud Function will automatically process the file
-3. Converted Parquet files will appear in your output bucket
+1. **Enable Hierarchical Namespace** on the output bucket (optional):
+   - Navigate to your newly created output bucket in the Google Cloud Console
+   - Go to the "Configuration" tab
+   - Find the Hierarchical Namespace setting and enable it
+
+2. Upload an MDF4 file (`.MF4`, `.MFC`, `.MFE`, or `.MFM`) to your input bucket
+3. The Cloud Function will automatically process the file
+4. Converted Parquet files will appear in your output bucket
 
 ## Troubleshooting
 
@@ -60,8 +59,8 @@ If you encounter issues:
 
 ## One-Click Deployment URL
 
-You can launch Google Cloud Shell with this repository pre-cloned using the URL below:
+You can launch Google Cloud Shell with this repository pre-cloned and the script already made executable using the URL below:
 
 ```
-https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README.md
+https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README.md&cloudshell_command=chmod%20%2Bx%20deploy.sh
 ```
