@@ -8,7 +8,4 @@ resource "google_beta_storage_bucket" "output_bucket" {
   
   uniform_bucket_level_access = true
 
-  hierarchical_namespace {
-    enabled = true
-  }  
 }
