@@ -19,11 +19,9 @@ Deploy input bucket for connecting CANedge devices.
    ./deploy_input_bucket.sh --project my-project-123 --region europe-west1 --bucket canedge-test-bucket-gcp
    ```
 
-3. **The deployment will proceed automatically**
-
 ---------
 
-### Notes
+### Notes/tips
 
 - Ensure you select a region near your deployment (see [this link](https://cloud.google.com/storage/docs/locations#location-r) for available regions)
 - Your project ID can be found by clicking your project in the Google Cloud console
