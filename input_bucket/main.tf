@@ -46,13 +46,16 @@ resource "google_storage_hmac_key" "key" {
 
 # Service account for HMAC key
 resource "google_service_account" "storage_admin" {
-  account_id   = "storage-admin-bucket" 
-  display_name = "Storage Admin Service Account for ${var.bucket_name}"
+  # Use bucket name but ensure it's valid for a service account ID (remove hyphens, limit length)
+  account_id   = "sa-${replace(substr(replace(var.bucket_name, "-", ""), 0, 24), ".", "")}" 
+  display_name = "Storage Admin for ${var.bucket_name}"
 }
 
-# Grant storage admin role to the service account
-resource "google_project_iam_member" "storage_admin" {
-  project = var.project
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.storage_admin.email}"
+# Grant bucket-specific permissions to the service account
+resource "google_storage_bucket_iam_binding" "bucket_object_admin" {
+  bucket = google_storage_bucket.input_bucket.name
+  role   = "roles/storage.objectAdmin"
+  members = [
+    "serviceAccount:${google_service_account.storage_admin.email}"
+  ]
 }

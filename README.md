@@ -22,6 +22,8 @@ One-click deployment URL:
 https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_input_bucket.md
 ```
 
+./deploy_input_bucket.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-10
+
 ### Deploy MDF4-to-Parquet Pipeline
 
 Once you have an input bucket set up, deploy the processing pipeline to automatically decode uploaded MDF4 files to Parquet format.

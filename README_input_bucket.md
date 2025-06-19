@@ -1,7 +1,5 @@
 # CANedge Input Bucket Deployment
 
-## What this does
-
 This will auto-create an input bucket for connecting your CANedge devices. Based on your inputs it will create:
 
 1. An **input bucket** for uploading MDF4 files from your CANedge devices

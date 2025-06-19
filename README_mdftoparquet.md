@@ -1,10 +1,7 @@
 # CANedge MF4-to-Parquet Pipeline Deployment
 
-## What this does
+This auto-deploy the MF4-to-Parquet decoding pipeline. When deployed, it creates:
 
-This repository contains Terraform configuration to automate the deployment of a CANedge MDF4-to-Parquet conversion pipeline on Google Cloud Platform using Cloud Functions 2nd generation.
-
-When deployed, it creates:
 1. An **output bucket** for storing decoded Parquet files
 2. A **Cloud Function** that auto-decodes CANedge MDF files when uploaded
 3. Necessary **IAM permissions** required for the function
