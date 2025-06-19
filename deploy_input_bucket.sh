@@ -89,33 +89,44 @@ terraform init
 
 # Apply the Terraform configuration to create the bucket
 echo "Applying Terraform configuration to create the input bucket..."
+
+# Capture the output but don't display it, and redirect stdout to a temporary file
 terraform apply ${AUTO_APPROVE} \
   -var="project=${PROJECT_ID}" \
   -var="region=${REGION}" \
-  -var="bucket_name=${BUCKET_NAME}"
+  -var="bucket_name=${BUCKET_NAME}" \
+  -no-color > terraform_output.tmp
 
 # Check if the initial deployment was successful
 if [ $? -ne 0 ]; then
   echo "❌ Initial deployment failed."
+  cat terraform_output.tmp  # Show output only on failure
+  rm terraform_output.tmp
   exit 1
 fi
 
+# Remove the temporary file
+rm terraform_output.tmp
+
 # Using local state only - no need to reinitialize with remote state
 
-# Show the outputs
-if [ $? -eq 0 ]; then
-  echo "✅ Input bucket deployment successful!"
-  echo
-  echo "CANedge S3 configuration details:"
-  echo "---------------------------"
-  echo "Endpoint:         $(terraform output -raw endpoint)"
-  echo "Port:             $(terraform output -raw port)"
-  echo "Bucket name:      $(terraform output -raw bucket_name)"
-  echo "Region:           $(terraform output -raw bucket_region)"
-  echo "Request style:    Path style"
-  echo "AccessKey:        $(terraform output -raw s3_interoperability_access_key)"
-  echo "SecretKey format: Plain"
-  echo "SecretKey:        $(terraform output -raw s3_interoperability_secret_key)"
- 
-
-fi
+# Show the outputs - only show our formatted output, not the default Terraform output
+echo
+echo
+echo 
+echo "---------------------------"
+echo "✅  Deployment successful!"
+echo
+echo "CANedge S3 configuration details:"
+echo "---------------------------"
+echo
+echo "Endpoint:         $(terraform output -raw endpoint)"
+echo "Port:             $(terraform output -raw port)"
+echo "Bucket name:      $(terraform output -raw bucket_name)"
+echo "Region:           $(terraform output -raw bucket_region)"
+echo "Request style:    Path style"
+echo "AccessKey:        $(terraform output -raw s3_interoperability_access_key)"
+echo "SecretKey format: Plain"
+echo "SecretKey:        $(terraform output -raw s3_interoperability_secret_key)"
+echo 
+echo

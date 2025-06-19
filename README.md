@@ -22,7 +22,7 @@ One-click deployment URL:
 https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_input_bucket.md
 ```
 
-./deploy_input_bucket.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-10
+./deploy_input_bucket.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-12
 
 ### Deploy MDF4-to-Parquet Pipeline
 
