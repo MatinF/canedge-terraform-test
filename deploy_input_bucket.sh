@@ -90,23 +90,22 @@ terraform init
 # Apply the Terraform configuration to create the bucket
 echo "Applying Terraform configuration to create the input bucket..."
 
-# Capture the output but don't display it, and redirect stdout to a temporary file
-terraform apply ${AUTO_APPROVE} \
-  -var="project=${PROJECT_ID}" \
-  -var="region=${REGION}" \
-  -var="bucket_name=${BUCKET_NAME}" \
-  -no-color > terraform_output.tmp
-
-# Check if the initial deployment was successful
-if [ $? -ne 0 ]; then
-  echo "❌ Initial deployment failed."
-  cat terraform_output.tmp  # Show output only on failure
-  rm terraform_output.tmp
-  exit 1
+# Always auto-approve to avoid having to type "yes"
+if [ -z "$AUTO_APPROVE" ]; then
+  AUTO_APPROVE="-auto-approve"
 fi
 
-# Remove the temporary file
-rm terraform_output.tmp
+# Run terraform apply with all progress visible but hide the outputs at the end
+TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
+  -var="project=${PROJECT_ID}" \
+  -var="region=${REGION}" \
+  -var="bucket_name=${BUCKET_NAME}")
+
+# Check if the deployment was successful
+if [ $? -ne 0 ]; then
+  echo "❌ Initial deployment failed."
+  exit 1
+fi
 
 # Using local state only - no need to reinitialize with remote state
 
@@ -118,7 +117,6 @@ echo "---------------------------"
 echo "✅  Deployment successful!"
 echo
 echo "CANedge S3 configuration details:"
-echo "---------------------------"
 echo
 echo "Endpoint:         $(terraform output -raw endpoint)"
 echo "Port:             $(terraform output -raw port)"
