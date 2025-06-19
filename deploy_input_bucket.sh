@@ -108,10 +108,10 @@ if [ $? -eq 0 ]; then
   echo
   echo "CANedge S3 configuration details:"
   echo "---------------------------"
-  echo "Endpoint:         $(terraform output -raw s3_endpoint)"
-  echo "Port:             $(terraform output -raw s3_port)"
+  echo "Endpoint:         $(terraform output -raw endpoint)"
+  echo "Port:             $(terraform output -raw port)"
   echo "Bucket name:      $(terraform output -raw bucket_name)"
-  echo "Region:           $(terraform output -raw region)"
+  echo "Region:           $(terraform output -raw bucket_region)"
   echo "Request style:    Path style"
   echo "AccessKey:        $(terraform output -raw s3_interoperability_access_key)"
   echo "SecretKey format: Plain"
