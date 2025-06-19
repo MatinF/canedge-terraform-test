@@ -27,13 +27,13 @@ Before deploying, please ensure you have:
 2. **Run the deployment with your project and bucket details**:
 
    ```bash
-   ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME
+   ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME --id YOUR_PIPELINE_NAME
    ```
 
-   For example, if your GCP project ID is `my-project-123`, your input bucket is named `canedge-test-bucket-gcp` and located in `europe-west4`:
+   For example, if your GCP project ID is `my-project-123`, your input bucket is named `canedge-test-bucket-gcp` and located in `europe-west4`, and you want to name your pipeline `my-canedge`:
 
    ```bash
-   ./deploy.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp
+   ./deploy.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp --id my-canedge
    ```
 
 3. **When prompted, type `yes` to proceed with the deployment**
@@ -43,6 +43,7 @@ Before deploying, please ensure you have:
 - You must specify your GCP project ID with the `--project` parameter
 - The output bucket will be named `YOUR_INPUT_BUCKET_NAME-parquet`
 - Your region **must match** the region where your input bucket is located
+- Use a unique `--id` parameter to avoid conflicts when deploying multiple pipelines or redeploying
 
 ## After Deployment
 
@@ -59,6 +60,10 @@ Before deploying, please ensure you have:
 
 If you encounter issues:
 
+- **Service account already exists error**: Use a unique `--id` parameter to create resources with different names:
+  ```
+  ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id my-unique-name
+  ```
 - Verify the function ZIP file is correctly uploaded to your input bucket root
 - Check that the region specified matches your input bucket's region
 - Ensure your active GCP project has the necessary APIs enabled
