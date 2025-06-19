@@ -1,4 +1,4 @@
-# CANedge MDF4-to-Parquet Pipeline - Cloud Deployment
+# CANedge MF4-to-Parquet Pipeline - Google Cloud Deployment
 
 ## What this does
 
@@ -75,3 +75,6 @@ You can launch Google Cloud Shell with this repository pre-cloned using the URL 
 ```
 https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README.md
 ```
+
+Example:
+./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-4 --id test4
