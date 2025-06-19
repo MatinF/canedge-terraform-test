@@ -14,7 +14,7 @@ When deployed, it will:
 Before deploying, please ensure you have:
 
 - Created your input bucket for MDF4 files
-- Uploaded the `mdf-to-parquet-google-function-v1.3.0.zip` file to the root of your input bucket
+- Uploaded the `mdf-to-parquet-google-function-v1.4.0.zip` file to the root of your input bucket
 - Noted the region where your input bucket is located (e.g., `europe-west4`)
 
 ## Deployment Instructions
@@ -70,4 +70,4 @@ https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://githu
 ```
 
 Example:
-./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-6 --id test15
+./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-7 --id test16
