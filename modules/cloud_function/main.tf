@@ -1,11 +1,10 @@
 /**
 * Module to deploy the Cloud Function for MDF4-to-Parquet conversion
 */
-
 resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
-  name     = "${var.unique_id}-mdf-to-parquet"
-  project  = var.project
-  location = var.region
+  name        = "${var.unique_id}-mdf-to-parquet"
+  project     = var.project
+  location    = var.region
   description = "CANedge MDF4 to Parquet converter function"
 
   build_config {
@@ -20,21 +19,13 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
   }
 
   service_config {
-    available_memory   = "1Gi"
-    timeout_seconds    = 540
-    environment_variables = {
+    available_memory       = "1Gi"
+    timeout_seconds        = 540
+    environment_variables  = {
       OUTPUT_BUCKET   = var.output_bucket_name
       FILE_EXTENSIONS = ".MF4,.MFC,.MFE,.MFM"
     }
-    service_account_email = var.service_account_email
-  }
-
-  event_trigger {
-    event_type    = "google.cloud.storage.object.v1.finalized"
-    resource      = var.input_bucket_name
-    trigger_region = var.region
-
-    retry_policy = "RETRY_POLICY_RETRY"
+    service_account_email  = var.service_account_email
   }
 
   labels = {
@@ -42,3 +33,32 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
   }
 }
 
+resource "google_eventarc_trigger" "mdf_to_parquet_trigger" {
+  name     = "${var.unique_id}-event-trigger"
+  project  = var.project
+  location = var.region
+
+  event_filters {
+    attribute = "type"
+    value     = "google.cloud.storage.object.v1.finalized"
+  }
+
+  event_filters {
+    attribute = "bucket"
+    value     = var.input_bucket_name
+  }
+
+  service_account = var.service_account_email
+
+  destination {
+    cloud_function {
+      function = google_cloudfunctions2_function.mdf_to_parquet_function.name
+    }
+  }
+
+  transport {
+    pubsub {
+      topic = null  # use default
+    }
+  }
+}

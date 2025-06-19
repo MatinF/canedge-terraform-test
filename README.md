@@ -77,4 +77,4 @@ https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://githu
 ```
 
 Example:
-./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-4 --id test4
+./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-5 --id test5
