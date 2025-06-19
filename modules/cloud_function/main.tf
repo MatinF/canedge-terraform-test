@@ -6,6 +6,11 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
   project     = var.project
   location    = var.region
   description = "CANedge MDF4 to Parquet converter function"
+  
+  # Wait for IAM permissions to propagate before creating the function
+  depends_on = [
+    var.iam_dependencies
+  ]
 
   build_config {
     runtime     = "python311"

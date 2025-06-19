@@ -27,3 +27,9 @@ variable "service_account_email" {
   description = "Email of the service account to use for the Cloud Function"
   type        = string
 }
+
+variable "iam_dependencies" {
+  description = "List of IAM resources that the function depends on to ensure permissions are ready"
+  type        = list(any)
+  default     = []
+}
