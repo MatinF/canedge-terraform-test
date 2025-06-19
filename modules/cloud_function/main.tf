@@ -15,42 +15,21 @@ resource "google_cloudfunctions_function" "mdf_to_parquet_function" {
   entry_point           = "process_mdf_file"
   
   # Event trigger - runs when a new MDF4 file is uploaded
+  # Note: Cloud Functions can only have a single event trigger, so we'll use
+  # a Cloud Storage notification topic with object metadata filtering instead
   event_trigger {
     event_type = "google.storage.object.finalize"
     resource   = var.input_bucket_name
     failure_policy {
       retry = true
     }
-    
-    # Only trigger on MDF4 file extensions
-    event_filters {
-      attribute = "objectSuffix"
-      value = ".MF4"
-    }
-  }
-  
-  # Additional event triggers for other supported file extensions
-  dynamic "event_trigger" {
-    for_each = [".MFC", ".MFE", ".MFM"]
-    content {
-      event_type = "google.storage.object.finalize"
-      resource   = var.input_bucket_name
-      
-      # Only trigger on specified file extensions
-      event_filters {
-        attribute = "objectSuffix"
-        value = event_trigger.value
-      }
-      
-      failure_policy {
-        retry = true
-      }
-    }
   }
 
   # Environment variables for the function
+  # Include file extensions to filter in the function code
   environment_variables = {
     OUTPUT_BUCKET = var.output_bucket_name
+    FILE_EXTENSIONS = ".MF4,.MFC,.MFE,.MFM"
   }
 
   # Use the service account created in the IAM module

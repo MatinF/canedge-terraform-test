@@ -15,7 +15,6 @@ This deployment sets up:
 - Google Cloud Platform account with an existing project
 - Existing input bucket with MDF4 files (e.g., `canedge-test-bucket-gcp`)
 - The MDF4-to-Parquet function ZIP file uploaded to your input bucket root as `mdf-to-parquet-google-function-v1.3.0.zip`
-- Google Cloud Shell access or Terraform installed locally
 
 ## 🚀 Deployment Instructions
 
