@@ -38,12 +38,12 @@ resource "google_eventarc_trigger" "mdf_to_parquet_trigger" {
   project  = var.project
   location = var.region
 
-  event_filters {
+  event_filter {
     attribute = "type"
     value     = "google.cloud.storage.object.v1.finalized"
   }
 
-  event_filters {
+  event_filter {
     attribute = "bucket"
     value     = var.input_bucket_name
   }
@@ -51,14 +51,10 @@ resource "google_eventarc_trigger" "mdf_to_parquet_trigger" {
   service_account = var.service_account_email
 
   destination {
-    cloud_function {
-      function = google_cloudfunctions2_function.mdf_to_parquet_function.name
-    }
+    cloud_function = google_cloudfunctions2_function.mdf_to_parquet_function.name
   }
 
   transport {
-    pubsub {
-      topic = null  # use default
-    }
+    pubsub {}
   }
 }
