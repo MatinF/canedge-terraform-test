@@ -47,15 +47,9 @@ Before deploying, please ensure you have:
 - Use a unique `--id` parameter to avoid conflicts when deploying multiple pipelines or redeploying
 
 ## After Deployment
-
-1. **Enable Hierarchical Namespace** on the output bucket (optional):
-   - Navigate to your newly created output bucket in the Google Cloud Console
-   - Go to the "Configuration" tab
-   - Find the Hierarchical Namespace setting and enable it
-
-2. Upload an MDF4 file (`.MF4`, `.MFC`, `.MFE`, or `.MFM`) to your input bucket
-3. The Cloud Function will automatically process the file
-4. Converted Parquet files will appear in your output bucket
+1. Upload an MDF4 file (`.MF4`, `.MFC`, `.MFE`, or `.MFM`) to your input bucket (if you're uploading `.MFE` or `.MFM`, ensure your `passwords.json` file is stored in the root of the input bucket)
+2. The Cloud Function will automatically DBC decode the file
+3. Decoded Parquet files will appear in your output bucket
 
 ## Troubleshooting
 
@@ -63,22 +57,8 @@ If you encounter issues:
 
 - **Service account already exists error**: Use a unique `--id` parameter to create resources with different names:
   ```
-  ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id my-unique-name
+  ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id YOUR_PIPELINE_NAME
   ```
-- **Permission denied on 'locations/[region]'**: This usually means Cloud Functions are not available in your selected region. Try a region where Cloud Functions are available, such as `europe-west1` (Belgium) or `us-central1` (Iowa).
-- **API not enabled**: Make sure the following APIs are enabled in your project:
-  - Cloud Functions API
-  - Cloud Run API
-  - Eventarc API
-  - Artifact Registry API
-  - Cloud Build API
-  - Cloud Storage API
-  - Service Usage API
-- **Permission denied errors**: If you get `Permission denied on 'eventarc.events.receiveEvent'` or similar errors, ensure your IAM service account has all the necessary permissions:
-  - `roles/eventarc.eventReceiver`
-  - `roles/serviceusage.serviceUsageConsumer`
-  - `roles/run.invoker`
-  - `roles/artifactregistry.reader`
 - Verify the function ZIP file is correctly uploaded to your input bucket root
 
 ## One-Click Deployment URL
@@ -90,4 +70,4 @@ https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://githu
 ```
 
 Example:
-./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-5 --id test9
+./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-6 --id test15
