@@ -1,0 +1,133 @@
+#!/bin/bash
+# CANedge GCP Input Bucket - One-Command Deployment Script
+
+# Display help information
+show_help() {
+  echo "CANedge GCP Input Bucket - Automated Deployment"
+  echo
+  echo "Usage:"
+  echo "  ./deploy_input_bucket.sh [options]"
+  echo
+  echo "Options:"
+  echo "  -p, --project PROJECT_ID    GCP Project ID (REQUIRED)"
+  echo "  -r, --region REGION         GCP region for deployment (default: europe-west1)"
+  echo "  -b, --bucket BUCKET_NAME    Input bucket name to create (REQUIRED)"
+  echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-input)"
+  echo "  -y, --auto-approve          Skip approval prompt"
+  echo "  -h, --help                  Show this help message"
+  echo
+  echo "Example:"
+  echo "  ./deploy_input_bucket.sh --project my-project-123 --region europe-west1 --bucket canedge-test-bucket-gcp"
+}
+
+# Default values
+REGION="europe-west1"
+UNIQUE_ID="canedge-input"
+AUTO_APPROVE=""
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -p|--project)
+      PROJECT_ID="$2"
+      shift 2
+      ;;
+    -r|--region)
+      REGION="$2"
+      shift 2
+      ;;
+    -b|--bucket)
+      BUCKET_NAME="$2"
+      shift 2
+      ;;
+    -i|--id)
+      UNIQUE_ID="$2"
+      shift 2
+      ;;
+    -y|--auto-approve)
+      AUTO_APPROVE="-auto-approve"
+      shift
+      ;;
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1"
+      show_help
+      exit 1
+      ;;
+  esac
+done
+
+# Check if required parameters are provided
+if [ -z "$PROJECT_ID" ]; then
+  echo "Error: Project ID is required. Please specify with --project flag."
+  show_help
+  exit 1
+fi
+
+if [ -z "$BUCKET_NAME" ]; then
+  echo "Error: Bucket name is required. Please specify with --bucket flag."
+  show_help
+  exit 1
+fi
+
+# Print deployment configuration
+echo "🚀 Deploying CANedge GCP Input Bucket with the following configuration:"
+echo "   - Project ID:    $PROJECT_ID"
+echo "   - Region:        $REGION"
+echo "   - Bucket Name:   $BUCKET_NAME"
+echo "   - Unique ID:     $UNIQUE_ID"
+echo
+
+# Move to the input_bucket directory
+cd input_bucket
+
+# Initialize Terraform with local state first
+echo "Initializing Terraform with local state..."
+terraform init
+
+# Apply the Terraform configuration to create the bucket
+echo "Applying Terraform configuration to create the input bucket..."
+terraform apply ${AUTO_APPROVE} \
+  -var="project=${PROJECT_ID}" \
+  -var="region=${REGION}" \
+  -var="bucket_name=${BUCKET_NAME}" \
+  -var="unique_id=${UNIQUE_ID}"
+
+# Check if the initial deployment was successful
+if [ $? -ne 0 ]; then
+  echo "❌ Initial deployment failed."
+  exit 1
+fi
+
+# Now reinitialize Terraform with remote state
+echo "Reinitializing Terraform with state stored in the newly created input bucket..."
+terraform init -reconfigure \
+  -backend-config="bucket=${BUCKET_NAME}" \
+  -backend-config="prefix=terraform/state/input_bucket"
+
+# Apply the configuration again to ensure it's properly stored
+echo "Applying Terraform configuration again to ensure state is properly stored..."
+terraform apply ${AUTO_APPROVE} \
+  -var="project=${PROJECT_ID}" \
+  -var="region=${REGION}" \
+  -var="bucket_name=${BUCKET_NAME}" \
+  -var="unique_id=${UNIQUE_ID}"
+
+# Show the outputs
+if [ $? -eq 0 ]; then
+  echo
+  echo "✅ Input bucket deployment successful!"
+  echo
+  echo "Details:"
+  terraform output
+  echo
+  echo "To display the S3 interoperability secret key (sensitive value):"
+  echo "  terraform output s3_interoperability_secret_key"
+  echo
+  echo "Next steps:"
+  echo "1. Note down the S3 interoperability access and secret keys for use with your CANedge devices"
+  echo "2. You can now deploy the MDF4-to-Parquet pipeline using ./deploy_mdftoparquet.sh"
+fi

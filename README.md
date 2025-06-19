@@ -1,88 +1,90 @@
-# CANedge MF4-to-Parquet Pipeline - Google Cloud Deployment
+# CANedge Google Cloud Platform Deployment
 
-## What this does
+This repository provides Terraform configurations to automate the deployment of CANedge data processing infrastructure on Google Cloud Platform. The deployment is split into two parts:
 
-This repository contains Terraform configuration to automate the deployment of a CANedge MDF4-to-Parquet conversion pipeline on Google Cloud Platform using Cloud Functions 2nd generation.
+1. **Input Bucket Deployment**: Creates a Google Cloud Storage bucket with proper CORS settings for CANedge device uploads
+2. **MDF4-to-Parquet Pipeline Deployment**: Sets up the data processing pipeline using Google Cloud Functions
 
-When deployed, it will:
-1. An **output bucket** for storing decoded Parquet files
-2. A **Cloud Function** that auto-decodes CANedge MDF files when uploaded
-3. Necessary **IAM permissions** required for the function
+## Deployment Options
 
-## Prerequisites
+### Option 1: Deploy Input Bucket Only
 
-Before deploying, please ensure you have:
+If you're just getting started, first deploy the input bucket where your CANedge devices will upload MDF4 files.
 
-- Created your input bucket for MDF4 files
-- Uploaded the `mdf-to-parquet-google-function-v1.4.0.zip` file to the root of your input bucket
-- Noted the region where your input bucket is located (e.g., `europe-west4`)
+```bash
+./deploy_input_bucket.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET_NAME
+```
 
-## Deployment Instructions
+Detailed instructions: [Input Bucket Deployment Guide](README_input_bucket.md)
 
-1. **Make the deployment script executable**:
+One-click deployment URL:
+```
+https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_input_bucket.md
+```
 
+### Option 2: Deploy MDF4-to-Parquet Pipeline
+
+Once you have an input bucket set up, deploy the processing pipeline to automatically convert uploaded MDF4 files to Parquet format.
+
+```bash
+./deploy_mdftoparquet.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_INPUT_BUCKET_NAME
+```
+
+Detailed instructions: [MDF4-to-Parquet Deployment Guide](README_mdftoparquet.md)
+
+One-click deployment URL:
+```
+https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_mdftoparquet.md
+```
+
+## Complete Deployment Workflow
+
+For a complete setup, follow these steps:
+
+1. **Create Input Bucket**:
    ```bash
-   chmod +x deploy.sh
+   chmod +x deploy_input_bucket.sh
+   ./deploy_input_bucket.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET_NAME
    ```
 
-2. **Run the deployment with your project and bucket details**:
+2. **Configure your CANedge devices** using the S3 interoperability credentials provided during input bucket deployment
 
+3. **Upload the cloud function ZIP file** to your input bucket:
    ```bash
-   ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME --id YOUR_PIPELINE_NAME
+   gsutil cp mdf-to-parquet-google-function-v1.4.0.zip gs://YOUR_BUCKET_NAME/
    ```
 
-   For example, if your GCP project ID is `my-project-123`, your input bucket is named `canedge-test-bucket-gcp` and located in `europe-west4`, and you want to name your pipeline `my-canedge`:
-
+4. **Deploy MDF4-to-Parquet Pipeline**:
    ```bash
-   ./deploy.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp --id my-canedge
+   chmod +x deploy_mdftoparquet.sh
+   ./deploy_mdftoparquet.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_INPUT_BUCKET_NAME
    ```
 
-3. **When prompted, type `yes` to proceed with the deployment**
+5. **Test the workflow** by uploading an MDF4 file to your input bucket and checking for the decoded Parquet files in the output bucket
 
-## Important Notes
+## Project Structure
 
-- You must specify your GCP project ID with the `--project` parameter
-- The output bucket will be named `YOUR_INPUT_BUCKET_NAME-parquet`
-- Your region **must match** the region where your input bucket is located
-- Use a unique `--id` parameter to avoid conflicts when deploying multiple pipelines or redeploying
+- `input_bucket/` - Terraform configuration for input bucket deployment
+- `mdftoparquet/` - Terraform configuration for MDF4-to-Parquet pipeline deployment
+  - `modules/` - Terraform modules specific to the MDF4-to-Parquet pipeline
+    - `output_bucket/` - Module for creating the output bucket
+    - `iam/` - Module for setting up IAM permissions
+    - `cloud_function/` - Module for deploying the Cloud Function
+- `deploy_input_bucket.sh` - Script for input bucket deployment
+- `deploy_mdftoparquet.sh` - Script for MDF4-to-Parquet pipeline deployment
 
-## After Deployment
-1. Upload an MDF4 file (`.MF4`, `.MFC`, `.MFE`, or `.MFM`) to your input bucket (if you're uploading `.MFE` or `.MFM`, ensure your `passwords.json` file is stored in the root of the input bucket)
-2. The Cloud Function will automatically DBC decode the file
-3. Decoded Parquet files will appear in your output bucket
+## Recommended Regions
+
+For optimal performance and pricing, we recommend the following regions:
+- Europe: `europe-west1` (Belgium) or `europe-west4` (Netherlands)
+- North America: `us-central1` (Iowa) or `us-east4` (Northern Virginia)
+- Asia: `asia-east1` (Taiwan) or `asia-southeast1` (Singapore)
 
 ## Troubleshooting
 
-If you encounter issues:
+If you encounter issues with either deployment:
 
-- **Service account already exists error**: Use a unique `--id` parameter to create resources with different names:
-  ```
-  ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id YOUR_PIPELINE_NAME
-  ```
-- Verify the function ZIP file is correctly uploaded to your input bucket root
-
-## One-Click Deployment URL
-
-You can launch Google Cloud Shell with this repository pre-cloned using the URL below:
-
-```
-https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README.md
-```
-
-Example:
-./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-7 --id test16
-
-## Updating an Existing Deployment
-
-When updating an existing deployment (e.g., to use a newer version of the function ZIP):
-
-1. **Use the same `--id` parameter** as your original deployment
-   ```
-   ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id YOUR_EXISTING_ID
-   ```
-
-2. Terraform will detect only the changes between versions and update just those components
-
-3. This approach prevents resource conflicts and minimizes changes to your infrastructure
-
-This state-aware update process is possible because Terraform stores your deployment state in the input bucket.
+- Make sure you have proper permissions in your Google Cloud project
+- Use unique identifiers with the `--id` parameter to avoid resource conflicts
+- Check the Google Cloud Console logs for detailed error messages
+- For the MDF4-to-Parquet pipeline, ensure the function ZIP file is uploaded to your input bucket
