@@ -71,3 +71,18 @@ https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://githu
 
 Example:
 ./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-7 --id test16
+
+## Updating an Existing Deployment
+
+When updating an existing deployment (e.g., to use a newer version of the function ZIP):
+
+1. **Use the same `--id` parameter** as your original deployment
+   ```
+   ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id YOUR_EXISTING_ID
+   ```
+
+2. Terraform will detect only the changes between versions and update just those components
+
+3. This approach prevents resource conflicts and minimizes changes to your infrastructure
+
+This state-aware update process is possible because Terraform stores your deployment state in the input bucket.
