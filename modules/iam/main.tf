@@ -2,6 +2,11 @@
 * IAM module for creating service accounts and permissions
 */
 
+# Get the GCS service account - needed for Eventarc triggers with GCS
+data "google_storage_project_service_account" "gcs_account" {
+  project = var.project
+}
+
 # Create service account for the Cloud Function
 resource "google_service_account" "function_service_account" {
   account_id   = "${var.unique_id}-function-sa"
@@ -27,5 +32,34 @@ resource "google_storage_bucket_iam_member" "function_output_bucket_access" {
 resource "google_project_iam_member" "function_logging" {
   project = var.project
   role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.function_service_account.email}"
+}
+
+# Required for Cloud Functions 2nd gen with GCS triggers
+# Allow the GCS service account to publish to Pub/Sub
+resource "google_project_iam_member" "gcs_pubsub_publishing" {
+  project = var.project
+  role    = "roles/pubsub.publisher"
+  member  = "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}"
+}
+
+# Allow function service account to be invoked by the Cloud Run service
+resource "google_project_iam_member" "function_invoker" {
+  project = var.project
+  role    = "roles/run.invoker"
+  member  = "serviceAccount:${google_service_account.function_service_account.email}"
+}
+
+# Allow function service account to receive events from Eventarc
+resource "google_project_iam_member" "function_event_receiver" {
+  project = var.project
+  role    = "roles/eventarc.eventReceiver"
+  member  = "serviceAccount:${google_service_account.function_service_account.email}"
+}
+
+# Allow function service account to access Artifact Registry
+resource "google_project_iam_member" "function_artifact_reader" {
+  project = var.project
+  role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.function_service_account.email}"
 }

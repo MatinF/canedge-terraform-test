@@ -2,8 +2,9 @@
 
 ## What this does
 
-This deployment automates the setup of an MF4-to-Parquet decoding pipeline in Google Cloud Platform:
+This repository contains Terraform configuration to automate the deployment of a CANedge MDF4-to-Parquet conversion pipeline on Google Cloud Platform using Cloud Functions 2nd generation.
 
+When deployed, it will:
 1. An **output bucket** for storing decoded Parquet files
 2. A **Cloud Function** that auto-decodes CANedge MDF files when uploaded
 3. Necessary **IAM permissions** required for the function
@@ -12,9 +13,9 @@ This deployment automates the setup of an MF4-to-Parquet decoding pipeline in Go
 
 Before deploying, please ensure you have:
 
-- ✅ Created your input bucket for MDF4 files
-- ✅ Uploaded the `mdf-to-parquet-google-function-v1.3.0.zip` file to the root of your input bucket
-- ✅ Noted the region where your input bucket is located (e.g., `europe-west4`)
+- Created your input bucket for MDF4 files
+- Uploaded the `mdf-to-parquet-google-function-v1.3.0.zip` file to the root of your input bucket
+- Noted the region where your input bucket is located (e.g., `europe-west4`)
 
 ## Deployment Instructions
 
@@ -64,9 +65,15 @@ If you encounter issues:
   ```
   ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id my-unique-name
   ```
+- **Permission denied on 'locations/[region]'**: This usually means Cloud Functions are not available in your selected region. Try a region where Cloud Functions are available, such as `europe-west1` (Belgium) or `us-central1` (Iowa).
+- **API not enabled**: Make sure the following APIs are enabled in your project:
+  - Cloud Functions API
+  - Cloud Run API
+  - Eventarc API
+  - Artifact Registry API
+  - Cloud Build API
+  - Cloud Storage API
 - Verify the function ZIP file is correctly uploaded to your input bucket root
-- Check that the region specified matches your input bucket's region
-- Ensure your active GCP project has the necessary APIs enabled
 
 ## One-Click Deployment URL
 
@@ -77,4 +84,4 @@ https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://githu
 ```
 
 Example:
-./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-5 --id test5
+./deploy.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-5 --id test8
