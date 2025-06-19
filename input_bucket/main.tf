@@ -27,19 +27,17 @@ resource "google_storage_bucket" "input_bucket" {
   location = var.region
   
   uniform_bucket_level_access = true
-}
 
-# Apply CORS settings to the input bucket
-resource "google_storage_bucket_cors" "input_bucket_cors" {
-  bucket = google_storage_bucket.input_bucket.name
-
-  cors_rule {
+  # CORS configuration for CANedge device uploads
+  cors {
     origin          = ["*"]
     method          = ["GET", "OPTIONS", "HEAD", "PUT", "POST", "DELETE"]
     response_header = ["*"]
     max_age_seconds = 3600
   }
 }
+
+# CORS settings are now directly in the bucket resource
 
 # Create HMAC key for S3 interoperability
 resource "google_storage_hmac_key" "key" {
