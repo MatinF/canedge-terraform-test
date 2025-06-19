@@ -28,14 +28,16 @@ Before deploying, please ensure you have:
 2. **Run the deployment with your project and bucket details**:
 
    ```bash
-   ./deploy_mdftoparquet.sh --project YOUR_PROJECT_ID --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME --id YOUR_PIPELINE_NAME
+   ./deploy_mdftoparquet.sh --project YOUR_PROJECT_ID --bucket YOUR_INPUT_BUCKET_NAME --id YOUR_PIPELINE_NAME
    ```
 
-   For example, if your GCP project ID is `my-project-123`, your input bucket is named `canedge-test-bucket-gcp` and located in `europe-west4`, and you want to name your pipeline `my-canedge`:
+   For example, if your GCP project ID is `my-project-123` and your input bucket is named `canedge-test-bucket-gcp`:
 
    ```bash
-   ./deploy_mdftoparquet.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp --id my-canedge
+   ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-canedge
    ```
+   
+   The script will automatically detect the region of your input bucket.
 
 3. **When prompted, type `yes` to proceed with the deployment**
 
@@ -43,7 +45,8 @@ Before deploying, please ensure you have:
 
 - You must specify your GCP project ID with the `--project` parameter
 - The output bucket will be named `YOUR_INPUT_BUCKET_NAME-parquet`
-- Your region **must match** the region where your input bucket is located
+- The region is automatically detected from your input bucket
+- You can still manually specify a region with `--region` if needed
 - Use a unique `--id` parameter to avoid conflicts when deploying multiple pipelines or redeploying
 
 ## After Deployment

@@ -12,11 +12,8 @@ terraform {
     }
   }
   
-  # Store state in the input bucket once created
-  # The actual bucket name is provided via -backend-config during terraform init
-  backend "gcs" {
-    prefix = "terraform/state/input_bucket"
-  }
+  # Using local state for input bucket creation
+  # This keeps the deployment simple without requiring remote state management
 }
 
 provider "google" {
@@ -51,8 +48,8 @@ resource "google_storage_hmac_key" "key" {
 
 # Service account for HMAC key
 resource "google_service_account" "storage_admin" {
-  account_id   = "storage-admin-${var.unique_id}"
-  display_name = "Storage Admin Service Account for ${var.unique_id}"
+  account_id   = "storage-admin-bucket" 
+  display_name = "Storage Admin Service Account for ${var.bucket_name}"
 }
 
 # Grant storage admin role to the service account

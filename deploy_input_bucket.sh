@@ -12,7 +12,7 @@ show_help() {
   echo "  -p, --project PROJECT_ID    GCP Project ID (REQUIRED)"
   echo "  -r, --region REGION         GCP region for deployment (default: europe-west1)"
   echo "  -b, --bucket BUCKET_NAME    Input bucket name to create (REQUIRED)"
-  echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-input)"
+  # Removed --id parameter as it's not relevant for input bucket creation
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
   echo
@@ -22,7 +22,6 @@ show_help() {
 
 # Default values
 REGION="europe-west1"
-UNIQUE_ID="canedge-input"
 AUTO_APPROVE=""
 
 # Parse command line arguments
@@ -41,7 +40,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     -i|--id)
-      UNIQUE_ID="$2"
+      echo "Warning: --id parameter is not used for input bucket creation and will be ignored."
       shift 2
       ;;
     -y|--auto-approve)
@@ -78,7 +77,7 @@ echo "🚀 Deploying CANedge GCP Input Bucket with the following configuration:"
 echo "   - Project ID:    $PROJECT_ID"
 echo "   - Region:        $REGION"
 echo "   - Bucket Name:   $BUCKET_NAME"
-echo "   - Unique ID:     $UNIQUE_ID"
+# Removed unique ID output as it's not used
 echo
 
 # Move to the input_bucket directory
@@ -93,8 +92,7 @@ echo "Applying Terraform configuration to create the input bucket..."
 terraform apply ${AUTO_APPROVE} \
   -var="project=${PROJECT_ID}" \
   -var="region=${REGION}" \
-  -var="bucket_name=${BUCKET_NAME}" \
-  -var="unique_id=${UNIQUE_ID}"
+  -var="bucket_name=${BUCKET_NAME}"
 
 # Check if the initial deployment was successful
 if [ $? -ne 0 ]; then
@@ -102,19 +100,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Now reinitialize Terraform with remote state
-echo "Reinitializing Terraform with state stored in the newly created input bucket..."
-terraform init -reconfigure \
-  -backend-config="bucket=${BUCKET_NAME}" \
-  -backend-config="prefix=terraform/state/input_bucket"
-
-# Apply the configuration again to ensure it's properly stored
-echo "Applying Terraform configuration again to ensure state is properly stored..."
-terraform apply ${AUTO_APPROVE} \
-  -var="project=${PROJECT_ID}" \
-  -var="region=${REGION}" \
-  -var="bucket_name=${BUCKET_NAME}" \
-  -var="unique_id=${UNIQUE_ID}"
+# Using local state only - no need to reinitialize with remote state
 
 # Show the outputs
 if [ $? -eq 0 ]; then

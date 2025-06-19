@@ -10,7 +10,7 @@ show_help() {
   echo
   echo "Options:"
   echo "  -p, --project PROJECT_ID    GCP Project ID (REQUIRED)"
-  echo "  -r, --region REGION         GCP region for deployment (default: europe-west4)"
+  echo "  -r, --region REGION         GCP region for deployment (auto-detected from bucket if not provided)"
   echo "  -b, --bucket BUCKET_NAME    Input bucket name (REQUIRED)"
   echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-demo)"
   echo "  -y, --auto-approve          Skip approval prompt"
@@ -21,7 +21,6 @@ show_help() {
 }
 
 # Default values
-REGION="europe-west4"
 UNIQUE_ID="canedge-demo"
 AUTO_APPROVE=""
 
@@ -74,14 +73,6 @@ if [ -z "$BUCKET_NAME" ]; then
   exit 1
 fi
 
-# Print deployment configuration
-echo "🚀 Deploying CANedge GCP MDF4-to-Parquet Pipeline with the following configuration:"
-echo "   - Project ID:    $PROJECT_ID"
-echo "   - Region:        $REGION"
-echo "   - Input Bucket:  $BUCKET_NAME"
-echo "   - Unique ID:     $UNIQUE_ID"
-echo
-
 # Check if the input bucket exists
 echo "Checking input bucket..."
 gsutil ls -b gs://${BUCKET_NAME} > /dev/null 2>&1
@@ -91,6 +82,30 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 echo "✓ Input bucket found."
+
+# If region is not provided, auto-detect it from the bucket
+if [ -z "$REGION" ]; then
+  echo "Auto-detecting region from input bucket..."
+  BUCKET_INFO=$(gsutil ls -L -b gs://${BUCKET_NAME})
+  
+  # Extract region from bucket info
+  REGION=$(echo "$BUCKET_INFO" | grep -i "location constraint:" | awk '{print $3}' | tr '[:upper:]' '[:lower:]')
+  
+  if [ -z "$REGION" ]; then
+    echo "❌ Failed to auto-detect region from bucket. Please specify with --region flag."
+    exit 1
+  fi
+  
+  echo "✓ Detected region: $REGION"
+fi
+
+# Print deployment configuration
+echo "🚀 Deploying CANedge GCP MDF4-to-Parquet Pipeline with the following configuration:"
+echo "   - Project ID:    $PROJECT_ID"
+echo "   - Region:        $REGION"
+echo "   - Input Bucket:  $BUCKET_NAME"
+echo "   - Unique ID:     $UNIQUE_ID"
+echo
 
 # Move to the mdftoparquet directory
 cd mdftoparquet

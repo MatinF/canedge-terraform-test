@@ -20,13 +20,13 @@ When deployed, it creates:
 2. **Run the deployment with your project details**:
 
    ```bash
-   ./deploy_input_bucket.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET_NAME --id YOUR_UNIQUE_ID
+   ./deploy_input_bucket.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET_NAME
    ```
 
    For example, to create a bucket named `canedge-test-bucket-gcp` in region `europe-west1`:
 
    ```bash
-   ./deploy_input_bucket.sh --project my-project-123 --region europe-west1 --bucket canedge-test-bucket-gcp --id my-canedge
+   ./deploy_input_bucket.sh --project my-project-123 --region europe-west1 --bucket canedge-test-bucket-gcp
    ```
 
 3. **When prompted, type `yes` to proceed with the deployment**
@@ -35,9 +35,8 @@ When deployed, it creates:
 
 - The bucket will be created with CORS settings that allow access from any origin (needed for CANedge devices)
 - The deployment will create S3 interoperability credentials for use with your CANedge devices
-- Terraform state will be stored in the bucket after creation for future modifications
+- Terraform state is stored locally, making the setup simpler
 - Choose a globally unique bucket name that follows Google Cloud naming requirements
-- The unique ID parameter is used to create unique names for related resources
 
 ## After Deployment
 
