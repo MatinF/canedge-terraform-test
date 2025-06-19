@@ -10,5 +10,7 @@ resource "google_storage_bucket" "output_bucket" {
   storage_class = "STANDARD"
   
   # Enable Hierarchical Namespace for the bucket
-  enable_hierarchical_namespace = true
+  hierarchical_namespace {
+    enabled = true
+  }
 }

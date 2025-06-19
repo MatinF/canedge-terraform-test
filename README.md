@@ -2,11 +2,11 @@
 
 ## What this does
 
-This deployment automates the setup of a complete MDF4-to-Parquet conversion pipeline on Google Cloud Platform, consisting of:
+This deployment automates the setup of an MF4-to-Parquet decoding pipeline in Google Cloud Platform:
 
-1. An **output bucket** with Hierarchical Namespace for storing converted Parquet files
-2. A **Cloud Function** that automatically processes your CANedge MDF4 files when uploaded
-3. All necessary **IAM permissions** to ensure the system works seamlessly
+1. An **output bucket** for storing decoded Parquet files
+2. A **Cloud Function** that auto-decodes CANedge MDF files when uploaded
+3. Necessary **IAM permissions** required for the function
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ Before deploying, please ensure you have:
 
 - ✅ Created your input bucket for MDF4 files
 - ✅ Uploaded the `mdf-to-parquet-google-function-v1.3.0.zip` file to the root of your input bucket
-- ✅ Noted the region where your input bucket is located (e.g., `europe-west4` for Amsterdam)
+- ✅ Noted the region where your input bucket is located (e.g., `europe-west4`)
 
 ## Deployment Instructions
 
@@ -24,23 +24,23 @@ Before deploying, please ensure you have:
    chmod +x deploy.sh
    ```
 
-2. **Run the deployment with your bucket details**:
+2. **Run the deployment with your project and bucket details**:
 
    ```bash
-   ./deploy.sh --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME
+   ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME
    ```
 
-   For example, if your input bucket is named `canedge-test-bucket-gcp` and located in Amsterdam:
+   For example, if your GCP project ID is `my-project-123`, your input bucket is named `canedge-test-bucket-gcp` and located in `europe-west4`:
 
    ```bash
-   ./deploy.sh --region europe-west4 --bucket canedge-test-bucket-gcp
+   ./deploy.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp
    ```
 
 3. **When prompted, type `yes` to proceed with the deployment**
 
 ## Important Notes
 
-- This script uses your **currently active GCP project** for deployment
+- You must specify your GCP project ID with the `--project` parameter
 - The output bucket will be named `YOUR_INPUT_BUCKET_NAME-parquet`
 - Your region **must match** the region where your input bucket is located
 
@@ -57,3 +57,11 @@ If you encounter issues:
 - Verify the function ZIP file is correctly uploaded to your input bucket root
 - Check that the region specified matches your input bucket's region
 - Ensure your active GCP project has the necessary APIs enabled
+
+## One-Click Deployment URL
+
+You can launch Google Cloud Shell with this repository pre-cloned using the URL below:
+
+```
+https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README.md
+```
