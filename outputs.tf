@@ -20,4 +20,9 @@ output "service_account_email" {
 output "deployment_instructions" {
   description = "Next steps after deployment"
   value       = <<EOT
+🎉 Deployment successful! Next steps:
+
+1. Upload MDF4 files to your input bucket to test the function
+2. Decoded Parquet files will appear in the output bucket
+EOT
 }
