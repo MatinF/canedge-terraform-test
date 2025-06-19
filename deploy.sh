@@ -9,7 +9,7 @@ show_help() {
   echo "  ./deploy.sh [options]"
   echo
   echo "Options:"
-  echo "  -p, --project PROJECT_ID    GCP Project ID (required)"
+  echo "  -p, --project PROJECT_ID    GCP Project ID (default: currently active project)"
   echo "  -r, --region REGION         GCP region for deployment (default: europe-west4)"
   echo "  -b, --bucket BUCKET_NAME    Input bucket name (default: canedge-test-bucket-gcp)"
   echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-demo)"
@@ -17,7 +17,7 @@ show_help() {
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy.sh --project my-gcp-project --region europe-west4 --bucket canedge-test-bucket-gcp"
+  echo "  ./deploy.sh --region europe-west4 --bucket canedge-test-bucket-gcp"
 }
 
 # Default values
@@ -61,11 +61,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Check for required parameters
+# Auto-detect the current GCP project if not provided
 if [ -z "$PROJECT_ID" ]; then
-  echo "Error: Project ID is required"
-  show_help
-  exit 1
+  PROJECT_ID=$(gcloud config get-value project 2>/dev/null)
+  if [ -z "$PROJECT_ID" ]; then
+    echo "Error: No active GCP project found. Please set a project with 'gcloud config set project PROJECT_ID' or specify with --project flag."
+    exit 1
+  fi
+  echo "Using active GCP project: $PROJECT_ID"
 fi
 
 # Print deployment configuration

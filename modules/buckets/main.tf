@@ -7,18 +7,8 @@ resource "google_storage_bucket" "output_bucket" {
   location = var.region
   
   uniform_bucket_level_access = true
-  
-  # Set reasonable defaults for storage
   storage_class = "STANDARD"
   
-  # Optional: Configure lifecycle rules if needed
-  lifecycle_rule {
-    condition {
-      age = 365  # Example: objects older than 1 year
-    }
-    action {
-      type = "SetStorageClass"
-      storage_class = "NEARLINE"
-    }
-  }
+  # Enable Hierarchical Namespace for the bucket
+  enable_hierarchical_namespace = true
 }
