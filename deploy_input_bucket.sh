@@ -104,16 +104,18 @@ fi
 
 # Show the outputs
 if [ $? -eq 0 ]; then
-  echo
   echo "✅ Input bucket deployment successful!"
   echo
-  echo "Details:"
-  terraform output
-  echo
-  echo "To display the S3 interoperability secret key (sensitive value):"
-  echo "  terraform output s3_interoperability_secret_key"
-  echo
-  echo "Next steps:"
-  echo "1. Note down the S3 interoperability access and secret keys for use with your CANedge devices"
-  echo "2. You can now deploy the MDF4-to-Parquet pipeline using ./deploy_mdftoparquet.sh"
+  echo "CANedge S3 configuration details:"
+  echo "---------------------------"
+  echo "Endpoint:         $(terraform output -raw s3_endpoint)"
+  echo "Port:             $(terraform output -raw s3_port)"
+  echo "Bucket name:      $(terraform output -raw bucket_name)"
+  echo "Region:           $(terraform output -raw region)"
+  echo "Request style:    Path style"
+  echo "AccessKey:        $(terraform output -raw s3_interoperability_access_key)"
+  echo "SecretKey format: Plain"
+  echo "SecretKey:        $(terraform output -raw s3_interoperability_secret_key)"
+ 
+
 fi

@@ -2,12 +2,11 @@
 
 ## What this does
 
-This will auto-create an input bucket for connecting your CANedge devices. The bucket is configured with CORS settings to enable you to login via CANcloud. Once deployed, it provides the relevant S3 details for your CANedge Configuration File.
+This will auto-create an input bucket for connecting your CANedge devices. Based on your inputs it will create:
 
-When deployed, it creates:
-1. An **input bucket** for storing MDF4 files from CANedge devices
-2. **CORS settings** that allow access via CANcloud
-3. **S3 details** for configuring your CANedge devices
+1. An **input bucket** for uploading MDF4 files from your CANedge devices
+2. Apply **CORS settings** to allow access via CANcloud
+3. Output **S3 details** for configuring your CANedge
 
 ## Deployment Instructions
 
