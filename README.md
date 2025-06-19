@@ -18,7 +18,13 @@ Before deploying, please ensure you have:
 
 ## Deployment Instructions
 
-1. **Run the deployment with your project and bucket details**:
+1. **Make the deployment script executable**:
+
+   ```bash
+   chmod +x deploy.sh
+   ```
+
+2. **Run the deployment with your project and bucket details**:
 
    ```bash
    ./deploy.sh --project YOUR_PROJECT_ID --region YOUR_BUCKET_REGION --bucket YOUR_INPUT_BUCKET_NAME
@@ -30,7 +36,7 @@ Before deploying, please ensure you have:
    ./deploy.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp
    ```
 
-2. **When prompted, type `yes` to proceed with the deployment**
+3. **When prompted, type `yes` to proceed with the deployment**
 
 ## Important Notes
 
@@ -59,8 +65,8 @@ If you encounter issues:
 
 ## One-Click Deployment URL
 
-You can launch Google Cloud Shell with this repository pre-cloned and the script already made executable using the URL below:
+You can launch Google Cloud Shell with this repository pre-cloned using the URL below:
 
 ```
-https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README.md&cloudshell_command=chmod%20%2Bx%20deploy.sh
+https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README.md
 ```
