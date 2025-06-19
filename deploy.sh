@@ -76,9 +76,20 @@ echo "   - Input Bucket:  $BUCKET_NAME"
 echo "   - Unique ID:     $UNIQUE_ID"
 echo
 
-# Initialize Terraform
-echo "Initializing Terraform..."
-terraform init
+# Check if the input bucket exists
+echo "Checking input bucket..."
+gsutil ls -b gs://${BUCKET_NAME} > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "❌ Input bucket '${BUCKET_NAME}' not found. Please create the bucket first before deploying."
+  exit 1
+fi
+echo "✓ Input bucket found."
+
+# Initialize Terraform with backend config pointing to input bucket
+echo "Initializing Terraform with state stored in input bucket..."
+terraform init -reconfigure \
+  -backend-config="bucket=${BUCKET_NAME}" \
+  -backend-config="prefix=terraform/state"
 
 # Apply Terraform configuration with variables
 echo "Applying Terraform configuration..."
@@ -94,7 +105,7 @@ if [ $? -eq 0 ]; then
   echo "✅ Deployment successful!"
   echo
   echo "Next steps:"
-  echo "1. Ensure your MDF4-to-Parquet function ZIP file is uploaded to: gs://${BUCKET_NAME}/mdf-to-parquet-google-function-v1.3.0.zip"
+  echo "1. Ensure your MDF4-to-Parquet function ZIP file is uploaded to: gs://${BUCKET_NAME}/mdf-to-parquet-google-function-v1.4.0.zip"
   echo "2. Upload an MDF4 file to your input bucket to test the function"
   echo "3. Check the output bucket for generated Parquet files: gs://${BUCKET_NAME}-parquet"
 fi

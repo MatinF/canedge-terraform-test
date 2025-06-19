@@ -11,6 +11,12 @@ terraform {
       version = ">= 4.84.0"
     }
   }
+  
+  # Store state in input bucket
+  # The actual bucket name is provided via -backend-config during terraform init
+  backend "gcs" {
+    prefix = "terraform/state"
+  }
 }
 
 provider "google" {
