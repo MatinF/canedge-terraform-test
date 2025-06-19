@@ -1,13 +1,13 @@
-# CANedge Input Bucket - Google Cloud Deployment
+# CANedge Input Bucket Deployment
 
 ## What this does
 
-This repository contains Terraform configuration to automate the creation of a CANedge input bucket on Google Cloud Platform. The input bucket is configured with proper CORS settings and provides S3 interoperability credentials for use with CANedge devices.
+This will auto-create an input bucket for connecting your CANedge devices. The bucket is configured with CORS settings to enable you to login via CANcloud. Once deployed, it provides the relevant S3 details for your CANedge Configuration File.
 
 When deployed, it creates:
 1. An **input bucket** for storing MDF4 files from CANedge devices
-2. Proper **CORS settings** to allow file uploads from CANedge devices
-3. **S3 interoperability credentials** for use with your CANedge devices
+2. **CORS settings** that allow access via CANcloud
+3. **S3 details** for configuring your CANedge devices
 
 ## Deployment Instructions
 
@@ -23,7 +23,7 @@ When deployed, it creates:
    ./deploy_input_bucket.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET_NAME
    ```
 
-   For example, to create a bucket named `canedge-test-bucket-gcp` in region `europe-west1`:
+   For example, to create a bucket named `canedge-test-bucket-gcp` in region `europe-west1` (see [this link](https://cloud.google.com/storage/docs/locations#location-r) for available regions):
 
    ```bash
    ./deploy_input_bucket.sh --project my-project-123 --region europe-west1 --bucket canedge-test-bucket-gcp

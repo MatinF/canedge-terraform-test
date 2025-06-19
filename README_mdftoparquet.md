@@ -1,4 +1,4 @@
-# CANedge MF4-to-Parquet Pipeline - Google Cloud Deployment
+# CANedge MF4-to-Parquet Pipeline Deployment
 
 ## What this does
 
