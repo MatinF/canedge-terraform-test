@@ -1,0 +1,458 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "CloudFormation template to import an existing S3 bucket and setup automation stack.",
+  "Parameters": {
+    "InputS3BucketName": {
+      "Description": "The name of your existing S3 bucket, to which your MDF log files are uploaded.",
+      "Type": "String",
+      "AllowedPattern": "^[a-z0-9]{1}[a-z0-9\\.\\-]{0,62}[a-z0-9]{1}$",
+      "ConstraintDescription": "Bucket name can only contain lowercase letters, numbers, hyphens, and periods. It must start and end with a lowercase letter or number."
+    },
+    "UniqueID": {
+      "Description": "A unique ID (max 10 chars) to distinguish your created resources.",
+      "Type": "String",
+      "MaxLength": 10,
+      "AllowedPattern": "^[a-z0-9]*$",
+      "ConstraintDescription": "The unique ID can only contain lowercase letters/numbers and should be a maximum of 10 characters."
+    },
+    "NotificationEmail": {
+      "Description": "An email to receive notifications of Lambda errors/events (you can unsubscribe if preferred).",
+      "Type": "String",
+      "AllowedPattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "ConstraintDescription": "Must be a valid email address."
+    }
+  },
+  "Resources": {
+    "ErrorSnsSubscription": {
+      "Type": "AWS::SNS::Subscription",
+      "Properties": {
+        "TopicArn": {
+          "Ref": "ErrorSnsTopic"
+        },
+        "Protocol": "email",
+        "Endpoint": {
+          "Ref": "NotificationEmail"
+        }
+      }
+    },
+    "ErrorSnsTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": {
+          "Fn::Sub": "mdf-to-parquet-lambda-error-sns-${UniqueID}"
+        },
+        "DisplayName": {
+          "Fn::Sub": "${UniqueID}-errors"
+        }
+      }
+    },
+    "EventSnsSubscription": {
+      "Type": "AWS::SNS::Subscription",
+      "Properties": {
+        "TopicArn": {
+          "Ref": "EventSnsTopic"
+        },
+        "Protocol": "email",
+        "Endpoint": {
+          "Ref": "NotificationEmail"
+        }
+      }
+    },
+    "EventSnsTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": {
+          "Fn::Sub": "mdf-to-parquet-lambda-event-sns-${UniqueID}"
+        },
+        "DisplayName": {
+          "Fn::Sub": "${UniqueID}-events"
+        }
+      }
+    },
+    "InputS3Bucket": {
+      "Type": "AWS::S3::Bucket",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Ref": "InputS3BucketName"
+        },
+        "NotificationConfiguration": {
+          "LambdaConfigurations": [
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": [
+                  "LambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Filter": {
+                "S3Key": {
+                  "Rules": [
+                    {
+                      "Name": "suffix",
+                      "Value": ".MF4"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": [
+                  "LambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Filter": {
+                "S3Key": {
+                  "Rules": [
+                    {
+                      "Name": "suffix",
+                      "Value": ".MFC"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": [
+                  "LambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Filter": {
+                "S3Key": {
+                  "Rules": [
+                    {
+                      "Name": "suffix",
+                      "Value": ".MFE"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": [
+                  "LambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Filter": {
+                "S3Key": {
+                  "Rules": [
+                    {
+                      "Name": "suffix",
+                      "Value": ".MFM"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DependsOn": "S3InvokePermission"
+    },
+    "LambdaErrorAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName": {
+          "Fn::Sub": "mdf-to-parquet-lambda-error-alarm-${UniqueID}"
+        },
+        "AlarmDescription": "Triggers an alarm when an error occurs in the Lambda function.",
+        "Namespace": "AWS/Lambda",
+        "MetricName": "Errors",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": {
+              "Fn::Sub": "mdf-to-parquet-lambda-function-${UniqueID}"
+            }
+          }
+        ],
+        "Statistic": "Sum",
+        "Period": 600,
+        "EvaluationPeriods": 1,
+        "Threshold": 1,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "AlarmActions": [
+          {
+            "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:mdf-to-parquet-lambda-error-sns-${UniqueID}"
+          }
+        ],
+        "OKActions": [],
+        "TreatMissingData": "notBreaching"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        ],
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Sub": "S3LimitedAccessPolicyRole-${UniqueID}"
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:ListBucket"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}/*"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:PutObject"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}-parquet/*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "sns:Publish",
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:mdf-to-parquet-lambda-event-sns-${UniqueID}"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:mdf-to-parquet-lambda-error-sns-${UniqueID}"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "FunctionName": {
+          "Fn::Sub": "mdf-to-parquet-lambda-function-${UniqueID}"
+        },
+        "Handler": "lambda_function.lambda_handler",
+        "Timeout": 120,
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "python3.11",
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "${InputS3BucketName}"
+          },
+          "S3Key": "mdf-to-parquet-lambda-function-v2.3.0.zip"
+        },
+        "Environment": {
+          "Variables": {
+            "SNS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:mdf-to-parquet-lambda-event-sns-${UniqueID}"
+            }
+          }
+        },
+        "Layers": [
+          {
+            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:336392948345:layer:AWSSDKPandas-Python311:21"
+          }
+        ]
+      }
+    },
+    "OutputS3Bucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "InputS3BucketName"
+              },
+              "-parquet"
+            ]
+          ]
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true
+        }
+      }
+    },
+    "S3InvokePermission": {
+      "Type": "AWS::Lambda::Permission",
+      "DependsOn": "LambdaFunction",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "LambdaFunction"
+        },
+        "Principal": "s3.amazonaws.com",
+        "SourceAccount": {
+          "Ref": "AWS::AccountId"
+        },
+        "SourceArn": {
+          "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}"
+        }
+      }
+    },
+    "S3LimitedAccessPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": {
+          "Fn::Sub": "S3LimitedAccessPolicy-${UniqueID}"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}/*"
+                },
+                {
+                  "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}"
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject",
+                "s3:ListBucket"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}-parquet/*"
+                },
+                {
+                  "Fn::Sub": "arn:aws:s3:::${InputS3BucketName}-parquet"
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "sns:Publish",
+              "Resource": [
+                {
+                  "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:mdf-to-parquet-lambda-event-sns-${UniqueID}"
+                },
+                {
+                  "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:mdf-to-parquet-lambda-error-sns-${UniqueID}"
+                }
+              ]
+            }
+          ]
+        },
+        "Users": [
+          {
+            "Ref": "S3LimitedAccessUser"
+          }
+        ]
+      }
+    },
+    "S3LimitedAccessUser": {
+      "Type": "AWS::IAM::User",
+      "Properties": {
+        "UserName": {
+          "Fn::Sub": "S3LimitedAccessUser-${UniqueID}"
+        }
+      }
+    },
+    "S3LimitedAccessUserAccessKey": {
+      "Type": "AWS::IAM::AccessKey",
+      "Properties": {
+        "UserName": {
+          "Ref": "S3LimitedAccessUser"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "03": {
+      "Description": "Default Region",
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "07": {
+      "Description": "S3 Access Key for copying data from local disk (or S3 input bucket) to output bucket",
+      "Value": {
+        "Ref": "S3LimitedAccessUserAccessKey"
+      }
+    },
+    "08": {
+      "Description": "S3 Secret Key for copying data from local disk (or S3 input bucket) to output bucket",
+      "Value": {
+        "Fn::GetAtt": [
+          "S3LimitedAccessUserAccessKey",
+          "SecretAccessKey"
+        ]
+      }
+    },
+    "09": {
+      "Description": "Input S3 bucket name (where MDF files are stored)",
+      "Value": {
+        "Fn::Sub": "${InputS3BucketName}"
+      }
+    },
+    "10": {
+      "Description": "Output S3 bucket name (where Parquet files are stored)",
+      "Value": {
+        "Fn::Sub": "${InputS3BucketName}-parquet"
+      }
+    },
+    "11": {
+      "Description": "Lambda Events SNS Topic ARN",
+      "Value": {
+        "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:mdf-to-parquet-lambda-event-sns-${UniqueID}"
+      }
+    }
+  }
+}
