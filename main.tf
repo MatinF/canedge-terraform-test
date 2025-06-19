@@ -48,4 +48,11 @@ module "cloud_function" {
   input_bucket_name    = var.input_bucket_name
   output_bucket_name   = module.buckets.output_bucket_name
   service_account_email = module.iam.service_account_email
+  
+  # Pass explicit dependencies to ensure IAM permissions are fully applied before function creation
+  iam_dependencies = [
+    module.iam.service_account_email,
+    module.iam.function_event_receiver_id, 
+    module.iam.function_service_usage_id
+  ]
 }
