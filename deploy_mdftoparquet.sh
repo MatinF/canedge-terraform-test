@@ -182,20 +182,20 @@ fi
 # Import existing resources if they exist
 if [ "$BUCKET_EXISTS" = true ]; then
   echo "Importing existing output bucket into Terraform state..."
-  echo "yes" | terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
+  terraform import -auto-approve -var="project=${PROJECT_ID}" -var="region=${REGION}" \
     module.output_bucket.google_storage_bucket.output_bucket "${OUTPUT_BUCKET_NAME}" > /dev/null 2>&1 || true
 fi
 
 # If the service account exists, ensure it's imported into Terraform state
 if [ "$SA_EXISTS" = true ]; then
   echo "Importing existing service account into Terraform state..."
-  echo "yes" | terraform import -var="project=${PROJECT_ID}" \
+  terraform import -auto-approve -var="project=${PROJECT_ID}" \
     module.iam.google_service_account.function_service_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" > /dev/null 2>&1 || true
 fi
 
 if [ "$FUNCTION_EXISTS" = true ]; then
   echo "Importing existing cloud function into Terraform state..."
-  echo "yes" | terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
+  terraform import -auto-approve -var="project=${PROJECT_ID}" -var="region=${REGION}" \
     module.cloud_function.google_cloudfunctions2_function.mdf_to_parquet_function "projects/${PROJECT_ID}/locations/${REGION}/functions/${FUNCTION_NAME}" > /dev/null 2>&1 || true
 fi
 

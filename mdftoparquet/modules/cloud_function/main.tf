@@ -2,17 +2,17 @@
 * Module to deploy the Cloud Function for MDF4-to-Parquet conversion
 */
 
-# Get metadata about the zip file to detect changes
-data "google_storage_object_metadata" "function_zip" {
-  name   = "mdf-to-parquet-google-function-v1.7.0.zip"
-  bucket = var.input_bucket_name
+# This forces Terraform to check the hash of the ZIP file at every apply
+# and redeploy the function if the file has changed
+data "external" "function_zip_hash" {
+  program = ["bash", "-c", "echo '{\"result\":\"'$(gsutil hash gs://${var.input_bucket_name}/mdf-to-parquet-google-function-v1.7.0.zip | grep md5 | awk '{print $3}')'\"}'"]
 }
 
 resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
   name        = "${var.unique_id}-mdf-to-parquet"
   project     = var.project
   location    = var.region
-  description = "CANedge MDF4 to Parquet converter function"
+  description = "CANedge MDF4 to Parquet converter function - Hash: ${data.external.function_zip_hash.result.result}"
   
   # Wait for IAM permissions to propagate before creating the function
   depends_on = [
@@ -28,16 +28,6 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
         object = "mdf-to-parquet-google-function-v1.7.0.zip"
       }
     }
-  }
-  
-  # This forces a redeploy whenever the content of the ZIP file changes
-  # by adding metadata from the file (updated_time, md5hash) to the etag
-  lifecycle {
-    replace_triggered_by = [
-      # This will trigger a redeploy if the file is changed or replaced
-      data.google_storage_object_metadata.function_zip.md5_hash,
-      data.google_storage_object_metadata.function_zip.time_created
-    ]
   }
 
   service_config {
