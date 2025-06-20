@@ -88,7 +88,7 @@ fi
 
 # Auto-detecting region from input bucket
 echo "Auto-detecting region from input bucket..."
-REGION=$(gsutil ls -L -b "gs://${BUCKET_NAME}" | grep -E "Location constraint:" | awk '{print $3}')
+REGION=$(gsutil ls -L -b "gs://${BUCKET_NAME}" | grep -E "Location constraint:" | awk '{print $3}' | tr '[:upper:]' '[:lower:]')
 echo "✓ Detected region: ${REGION}"
 
 # Check if output bucket already exists
