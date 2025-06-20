@@ -5,7 +5,7 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
 ## Prerequisites
 
 - Input bucket for MDF4 files (create using `deploy_input_bucket.sh`)
-- Function ZIP file uploaded to input bucket: `mdf-to-parquet-google-function-v3.0.0.zip`
+- Function ZIP file uploaded to input bucket: `mdf-to-parquet-google-function-v3.0.3.zip`
 
 ## How to deploy
 
@@ -46,7 +46,6 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
 - An output bucket is auto-created with the name `YOUR_INPUT_BUCKET_NAME-parquet`
 - Upload `.MF4`, `.MFC`, `.MFE`, or `.MFM` files to trigger auto-decoding
 - For encrypted files (`.MFE` or `.MFM`), store `passwords.json` in the bucket root
-- The Cloud Function is configured with `RETRY_POLICY_DO_NOT_RETRY` to avoid endless retry loops on failure
 
 
 ## Updating an Existing Deployment
