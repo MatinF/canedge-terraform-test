@@ -15,6 +15,7 @@ show_help() {
   echo "Optional:"
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
   echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-demo)"
+  echo "  -e, --email EMAIL           Email address to receive notifications"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
   echo
@@ -25,6 +26,7 @@ show_help() {
 # Default values
 UNIQUE_ID="canedge-demo"
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
+NOTIFICATION_EMAIL=""         # Email for notifications
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -43,6 +45,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -i|--id)
       UNIQUE_ID="$2"
+      shift 2
+      ;;
+    -e|--email)
+      NOTIFICATION_EMAIL="$2"
       shift 2
       ;;
     -y|--auto-approve)
@@ -145,6 +151,7 @@ echo "   - Project ID:    $PROJECT_ID"
 echo "   - Region:        $REGION"
 echo "   - Input Bucket:  $BUCKET_NAME"
 echo "   - Unique ID:     $UNIQUE_ID"
+[ -n "$NOTIFICATION_EMAIL" ] && echo "   - Notifications: $NOTIFICATION_EMAIL"
 echo
 
 # Move to the mdftoparquet directory
@@ -158,7 +165,7 @@ terraform init -reconfigure \
 
 # Check if the ZIP file exists in the bucket
 echo "Checking if Cloud Function ZIP file exists in bucket..."
-ZIP_FILE="mdf-to-parquet-google-function-v1.6.0.zip"
+ZIP_FILE="mdf-to-parquet-google-function-v1.7.0.zip"
 if gsutil stat "gs://${BUCKET_NAME}/${ZIP_FILE}" > /dev/null 2>&1; then
   echo "✓ Found Cloud Function ZIP file in bucket"
 else
@@ -194,7 +201,7 @@ fi
 
 # Apply Terraform configuration with variables
 if [ "$FUNCTION_EXISTS" = true ]; then
-  echo "Updating existing resources and redeploying Cloud Function (this may take a few minutes) ... "
+  echo "Updating existing resources and redeploying Cloud Function (this may take a few minutes)... "
   # Force an update of the function by first planning with detailed output
   echo "Analyzing changes to make..."
   terraform plan -var="project=${PROJECT_ID}" \
@@ -214,12 +221,27 @@ else
   echo "Deploying new resources (this may take a few minutes) ... "
 fi
 
+# If notification email wasn't provided via command line, ask for it now
+if [ -z "$NOTIFICATION_EMAIL" ]; then
+  echo -n "Enter email address for event notifications (leave blank to skip): "
+  read -r NOTIFICATION_EMAIL
+  echo
+  if [ -z "$NOTIFICATION_EMAIL" ]; then
+    echo "⚠️ Warning: No email provided. Notifications will be configured but no subscribers will receive them."
+    echo "   You can add subscribers to the Pub/Sub topic later via Google Cloud Console."
+    echo
+    # Set a placeholder email as Terraform requires this variable
+    NOTIFICATION_EMAIL="no-reply@example.com"
+  fi
+fi
+
 # Run terraform apply with auto-approve
 TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
   -var="project=${PROJECT_ID}" \
   -var="region=${REGION}" \
   -var="input_bucket_name=${BUCKET_NAME}" \
-  -var="unique_id=${UNIQUE_ID}")
+  -var="unique_id=${UNIQUE_ID}" \
+  -var="notification_email=${NOTIFICATION_EMAIL}")
 
 # Check if the deployment was successful
 if [ $? -eq 0 ]; then

@@ -22,3 +22,8 @@ variable "unique_id" {
   type        = string
   default     = "canedge"
 }
+
+variable "notification_email" {
+  description = "Email address to receive notifications from the Cloud Function"
+  type        = string
+}

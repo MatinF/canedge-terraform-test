@@ -76,3 +76,10 @@ resource "google_project_iam_member" "function_artifact_reader" {
   role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.function_service_account.email}"
 }
+
+# Allow the function service account to publish to Pub/Sub topics
+resource "google_project_iam_member" "function_pubsub_publisher" {
+  project = var.project
+  role    = "roles/pubsub.publisher"
+  member  = "serviceAccount:${google_service_account.function_service_account.email}"
+}

@@ -33,3 +33,8 @@ variable "iam_dependencies" {
   type        = list(any)
   default     = []
 }
+
+variable "pubsub_topic_path" {
+  description = "Full resource path of the Pub/Sub topic for notifications"
+  type        = string
+}

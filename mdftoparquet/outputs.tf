@@ -23,6 +23,11 @@ output "service_account_key" {
   sensitive   = true
 }
 
+output "pubsub_topic_path" {
+  description = "Full resource path of the Pub/Sub topic for notifications"
+  value       = module.pubsub.topic_path
+}
+
 output "deployment_instructions" {
   description = "Next steps after deployment"
   value       = <<EOT
@@ -30,5 +35,7 @@ output "deployment_instructions" {
 
 1. Upload MDF4 files to your input bucket to test the function
 2. Decoded Parquet files will appear in the output bucket
+3. Event notifications will be sent to ${var.notification_email} via Pub/Sub
+   Topic path: ${module.pubsub.topic_path}
 EOT
 }
