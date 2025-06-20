@@ -75,30 +75,53 @@ if [ -z "$BUCKET_NAME" ]; then
   exit 1
 fi
 
-# Check if the input bucket exists
+# Checking input bucket...
 echo "Checking input bucket..."
-gsutil ls -b gs://${BUCKET_NAME} > /dev/null 2>&1
+gsutil ls -b "gs://${BUCKET_NAME}" > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-  echo "❌ Input bucket '${BUCKET_NAME}' not found. Please create the bucket first before deploying."
-  echo "   You can use ./deploy_input_bucket.sh to create the input bucket."
+  echo "❌ ERROR: Input bucket '${BUCKET_NAME}' not found in project '${PROJECT_ID}'."
+  echo "Please create the input bucket first using deploy_input_bucket.sh"
   exit 1
+else
+  echo "✓ Input bucket found."
 fi
-echo "✓ Input bucket found."
 
-# If region is not provided, auto-detect it from the bucket
-if [ -z "$REGION" ]; then
-  echo "Auto-detecting region from input bucket..."
-  BUCKET_INFO=$(gsutil ls -L -b gs://${BUCKET_NAME})
-  
-  # Extract region from bucket info
-  REGION=$(echo "$BUCKET_INFO" | grep -i "location constraint:" | awk '{print $3}' | tr '[:upper:]' '[:lower:]')
-  
-  if [ -z "$REGION" ]; then
-    echo "❌ Failed to auto-detect region from bucket. Please specify with --region flag."
-    exit 1
-  fi
-  
-  echo "✓ Detected region: $REGION"
+# Auto-detecting region from input bucket
+echo "Auto-detecting region from input bucket..."
+REGION=$(gsutil ls -L -b "gs://${BUCKET_NAME}" | grep -E "Location constraint:" | awk '{print $3}')
+echo "✓ Detected region: ${REGION}"
+
+# Check if output bucket already exists
+OUTPUT_BUCKET_NAME="${BUCKET_NAME}-parquet"
+echo "Checking if output bucket already exists..."
+if gsutil ls -b "gs://${OUTPUT_BUCKET_NAME}" > /dev/null 2>&1; then
+  echo "✓ Output bucket already exists, will be reused"
+  BUCKET_EXISTS=true
+else
+  echo "✓ Output bucket will be created"
+  BUCKET_EXISTS=false
+fi
+
+# Check if service account already exists
+SA_NAME="canedge-fn-${UNIQUE_ID}"
+echo "Checking if service account already exists..."
+if gcloud iam service-accounts list --project="$PROJECT_ID" --filter="email:${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" --format="value(email)" | grep -q "${SA_NAME}"; then
+  echo "✓ Service account already exists, will be reused"
+  SA_EXISTS=true
+else
+  echo "✓ Service account will be created"
+  SA_EXISTS=false
+fi
+
+# Check if cloud function already exists
+FUNCTION_NAME="mdf-to-parquet-${UNIQUE_ID}"
+echo "Checking if cloud function already exists..."
+if gcloud functions describe "$FUNCTION_NAME" --project="$PROJECT_ID" --region="$REGION" > /dev/null 2>&1; then
+  echo "✓ Cloud function already exists, will be reused"
+  FUNCTION_EXISTS=true
+else
+  echo "✓ Cloud function will be created"
+  FUNCTION_EXISTS=false
 fi
 
 # Print deployment configuration
@@ -118,6 +141,25 @@ terraform init -reconfigure \
   -backend-config="bucket=${BUCKET_NAME}" \
   -backend-config="prefix=terraform/state/mdftoparquet" > /dev/null
 
+# Import existing resources if they exist
+if [ "$BUCKET_EXISTS" = true ]; then
+  echo "Importing existing output bucket into Terraform state..."
+  terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
+    module.output_bucket.google_storage_bucket.output_bucket "${OUTPUT_BUCKET_NAME}" > /dev/null 2>&1 || true
+fi
+
+if [ "$SA_EXISTS" = true ]; then
+  echo "Importing existing service account into Terraform state..."
+  terraform import -var="project=${PROJECT_ID}" \
+    module.iam.google_service_account.function_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" > /dev/null 2>&1 || true
+fi
+
+if [ "$FUNCTION_EXISTS" = true ]; then
+  echo "Importing existing cloud function into Terraform state..."
+  terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
+    module.cloud_function.google_cloudfunctions2_function.mdf_to_parquet_function "projects/${PROJECT_ID}/locations/${REGION}/functions/${FUNCTION_NAME}" > /dev/null 2>&1 || true
+fi
+
 # Apply Terraform configuration with variables
 echo "Applying Terraform configuration..."
 
@@ -132,8 +174,7 @@ TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
 if [ $? -eq 0 ]; then
   # Extract important values from terraform output
   OUTPUT_BUCKET=$(terraform output -raw output_bucket_name 2>/dev/null)
-  FUNCTION_NAME=$(terraform output -raw function_name 2>/dev/null)
-  FUNCTION_REGION=$(terraform output -raw function_region 2>/dev/null)
+  FUNCTION_NAME=$(terraform output -raw cloud_function_name 2>/dev/null)
   
   echo
   echo
@@ -146,6 +187,5 @@ if [ $? -eq 0 ]; then
   echo "Input bucket:     ${BUCKET_NAME}"
   echo "Output bucket:    ${OUTPUT_BUCKET}"
   echo "Function name:    ${FUNCTION_NAME}"
-  echo "Function region:  ${FUNCTION_REGION}"
   echo 
 fi
