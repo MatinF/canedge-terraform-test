@@ -3,26 +3,28 @@
 
 # Display help information
 show_help() {
-  echo "CANedge GCP MDF4-to-Parquet Pipeline - Automated Deployment"
+  echo "CANedge MDF4-to-Parquet Pipeline - Automated Deployment"
   echo
   echo "Usage:"
   echo "  ./deploy_mdftoparquet.sh [options]"
   echo
-  echo "Options:"
-  echo "  -p, --project PROJECT_ID    GCP Project ID (REQUIRED)"
-  echo "  -r, --region REGION         GCP region for deployment (auto-detected from bucket if not provided)"
-  echo "  -b, --bucket BUCKET_NAME    Input bucket name (REQUIRED)"
+  echo "Required:"
+  echo "  -p, --project PROJECT_ID    GCP Project ID"
+  echo "  -b, --bucket BUCKET_NAME    Input bucket name"
+  echo
+  echo "Optional:"
+  echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
   echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-demo)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --region europe-west4 --bucket canedge-test-bucket-gcp"
+  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-pipeline"
 }
 
 # Default values
 UNIQUE_ID="canedge-demo"
-AUTO_APPROVE=""
+AUTO_APPROVE="-auto-approve" # Auto-approve by default
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -100,7 +102,7 @@ if [ -z "$REGION" ]; then
 fi
 
 # Print deployment configuration
-echo "🚀 Deploying CANedge GCP MDF4-to-Parquet Pipeline with the following configuration:"
+echo "🚀 Deploying MDF4-to-Parquet Pipeline:"
 echo "   - Project ID:    $PROJECT_ID"
 echo "   - Region:        $REGION"
 echo "   - Input Bucket:  $BUCKET_NAME"
@@ -114,23 +116,36 @@ cd mdftoparquet
 echo "Initializing Terraform with state stored in input bucket..."
 terraform init -reconfigure \
   -backend-config="bucket=${BUCKET_NAME}" \
-  -backend-config="prefix=terraform/state/mdftoparquet"
+  -backend-config="prefix=terraform/state/mdftoparquet" > /dev/null
 
 # Apply Terraform configuration with variables
 echo "Applying Terraform configuration..."
-terraform apply ${AUTO_APPROVE} \
+
+# Run terraform apply with auto-approve
+TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
   -var="project=${PROJECT_ID}" \
   -var="region=${REGION}" \
   -var="input_bucket_name=${BUCKET_NAME}" \
-  -var="unique_id=${UNIQUE_ID}"
+  -var="unique_id=${UNIQUE_ID}")
 
-# Show success message if deployment was successful
+# Check if the deployment was successful
 if [ $? -eq 0 ]; then
+  # Extract important values from terraform output
+  OUTPUT_BUCKET=$(terraform output -raw output_bucket_name 2>/dev/null)
+  FUNCTION_NAME=$(terraform output -raw function_name 2>/dev/null)
+  FUNCTION_REGION=$(terraform output -raw function_region 2>/dev/null)
+  
   echo
-  echo "✅ Deployment successful!"
   echo
-  echo "Next steps:"
-  echo "1. Ensure your MDF4-to-Parquet function ZIP file is uploaded to: gs://${BUCKET_NAME}/mdf-to-parquet-google-function-v1.4.0.zip"
-  echo "2. Upload an MDF4 file to your input bucket to test the function"
-  echo "3. Check the output bucket for generated Parquet files: gs://${BUCKET_NAME}-parquet"
+  echo
+  echo "---------------------------"
+  echo "✅  Deployment successful!"
+  echo
+  echo "MDF4-to-Parquet Pipeline details:"
+  echo
+  echo "Input bucket:     ${BUCKET_NAME}"
+  echo "Output bucket:    ${OUTPUT_BUCKET}"
+  echo "Function name:    ${FUNCTION_NAME}"
+  echo "Function region:  ${FUNCTION_REGION}"
+  echo 
 fi

@@ -1,0 +1,2 @@
+./deploy_input_bucket.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-16
+

@@ -1,55 +1,39 @@
-# CANedge MF4-to-Parquet Pipeline Deployment
+# CANedge MDF4-to-Parquet Pipeline Deployment
 
-This auto-deploy the MF4-to-Parquet decoding pipeline. When deployed, it creates:
-
-1. An **output bucket** for storing decoded Parquet files
-2. A **Cloud Function** that auto-decodes CANedge MDF files when uploaded
-3. Necessary **IAM permissions** required for the function
+Deploy pipeline to automatically decode MDF4 files to Parquet format.
 
 ## Prerequisites
 
-Before deploying, please ensure you have:
+- Input bucket for MDF4 files (create using `deploy_input_bucket.sh`)
+- Function ZIP file uploaded to input bucket: `mdf-to-parquet-google-function-v1.4.0.zip`
 
-- Created your input bucket for MDF4 files (you can use the `deploy_input_bucket.sh` script provided)
-- Uploaded the `mdf-to-parquet-google-function-v1.4.0.zip` file to the root of your input bucket
-- Noted the region where your input bucket is located (e.g., `europe-west4`)
-
-## Deployment Instructions
+## How to deploy
 
 1. **Make the deployment script executable**:
-
    ```bash
    chmod +x deploy_mdftoparquet.sh
    ```
 
-2. **Run the deployment with your project and bucket details**:
-
+2. **Run the deployment with your project details**:
    ```bash
-   ./deploy_mdftoparquet.sh --project YOUR_PROJECT_ID --bucket YOUR_INPUT_BUCKET_NAME --id YOUR_PIPELINE_NAME
+   ./deploy_mdftoparquet.sh --project YOUR_PROJECT_ID --bucket YOUR_INPUT_BUCKET_NAME --id YOUR_PIPELINE_ID
    ```
 
-   For example, if your GCP project ID is `my-project-123` and your input bucket is named `canedge-test-bucket-gcp`:
-
+   Example:
    ```bash
-   ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-canedge
+   ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id mypipeline
    ```
-   
-   The script will automatically detect the region of your input bucket.
 
-3. **When prompted, type `yes` to proceed with the deployment**
+---------
 
-## Important Notes
+### Notes/tips
 
-- You must specify your GCP project ID with the `--project` parameter
-- The output bucket will be named `YOUR_INPUT_BUCKET_NAME-parquet`
-- The region is automatically detected from your input bucket
-- You can still manually specify a region with `--region` if needed
-- Use a unique `--id` parameter to avoid conflicts when deploying multiple pipelines or redeploying
-
-## After Deployment
-1. Upload an MDF4 file (`.MF4`, `.MFC`, `.MFE`, or `.MFM`) to your input bucket (if you're uploading `.MFE` or `.MFM`, ensure your `passwords.json` file is stored in the root of the input bucket)
-2. The Cloud Function will automatically DBC decode the file
-3. Decoded Parquet files will appear in your output bucket
+- Use the `--id` parameter to uniquely identify your pipeline (e.g. for multiple deployments)
+- An output bucket is auto-created with the name `YOUR_INPUT_BUCKET_NAME-parquet`
+- Upload `.MF4`, `.MFC`, `.MFE`, or `.MFM` files to trigger auto-decoding
+- For encrypted files (`.MFE` or `.MFM`), store `passwords.json` in the bucket root
+- The Function will automatically DBC decode the file
+- Decoded Parquet files will appear in your output bucket
 
 ## Troubleshooting
 
