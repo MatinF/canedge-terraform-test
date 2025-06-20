@@ -4,7 +4,7 @@
 
 output "output_bucket_name" {
   description = "Name of the created output bucket for Parquet files"
-  value       = module.buckets.output_bucket_name
+  value       = module.output_bucket.output_bucket_name
 }
 
 output "cloud_function_name" {
