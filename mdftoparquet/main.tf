@@ -64,6 +64,7 @@ module "cloud_function" {
   output_bucket_name   = module.output_bucket.output_bucket_name
   service_account_email = module.iam.service_account_email
   pubsub_topic_path    = module.pubsub.topic_path
+  function_zip         = var.function_zip
   
   # Pass explicit dependencies to ensure IAM permissions are fully applied before function creation
   iam_dependencies = [

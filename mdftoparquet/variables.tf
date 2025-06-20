@@ -27,3 +27,9 @@ variable "notification_email" {
   description = "Email address to receive notifications from the Cloud Function"
   type        = string
 }
+
+variable "function_zip" {
+  description = "Filename of the Cloud Function ZIP file in the input bucket"
+  type        = string
+  default     = "mdf-to-parquet-google-function-v3.0.0.zip"
+}

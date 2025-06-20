@@ -16,17 +16,19 @@ show_help() {
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
   echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-demo)"
   echo "  -e, --email EMAIL           Email address to receive notifications"
+  echo "  -z, --zip FUNCTION_ZIP      Cloud Function ZIP filename (default: mdf-to-parquet-google-function-v3.0.0.zip)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-pipeline"
+  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-pipeline --zip mdf-to-parquet-google-function-v3.0.0.zip"
 }
 
 # Default values
 UNIQUE_ID="canedge-demo"
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
 NOTIFICATION_EMAIL=""         # Email for notifications
+FUNCTION_ZIP="mdf-to-parquet-google-function-v3.0.0.zip" # Default function ZIP filename
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -49,6 +51,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -e|--email)
       NOTIFICATION_EMAIL="$2"
+      shift 2
+      ;;
+    -z|--zip)
+      FUNCTION_ZIP="$2"
       shift 2
       ;;
     -y|--auto-approve)
@@ -165,11 +171,10 @@ terraform init -reconfigure \
 
 # Check if the ZIP file exists in the bucket
 echo "Checking if Cloud Function ZIP file exists in bucket..."
-ZIP_FILE="mdf-to-parquet-google-function-v1.7.0.zip"
-if gsutil stat "gs://${BUCKET_NAME}/${ZIP_FILE}" > /dev/null 2>&1; then
-  echo "✓ Found Cloud Function ZIP file in bucket"
+if gsutil stat "gs://${BUCKET_NAME}/${FUNCTION_ZIP}" > /dev/null 2>&1; then
+  echo "✓ Found Cloud Function ZIP file '${FUNCTION_ZIP}' in bucket"
 else
-  echo "⚠️ Warning: Cloud Function ZIP file '${ZIP_FILE}' not found in bucket '${BUCKET_NAME}'."
+  echo "⚠️ Warning: Cloud Function ZIP file '${FUNCTION_ZIP}' not found in bucket '${BUCKET_NAME}'."
   echo "   You may need to upload it manually before the function will work correctly."
   echo "   Continue anyway? (y/n)"
   read -r response
@@ -223,6 +228,7 @@ if [ "$FUNCTION_EXISTS" = true ]; then
     -var="input_bucket_name=${BUCKET_NAME}" \
     -var="unique_id=${UNIQUE_ID}" \
     -var="notification_email=${NOTIFICATION_EMAIL}" \
+    -var="function_zip=${FUNCTION_ZIP}" \
     -out=tfplan
   
   # Apply the plan without asking for confirmation
@@ -239,7 +245,8 @@ else
     -var="region=${REGION}" \
     -var="input_bucket_name=${BUCKET_NAME}" \
     -var="unique_id=${UNIQUE_ID}" \
-    -var="notification_email=${NOTIFICATION_EMAIL}"
+    -var="notification_email=${NOTIFICATION_EMAIL}" \
+    -var="function_zip=${FUNCTION_ZIP}"
 fi
 
 # Check if the deployment was successful

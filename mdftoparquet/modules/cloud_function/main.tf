@@ -25,7 +25,7 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
     source {
       storage_source {
         bucket = var.input_bucket_name
-        object = "mdf-to-parquet-google-function-v1.7.0.zip"
+        object = var.function_zip
       }
     }
   }
