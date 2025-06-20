@@ -5,6 +5,8 @@ This repository provides Terraform configurations to automate the deployment of 
 1. **Input Bucket Deployment**: Creates an input bucket for storing uploaded CANedge log files
 2. **MF4-to-Parquet Deployment**: Creates an output bucket and Cloud Function for DBC decoding MDF to Parquet
 
+----------
+
 ## Deployment
 
 ### Deploy Input Bucket
@@ -13,18 +15,12 @@ If you're just getting started, first deploy the input bucket where your CANedge
 
 [One-click deployment URL](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_input_bucket.md)
 
-Detailed instructions: [Input Bucket Deployment Guide](README_input_bucket.md)
-
-----------
 
 ### Deploy MF4-to-Parquet Pipeline
 
 Once you have an input bucket set up, you can optionally deploy the processing pipeline to automatically DBC decode uploaded MF4 files to Parquet format. Click the below URL to get started: 
 
 [One-click deployment URL](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_mdftoparquet.md)
-
-
-Detailed instructions: [MF4-to-Parquet Deployment Guide](README_mdftoparquet.md)
 
 ----------
 
@@ -39,6 +35,7 @@ Detailed instructions: [MF4-to-Parquet Deployment Guide](README_mdftoparquet.md)
 - `deploy_input_bucket.sh` - Script for input bucket deployment
 - `deploy_mdftoparquet.sh` - Script for MF4-to-Parquet pipeline deployment
 
+----------
 
 ## Troubleshooting
 
@@ -47,4 +44,4 @@ If you encounter issues with either deployment:
 - Make sure you have proper permissions in your Google Cloud project
 - Use unique identifiers with the `--id` parameter to avoid resource conflicts
 - Check the Google Cloud Console logs for detailed error messages
-- For the MF4-to-Parquet pipeline, ensure the function ZIP file is uploaded to your input bucket before deployment
+- For the MF4-to-Parquet, ensure the function ZIP file is uploaded to your input bucket before deployment

@@ -5,7 +5,7 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
 ## Prerequisites
 
 - Input bucket for MDF4 files (create using `deploy_input_bucket.sh`)
-- Function ZIP file uploaded to input bucket: `mdf-to-parquet-google-function-v1.4.0.zip`
+- Function ZIP file uploaded to input bucket: `mdf-to-parquet-google-function-v1.5.0.zip`
 
 ## How to deploy
 
