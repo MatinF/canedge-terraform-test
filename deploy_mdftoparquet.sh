@@ -199,28 +199,6 @@ if [ "$FUNCTION_EXISTS" = true ]; then
     module.cloud_function.google_cloudfunctions2_function.mdf_to_parquet_function "projects/${PROJECT_ID}/locations/${REGION}/functions/${FUNCTION_NAME}" > /dev/null 2>&1 || true
 fi
 
-# Apply Terraform configuration with variables
-if [ "$FUNCTION_EXISTS" = true ]; then
-  echo "Updating existing resources and redeploying Cloud Function (this may take a few minutes)... "
-  # Force an update of the function by first planning with detailed output
-  echo "Analyzing changes to make..."
-  terraform plan -var="project=${PROJECT_ID}" \
-    -var="region=${REGION}" \
-    -var="input_bucket_name=${BUCKET_NAME}" \
-    -var="unique_id=${UNIQUE_ID}" -out=tfplan > plan_output.txt
-  
-  # Check if there are changes to apply
-  if grep -q "No changes" plan_output.txt; then
-    echo "No changes detected in the infrastructure. Consider using 'taint' to force redeployment if needed."
-    echo "Continuing with apply to ensure cloud function is up to date..."
-  else
-    echo "Changes detected, proceeding with update..."
-  fi
-  rm -f plan_output.txt
-else
-  echo "Deploying new resources (this may take a few minutes) ... "
-fi
-
 # If notification email wasn't provided via command line, ask for it now
 if [ -z "$NOTIFICATION_EMAIL" ]; then
   echo -n "Enter email address for event notifications (leave blank to skip): "
@@ -235,16 +213,38 @@ if [ -z "$NOTIFICATION_EMAIL" ]; then
   fi
 fi
 
-# Run terraform apply with auto-approve
-TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
-  -var="project=${PROJECT_ID}" \
-  -var="region=${REGION}" \
-  -var="input_bucket_name=${BUCKET_NAME}" \
-  -var="unique_id=${UNIQUE_ID}" \
-  -var="notification_email=${NOTIFICATION_EMAIL}")
+# Apply Terraform configuration with variables
+if [ "$FUNCTION_EXISTS" = true ]; then
+  echo "Updating existing resources and redeploying Cloud Function (this may take a few minutes)... "
+  # Create a plan and apply it directly without requiring confirmation
+  echo "Creating Terraform plan..."
+  terraform plan -var="project=${PROJECT_ID}" \
+    -var="region=${REGION}" \
+    -var="input_bucket_name=${BUCKET_NAME}" \
+    -var="unique_id=${UNIQUE_ID}" \
+    -var="notification_email=${NOTIFICATION_EMAIL}" \
+    -out=tfplan
+  
+  # Apply the plan without asking for confirmation
+  echo "\nApplying the plan (no confirmation needed)..."
+  terraform apply -auto-approve tfplan
+  
+  # Clean up the plan file
+  rm -f tfplan
+else
+  echo "Deploying new resources (this may take a few minutes) ... "
+  # Run terraform apply with auto-approve
+  terraform apply ${AUTO_APPROVE} \
+    -var="project=${PROJECT_ID}" \
+    -var="region=${REGION}" \
+    -var="input_bucket_name=${BUCKET_NAME}" \
+    -var="unique_id=${UNIQUE_ID}" \
+    -var="notification_email=${NOTIFICATION_EMAIL}"
+fi
 
 # Check if the deployment was successful
-if [ $? -eq 0 ]; then
+DEPLOY_STATUS=$?
+if [ $DEPLOY_STATUS -eq 0 ]; then
   # Deployment successful
   if [ "$FUNCTION_EXISTS" = true ]; then
     echo "Redeployment completed successfully."
