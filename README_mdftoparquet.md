@@ -35,24 +35,6 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
 - The Function will automatically DBC decode the file
 - Decoded Parquet files will appear in your output bucket
 
-## Troubleshooting
-
-If you encounter issues:
-
-- **Service account already exists error**: Use a unique `--id` parameter to create resources with different names:
-  ```
-  ./deploy_mdftoparquet.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET --id YOUR_PIPELINE_NAME
-  ```
-- Verify the function ZIP file is correctly uploaded to your input bucket root
-
-## One-Click Deployment URL
-
-You can launch Google Cloud Shell with this repository pre-cloned using the URL below:
-
-```
-https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_mdftoparquet.md
-```
-
 ## Updating an Existing Deployment
 
 When updating an existing deployment (e.g., to use a newer version of the function ZIP):

@@ -121,7 +121,7 @@ echo
 echo "Endpoint:         $(terraform output -raw endpoint)"
 echo "Port:             $(terraform output -raw port)"
 echo "Bucket name:      $(terraform output -raw bucket_name)"
-echo "Region:           $(terraform output -raw bucket_region)"
+echo "Region:           $(terraform output -raw bucket_region | tr '[:upper:]' '[:lower:]')"
 echo "Request style:    Path style"
 echo "AccessKey:        $(terraform output -raw s3_interoperability_access_key)"
 echo "SecretKey format: Plain"

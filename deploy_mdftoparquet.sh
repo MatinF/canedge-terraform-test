@@ -177,7 +177,7 @@ if [ "$FUNCTION_EXISTS" = true ]; then
 fi
 
 # Apply Terraform configuration with variables
-echo "Applying Terraform configuration..."
+echo "Applying Terraform configuration (this may take a few minutes) ... "
 
 # Run terraform apply with auto-approve
 TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
