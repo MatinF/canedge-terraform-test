@@ -5,7 +5,7 @@
 # This forces Terraform to check the hash of the ZIP file at every apply
 # and redeploy the function if the file has changed
 data "external" "function_zip_hash" {
-  program = ["bash", "-c", "echo '{\"result\":\"'$(gsutil hash gs://${var.input_bucket_name}/mdf-to-parquet-google-function-v1.7.0.zip | grep md5 | awk '{print $3}')'\"}'"]
+  program = ["bash", "-c", "echo '{\"result\":\"'$(gsutil hash gs://${var.input_bucket_name}/${var.function_zip} | grep md5 | awk '{print $3}')'\"}'"]
 }
 
 resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
@@ -44,7 +44,7 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
   event_trigger {
     trigger_region        = var.region
     event_type            = "google.cloud.storage.object.v1.finalized"
-    retry_policy          = "RETRY_POLICY_RETRY"
+    retry_policy          = "RETRY_POLICY_DO_NOT_RETRY" # Disabled automatic retries to prevent infinite retry loops
     service_account_email = var.service_account_email
     event_filters {
       attribute = "bucket"

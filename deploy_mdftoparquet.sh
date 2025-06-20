@@ -1,6 +1,20 @@
 #!/bin/bash
 # CANedge GCP MDF4-to-Parquet Pipeline - One-Command Deployment Script
 
+# Check if the script is being executed directly (not sourced)
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  # Check if script has execute permissions (skip on Windows where chmod doesn't apply)
+  if [[ "$(uname -s)" != CYGWIN* ]] && [[ "$(uname -s)" != MINGW* ]] && [[ "$(uname -s)" != MSYS* ]]; then
+    if [[ ! -x "${BASH_SOURCE[0]}" ]]; then
+      echo -e "\033[1;31mERROR: Permission denied\033[0m"
+      echo "This script is not executable. Run the following command first:"
+      script_name=$(basename "${BASH_SOURCE[0]}")
+      echo "  chmod +x ${script_name}"
+      exit 1
+    fi
+  fi
+fi
+
 # Display help information
 show_help() {
   echo "CANedge MDF4-to-Parquet Pipeline - Automated Deployment"
