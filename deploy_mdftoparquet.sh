@@ -102,33 +102,30 @@ else
   BUCKET_EXISTS=false
 fi
 
-# Check if service account already exists or is in soft-delete state
+# Check if service account already exists
 SA_NAME="${UNIQUE_ID}-function-sa"
 SA_EMAIL="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 echo "Checking if service account already exists..."
 
-# First check if it's visible in the list of service accounts
+# Check if service account is visible in the list
 if gcloud iam service-accounts list --project="$PROJECT_ID" --filter="email:${SA_EMAIL}" --format="value(email)" | grep -q "${SA_NAME}"; then
-  echo "❌ ERROR: Service account '${SA_EMAIL}' already exists."
-  echo "Please use a different --id parameter to avoid name conflicts."
-  echo "Example: ./deploy_mdftoparquet.sh --project ${PROJECT_ID} --bucket ${BUCKET_NAME} --id ${UNIQUE_ID}-new"
-  exit 1
-fi
-
-# Then check if it's in soft-delete state by trying to create it
-TEMP_CHECK=$(gcloud iam service-accounts create "${SA_NAME}" --project="$PROJECT_ID" 2>&1 || true)
-if [[ $TEMP_CHECK == *"already exists"* ]]; then
-  echo "❌ ERROR: Service account '${SA_EMAIL}' appears to be in soft-delete state (30-day reservation period)."
-  echo "Google Cloud reserves deleted service account names for approximately 30 days."
-  echo "Please use a different --id parameter to avoid name conflicts."
-  echo "Example: ./deploy_mdftoparquet.sh --project ${PROJECT_ID} --bucket ${BUCKET_NAME} --id ${UNIQUE_ID}-new"
-  exit 1
+  echo "✓ Service account already exists, will be reused"
+  SA_EXISTS=true
 else
-  # If we were able to create it, delete it immediately as we'll let Terraform manage it
-  if [[ $TEMP_CHECK != *"PERMISSION_DENIED"* ]]; then
-    gcloud iam service-accounts delete "${SA_EMAIL}" --project="$PROJECT_ID" --quiet > /dev/null 2>&1 || true
+  # Check if service account is in soft-delete state
+  TEMP_CHECK=$(gcloud iam service-accounts create "${SA_NAME}-probe" --project="$PROJECT_ID" 2>&1 || true)
+  if [[ $TEMP_CHECK == *"already exists"* ]]; then
+    echo "✓ Service account appears to be in soft-delete state"
+    echo "✓ Will create new service account with ID ${UNIQUE_ID}-function-sa"
+    SA_EXISTS=false
+  else
+    # If we were able to create the probe account, delete it immediately 
+    if [[ $TEMP_CHECK != *"PERMISSION_DENIED"* ]]; then
+      gcloud iam service-accounts delete "${SA_NAME}-probe@${PROJECT_ID}.iam.gserviceaccount.com" --project="$PROJECT_ID" --quiet > /dev/null 2>&1 || true
+    fi
+    echo "✓ Service account will be created"
+    SA_EXISTS=false
   fi
-  echo "✓ Service account name is available and will be created"
 fi
 
 # Check if cloud function already exists
@@ -159,6 +156,22 @@ terraform init -reconfigure \
   -backend-config="bucket=${BUCKET_NAME}" \
   -backend-config="prefix=terraform/state/mdftoparquet" > /dev/null
 
+# Check if the ZIP file exists in the bucket
+echo "Checking if Cloud Function ZIP file exists in bucket..."
+ZIP_FILE="mdf-to-parquet-google-function-v1.6.0.zip"
+if gsutil stat "gs://${BUCKET_NAME}/${ZIP_FILE}" > /dev/null 2>&1; then
+  echo "✓ Found Cloud Function ZIP file in bucket"
+else
+  echo "⚠️ Warning: Cloud Function ZIP file '${ZIP_FILE}' not found in bucket '${BUCKET_NAME}'."
+  echo "   You may need to upload it manually before the function will work correctly."
+  echo "   Continue anyway? (y/n)"
+  read -r response
+  if [[ "$response" != "y" && "$response" != "Y" ]]; then
+    echo "Deployment cancelled."
+    exit 1
+  fi
+fi
+
 # Import existing resources if they exist
 if [ "$BUCKET_EXISTS" = true ]; then
   echo "Importing existing output bucket into Terraform state..."
@@ -166,9 +179,12 @@ if [ "$BUCKET_EXISTS" = true ]; then
     module.output_bucket.google_storage_bucket.output_bucket "${OUTPUT_BUCKET_NAME}" > /dev/null 2>&1 || true
 fi
 
-# No longer need to import service accounts as we'll exit if they already exist
-
-# We've already checked for service account existence and exited if there were issues
+# If the service account exists, ensure it's imported into Terraform state
+if [ "$SA_EXISTS" = true ]; then
+  echo "Importing existing service account into Terraform state..."
+  echo "yes" | terraform import -var="project=${PROJECT_ID}" \
+    module.iam.google_service_account.function_service_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" > /dev/null 2>&1 || true
+fi
 
 if [ "$FUNCTION_EXISTS" = true ]; then
   echo "Importing existing cloud function into Terraform state..."
@@ -177,7 +193,26 @@ if [ "$FUNCTION_EXISTS" = true ]; then
 fi
 
 # Apply Terraform configuration with variables
-echo "Applying Terraform configuration (this may take a few minutes) ... "
+if [ "$FUNCTION_EXISTS" = true ]; then
+  echo "Updating existing resources and redeploying Cloud Function (this may take a few minutes) ... "
+  # Force an update of the function by first planning with detailed output
+  echo "Analyzing changes to make..."
+  terraform plan -var="project=${PROJECT_ID}" \
+    -var="region=${REGION}" \
+    -var="input_bucket_name=${BUCKET_NAME}" \
+    -var="unique_id=${UNIQUE_ID}" -out=tfplan > plan_output.txt
+  
+  # Check if there are changes to apply
+  if grep -q "No changes" plan_output.txt; then
+    echo "No changes detected in the infrastructure. Consider using 'taint' to force redeployment if needed."
+    echo "Continuing with apply to ensure cloud function is up to date..."
+  else
+    echo "Changes detected, proceeding with update..."
+  fi
+  rm -f plan_output.txt
+else
+  echo "Deploying new resources (this may take a few minutes) ... "
+fi
 
 # Run terraform apply with auto-approve
 TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
@@ -188,7 +223,12 @@ TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
 
 # Check if the deployment was successful
 if [ $? -eq 0 ]; then
-  # Deployment successful, no cleanup needed
+  # Deployment successful
+  if [ "$FUNCTION_EXISTS" = true ]; then
+    echo "Redeployment completed successfully."
+  else
+    echo "New deployment completed successfully."
+  fi
   # Extract important values from terraform output
   OUTPUT_BUCKET=$(terraform output -raw output_bucket_name 2>/dev/null)
   FUNCTION_NAME=$(terraform output -raw cloud_function_name 2>/dev/null)
