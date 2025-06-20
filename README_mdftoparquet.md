@@ -17,11 +17,11 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
 2. **Run the deployment with your project details**:
    ```bash
    ./deploy_mdftoparquet.sh \
-      --project YOUR_PROJECT_ID \
-      --bucket YOUR_INPUT_BUCKET_NAME \
-      --id YOUR_PIPELINE_ID \
-      --email YOUR_EMAIL_ADDRESS \
-      --zip YOUR_FUNCTION_ZIP
+     --project YOUR_PROJECT_ID \
+     --bucket YOUR_INPUT_BUCKET_NAME \
+     --id YOUR_PIPELINE_ID \
+     --email YOUR_EMAIL_ADDRESS \
+     --zip YOUR_FUNCTION_ZIP
    ```
 
    Example:
