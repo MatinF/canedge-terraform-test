@@ -102,31 +102,33 @@ else
   BUCKET_EXISTS=false
 fi
 
-# Check if service account already exists
+# Check if service account already exists or is in soft-delete state
 SA_NAME="${UNIQUE_ID}-function-sa"
 SA_EMAIL="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 echo "Checking if service account already exists..."
+
+# First check if it's visible in the list of service accounts
 if gcloud iam service-accounts list --project="$PROJECT_ID" --filter="email:${SA_EMAIL}" --format="value(email)" | grep -q "${SA_NAME}"; then
-  echo "✓ Service account exists and will be reused"
-  SA_EXISTS=true
-  SA_SOFT_DELETED=false
+  echo "❌ ERROR: Service account '${SA_EMAIL}' already exists."
+  echo "Please use a different --id parameter to avoid name conflicts."
+  echo "Example: ./deploy_mdftoparquet.sh --project ${PROJECT_ID} --bucket ${BUCKET_NAME} --id ${UNIQUE_ID}-new"
+  exit 1
+fi
+
+# Then check if it's in soft-delete state by trying to create it
+TEMP_CHECK=$(gcloud iam service-accounts create "${SA_NAME}" --project="$PROJECT_ID" 2>&1 || true)
+if [[ $TEMP_CHECK == *"already exists"* ]]; then
+  echo "❌ ERROR: Service account '${SA_EMAIL}' appears to be in soft-delete state (30-day reservation period)."
+  echo "Google Cloud reserves deleted service account names for approximately 30 days."
+  echo "Please use a different --id parameter to avoid name conflicts."
+  echo "Example: ./deploy_mdftoparquet.sh --project ${PROJECT_ID} --bucket ${BUCKET_NAME} --id ${UNIQUE_ID}-new"
+  exit 1
 else
-  # Check if service account is in soft-delete state
-  # We can indirectly check this by attempting to create a temporary service account with the same name
-  TEMP_CHECK=$(gcloud iam service-accounts create "${SA_NAME}" --project="$PROJECT_ID" 2>&1 || true)
-  if [[ $TEMP_CHECK == *"already exists"* ]]; then
-    echo "⚠️ Service account appears to be in soft-delete state (30-day reservation period)"
-    SA_SOFT_DELETED=true
-    SA_EXISTS=false
-  else
-    # If we were able to create it, delete it immediately as we'll let Terraform manage it
-    if [[ $TEMP_CHECK != *"PERMISSION_DENIED"* ]]; then
-      gcloud iam service-accounts delete "${SA_EMAIL}" --project="$PROJECT_ID" --quiet > /dev/null 2>&1 || true
-    fi
-    echo "✓ Service account will be created"
-    SA_EXISTS=false
-    SA_SOFT_DELETED=false
+  # If we were able to create it, delete it immediately as we'll let Terraform manage it
+  if [[ $TEMP_CHECK != *"PERMISSION_DENIED"* ]]; then
+    gcloud iam service-accounts delete "${SA_EMAIL}" --project="$PROJECT_ID" --quiet > /dev/null 2>&1 || true
   fi
+  echo "✓ Service account name is available and will be created"
 fi
 
 # Check if cloud function already exists
@@ -164,24 +166,9 @@ if [ "$BUCKET_EXISTS" = true ]; then
     module.output_bucket.google_storage_bucket.output_bucket "${OUTPUT_BUCKET_NAME}" > /dev/null 2>&1 || true
 fi
 
-if [ "$SA_EXISTS" = true ]; then
-  echo "Importing existing service account into Terraform state..."
-  echo "yes" | terraform import -var="project=${PROJECT_ID}" \
-    module.iam.google_service_account.function_service_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" > /dev/null 2>&1 || true
-fi
+# No longer need to import service accounts as we'll exit if they already exist
 
-# If service account is in soft-delete state, we need special handling
-if [ "$SA_SOFT_DELETED" = true ]; then
-  echo "⚠️ Handling soft-deleted service account scenario..."
-  
-  # Remove the service account from terraform state if it exists there
-  terraform state rm module.iam.google_service_account.function_service_account > /dev/null 2>&1 || true
-  
-  # Modify the terraform file to use a different name temporarily
-  TMP_SA_NAME="${UNIQUE_ID}-tmp-$(date +%s)-sa"
-  sed -i.bak "s/account_id *= *\"\${var.unique_id}-function-sa\"/account_id = \"${TMP_SA_NAME}\"/g" modules/iam/main.tf
-  echo "ℹ️ Using temporary service account name: ${TMP_SA_NAME}"
-fi
+# We've already checked for service account existence and exited if there were issues
 
 if [ "$FUNCTION_EXISTS" = true ]; then
   echo "Importing existing cloud function into Terraform state..."
@@ -201,11 +188,7 @@ TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
 
 # Check if the deployment was successful
 if [ $? -eq 0 ]; then
-  # If we used a temporary name due to soft-deletion, restore the main.tf file
-  if [ "$SA_SOFT_DELETED" = true ]; then
-    mv modules/iam/main.tf.bak modules/iam/main.tf > /dev/null 2>&1 || true
-    echo "ℹ️ Restored original service account configuration"
-  fi
+  # Deployment successful, no cleanup needed
   # Extract important values from terraform output
   OUTPUT_BUCKET=$(terraform output -raw output_bucket_name 2>/dev/null)
   FUNCTION_NAME=$(terraform output -raw cloud_function_name 2>/dev/null)
