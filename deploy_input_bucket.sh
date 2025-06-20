@@ -73,7 +73,7 @@ if [ -z "$BUCKET_NAME" ]; then
 fi
 
 # Print deployment configuration
-echo "🚀 Deploying CANedge GCP Input Bucket with the following configuration:"
+echo "Deploying CANedge GCP Input Bucket with the following configuration:"
 echo "   - Project ID:    $PROJECT_ID"
 echo "   - Region:        $REGION"
 echo "   - Bucket Name:   $BUCKET_NAME"
@@ -103,7 +103,7 @@ TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
 
 # Check if the deployment was successful
 if [ $? -ne 0 ]; then
-  echo "❌ Initial deployment failed."
+  echo "❌  Initial deployment failed."
   exit 1
 fi
 

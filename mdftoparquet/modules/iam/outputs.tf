@@ -8,6 +8,12 @@ output "function_event_receiver_id" {
   value       = google_project_iam_member.function_event_receiver.id
 }
 
+output "service_account_key" {
+  description = "Service account key for local development/testing (private key in base64-encoded JSON format)"
+  value       = google_service_account_key.function_sa_key.private_key
+  sensitive   = true
+}
+
 output "function_service_usage_id" {
   description = "ID of the serviceusage.serviceUsageConsumer permission"
   value       = google_project_iam_member.function_service_usage.id

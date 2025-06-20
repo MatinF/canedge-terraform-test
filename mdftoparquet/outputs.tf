@@ -17,6 +17,12 @@ output "service_account_email" {
   value       = module.iam.service_account_email
 }
 
+output "service_account_key" {
+  description = "Service account key for local development (base64-encoded JSON)"
+  value       = module.iam.service_account_key
+  sensitive   = true
+}
+
 output "deployment_instructions" {
   description = "Next steps after deployment"
   value       = <<EOT

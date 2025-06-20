@@ -50,6 +50,11 @@ resource "google_project_iam_member" "function_invoker" {
   member  = "serviceAccount:${google_service_account.function_service_account.email}"
 }
 
+# Create a service account key for local development/testing
+resource "google_service_account_key" "function_sa_key" {
+  service_account_id = google_service_account.function_service_account.name
+}
+
 # Grant permissions for Eventarc
 # The service account needs both eventarc.eventReceiver role and serviceusage.serviceUsageConsumer
 resource "google_project_iam_member" "function_event_receiver" {

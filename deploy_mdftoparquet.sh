@@ -103,7 +103,7 @@ else
 fi
 
 # Check if service account already exists
-SA_NAME="canedge-fn-${UNIQUE_ID}"
+SA_NAME="${UNIQUE_ID}-function-sa"
 echo "Checking if service account already exists..."
 if gcloud iam service-accounts list --project="$PROJECT_ID" --filter="email:${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" --format="value(email)" | grep -q "${SA_NAME}"; then
   echo "✓ Service account already exists, will be reused"
@@ -114,9 +114,9 @@ else
 fi
 
 # Check if cloud function already exists
-FUNCTION_NAME="mdf-to-parquet-${UNIQUE_ID}"
+FUNCTION_NAME="${UNIQUE_ID}-mdf-to-parquet"
 echo "Checking if cloud function already exists..."
-if gcloud functions describe "$FUNCTION_NAME" --project="$PROJECT_ID" --region="$REGION" > /dev/null 2>&1; then
+if gcloud functions describe "$FUNCTION_NAME" --gen2 --project="$PROJECT_ID" --region="$REGION" > /dev/null 2>&1; then
   echo "✓ Cloud function already exists, will be reused"
   FUNCTION_EXISTS=true
 else
@@ -125,7 +125,7 @@ else
 fi
 
 # Print deployment configuration
-echo "🚀 Deploying MDF4-to-Parquet Pipeline:"
+echo "Deploying MDF4-to-Parquet Pipeline:"
 echo "   - Project ID:    $PROJECT_ID"
 echo "   - Region:        $REGION"
 echo "   - Input Bucket:  $BUCKET_NAME"
@@ -144,19 +144,19 @@ terraform init -reconfigure \
 # Import existing resources if they exist
 if [ "$BUCKET_EXISTS" = true ]; then
   echo "Importing existing output bucket into Terraform state..."
-  terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
+  echo "yes" | terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
     module.output_bucket.google_storage_bucket.output_bucket "${OUTPUT_BUCKET_NAME}" > /dev/null 2>&1 || true
 fi
 
 if [ "$SA_EXISTS" = true ]; then
   echo "Importing existing service account into Terraform state..."
-  terraform import -var="project=${PROJECT_ID}" \
-    module.iam.google_service_account.function_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" > /dev/null 2>&1 || true
+  echo "yes" | terraform import -var="project=${PROJECT_ID}" \
+    module.iam.google_service_account.function_service_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" > /dev/null 2>&1 || true
 fi
 
 if [ "$FUNCTION_EXISTS" = true ]; then
   echo "Importing existing cloud function into Terraform state..."
-  terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
+  echo "yes" | terraform import -var="project=${PROJECT_ID}" -var="region=${REGION}" \
     module.cloud_function.google_cloudfunctions2_function.mdf_to_parquet_function "projects/${PROJECT_ID}/locations/${REGION}/functions/${FUNCTION_NAME}" > /dev/null 2>&1 || true
 fi
 
@@ -175,6 +175,24 @@ if [ $? -eq 0 ]; then
   # Extract important values from terraform output
   OUTPUT_BUCKET=$(terraform output -raw output_bucket_name 2>/dev/null)
   FUNCTION_NAME=$(terraform output -raw cloud_function_name 2>/dev/null)
+  SERVICE_ACCOUNT=$(terraform output -raw service_account_email 2>/dev/null)
+  
+  # Get the service account key (base64-encoded JSON)
+  SA_KEY=$(terraform output -raw service_account_key 2>/dev/null)
+  
+  # Decode the base64 key to get the JSON content
+  SA_KEY_JSON=$(echo "${SA_KEY}" | base64 --decode)
+  
+  # Create a local file and upload it to the input bucket
+  KEY_FILE="${UNIQUE_ID}-service-account-key.json"
+  echo "${SA_KEY_JSON}" > ${KEY_FILE}
+  
+  # Upload to the input bucket
+  echo "Uploading service account key to input bucket..."
+  gsutil cp ${KEY_FILE} gs://${BUCKET_NAME}/${KEY_FILE}
+  
+  # Clean up the local file
+  rm ${KEY_FILE}
   
   echo
   echo
@@ -182,10 +200,14 @@ if [ $? -eq 0 ]; then
   echo "---------------------------"
   echo "✅  Deployment successful!"
   echo
-  echo "MDF4-to-Parquet Pipeline details:"
+  echo "MDF4-to-Parquet details:"
   echo
-  echo "Input bucket:     ${BUCKET_NAME}"
-  echo "Output bucket:    ${OUTPUT_BUCKET}"
-  echo "Function name:    ${FUNCTION_NAME}"
+  echo "Input bucket:           ${BUCKET_NAME}"
+  echo "Output bucket:          ${OUTPUT_BUCKET}"
+  echo "Function name:          ${FUNCTION_NAME}"
+  echo "Service account:        ${SERVICE_ACCOUNT}"
+  echo
+  echo "Service account key saved to: gs://${BUCKET_NAME}/${KEY_FILE}"
+  echo
   echo 
 fi
