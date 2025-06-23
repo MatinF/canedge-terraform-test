@@ -13,6 +13,7 @@ Deploy pipeline to automatically decode MDF files to Parquet format.
 chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh \
    --project YOUR_PROJECT_ID \
    --bucket YOUR_INPUT_BUCKET_NAME \
+   --id YOUR_PIPELINE_ID \
    --email YOUR_EMAIL_ADDRESS \
    --zip YOUR_FUNCTION_ZIP
 ```
@@ -22,6 +23,7 @@ Example:
 chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh \
    --project my-project-123 \
    --bucket canedge-test-bucket-gcp \
+   --id canedge-demo \
    --email user@example.com \
    --zip mdf-to-parquet-google-function-v3.0.6.zip
 ```
@@ -30,7 +32,7 @@ chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh \
 
 ### Notes/tips
 
-- Your input bucket name is used to uniquely identify all pipeline resources
+- Use the `--id` parameter to uniquely identify your pipeline resources
 - Use the `--email` parameter to specify the email address for notifications
 - Use the `--zip` parameter to specify the Cloud Function ZIP filename
 - An output bucket is auto-created with the name `YOUR_INPUT_BUCKET_NAME-parquet`
@@ -42,11 +44,12 @@ chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh \
 
 When updating an existing deployment (e.g., to use a newer version of the function ZIP):
 
-1. **Use the same bucket name** as your original deployment
+1. **Use the same `--id` parameter** as your original deployment
    ```bash
    chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh \
       --project YOUR_PROJECT_ID \
       --bucket YOUR_BUCKET_NAME \
+      --id YOUR_EXISTING_ID \
       --email YOUR_EMAIL_ADDRESS \
       --zip YOUR_FUNCTION_ZIP
    ```

@@ -25,6 +25,7 @@ show_help() {
   echo "Required:"
   echo "  -p, --project PROJECT_ID    GCP Project ID"
   echo "  -b, --bucket BUCKET_NAME    Input bucket name"
+  echo "  -i, --id UNIQUE_ID          Unique identifier for pipeline resources"
   echo
   echo "Optional:"
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
@@ -34,13 +35,14 @@ show_help() {
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --email user@example.com --zip mdf-to-parquet-google-function-v3.0.6.zip"
+  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --email user@example.com --zip mdf-to-parquet-google-function-v3.0.6.zip"
 }
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
 NOTIFICATION_EMAIL=""         # Email for notifications
 FUNCTION_ZIP="mdf-to-parquet-google-function-v3.0.6.zip" # Default function ZIP filename
+# No default for UNIQUE_ID - user must provide it
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -57,7 +59,10 @@ while [[ $# -gt 0 ]]; do
       BUCKET_NAME="$2"
       shift 2
       ;;
-    # --id parameter removed - now using bucket name instead
+    -i|--id)
+      UNIQUE_ID="$2"
+      shift 2
+      ;;
     -e|--email)
       NOTIFICATION_EMAIL="$2"
       shift 2
@@ -105,8 +110,13 @@ if [ $? -ne 0 ]; then
   exit 1
 else
   echo "✓ Input bucket found."
-  # Use the bucket name as the unique identifier
-  UNIQUE_ID="${BUCKET_NAME}"
+fi
+
+# Check if unique ID is provided
+if [ -z "$UNIQUE_ID" ]; then
+  echo "Error: Unique ID is required. Please specify with --id flag."
+  show_help
+  exit 1
 fi
 
 # Auto-detecting region from input bucket

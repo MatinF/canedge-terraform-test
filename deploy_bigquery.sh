@@ -25,6 +25,7 @@ show_help() {
   echo "Required:"
   echo "  -p, --project PROJECT_ID    GCP Project ID"
   echo "  -b, --bucket BUCKET_NAME    Input bucket name"
+  echo "  -i, --id UNIQUE_ID          Unique identifier for BigQuery resources"
   echo "  -d, --dataset DATASET_ID    BigQuery dataset ID"
   echo
   echo "Optional:"
@@ -33,11 +34,12 @@ show_help() {
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --dataset lakedataset1"
+  echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --dataset lakedataset1"
 }
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
+# No default for UNIQUE_ID - user must provide it
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -54,7 +56,10 @@ while [[ $# -gt 0 ]]; do
       BUCKET_NAME="$2"
       shift 2
       ;;
-    # --id parameter removed - now using bucket name instead
+    -i|--id)
+      UNIQUE_ID="$2"
+      shift 2
+      ;;
     -d|--dataset)
       DATASET_ID="$2"
       shift 2
@@ -89,8 +94,12 @@ if [ -z "$BUCKET_NAME" ]; then
   exit 1
 fi
 
-# Use the bucket name as the unique identifier
-UNIQUE_ID="${BUCKET_NAME}"
+# Check if unique ID is provided
+if [ -z "$UNIQUE_ID" ]; then
+  echo "Error: Unique ID is required. Please specify with --id flag."
+  show_help
+  exit 1
+fi
 
 # Check if dataset ID is provided
 if [ -z "$DATASET_ID" ]; then
