@@ -39,7 +39,7 @@ resource "google_monitoring_alert_policy" "mdf_to_parquet_event_alert" {
     display_name = "MDF-to-Parquet Event Detected"
     
     condition_threshold {
-      filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.mdf_to_parquet_event_metric.name}\""
+      filter          = "resource.type=\"cloud_run_revision\" AND metric.type=\"logging.googleapis.com/user/${google_logging_metric.mdf_to_parquet_event_metric.name}\""
       duration        = "0s"  # Alert immediately when event is detected
       comparison      = "COMPARISON_GT"
       threshold_value = 0     # Alert on any occurrence
