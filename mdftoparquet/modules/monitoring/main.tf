@@ -64,8 +64,9 @@ resource "google_monitoring_alert_policy" "mdf_to_parquet_event_alert" {
     google_monitoring_notification_channel.email_channel.name
   ]
   
-  # Auto-close incidents after 30 minutes
+  # Auto-close incidents after 30 minutes and don't notify on closure
   alert_strategy {
     auto_close = "1800s"
+    notification_prompts = ["OPENED"]
   }
 }
