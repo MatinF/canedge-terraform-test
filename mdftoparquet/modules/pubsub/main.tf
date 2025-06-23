@@ -29,10 +29,18 @@ resource "google_pubsub_subscription" "email_subscription" {
   # Default message retention - 7 days
   message_retention_duration = "604800s"
   
-  # Retry policy for failed delivery attempts
+  # Set short acknowledgement deadline to fail quickly if there's an issue
+  ack_deadline_seconds = 10
+  
+  # Minimal retry policy - short backoff and only retry for a brief period
   retry_policy {
     minimum_backoff = "10s"
-    maximum_backoff = "600s"
+    maximum_backoff = "60s" # Limit maximum backoff to just 1 minute
+  }
+  
+  # Set a short expiration period for messages to prevent long retry cycles
+  expiration_policy {
+    ttl = "300s" # 5 minutes maximum lifetime for undelivered messages
   }
   
   labels = {

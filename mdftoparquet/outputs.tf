@@ -27,3 +27,13 @@ output "pubsub_topic_path" {
   description = "Full resource path of the Pub/Sub topic for notifications"
   value       = module.pubsub.topic_path
 }
+
+output "logging_metric_id" {
+  description = "ID of the logging metric for monitoring 'NEW EVENT' occurrences"
+  value       = module.monitoring.metric_id
+}
+
+output "alert_policy_id" {
+  description = "ID of the alert policy for 'NEW EVENT' notifications"
+  value       = module.monitoring.alert_policy_id
+}

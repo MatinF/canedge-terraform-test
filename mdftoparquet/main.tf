@@ -73,3 +73,17 @@ module "cloud_function" {
     module.iam.function_service_usage_id
   ]
 }
+
+# Monitoring module for logging metrics and alert policies
+module "monitoring" {
+  source = "./modules/monitoring"
+
+  project            = var.project
+  unique_id          = var.unique_id
+  notification_email = var.notification_email
+  function_name      = module.cloud_function.function_name
+  
+  depends_on = [
+    module.cloud_function
+  ]
+}
