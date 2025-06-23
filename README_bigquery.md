@@ -1,34 +1,39 @@
-# CANedge BigQuery Analytics Deployment
+# CANedge BigQuery Deployment
 
-Deploy BigQuery resources for querying your CANedge Parquet data lake.
+Deploy BigQuery to query your Parquet data lake.
 
 ## Prerequisites
 
-- Input bucket for MDF files (create using `deploy_input_bucket.sh`)
-- Parquet data lake (deploy using `deploy_mdftoparquet.sh`)
+- Input bucket for CANedge MDF files 
+- Output bucket for DBC decoded Parquet files
 
 ## How to deploy
 
-**Run the deployment with one command**:
 ```bash
-chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project YOUR_PROJECT_ID --bucket YOUR_INPUT_BUCKET_NAME
+chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh \
+   --project YOUR_PROJECT_ID \
+   --bucket YOUR_INPUT_BUCKET_NAME \
+   --dataset YOUR_DATASET_NAME
 ```
 
 Example:
 ```bash
-chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp
+chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh \
+   --project my-project-123 \
+   --bucket canedge-test-bucket-gcp \
+   --dataset lakedataset1
 ```
 
 ---------
 
 ### Notes/tips
 
-- Use the `--id` parameter to uniquely identify your BigQuery resources
-- Use `--dataset` to specify a custom dataset name (default: `lakedataset1`)
+- The input bucket name is used to uniquely identify your BigQuery resources
+- The `--dataset` parameter is required to name your BigQuery dataset
 - Region is auto-detected from your input bucket
 - Two service account keys are created and stored in your input bucket:
-  - Admin key: `<unique-id>-bigquery-admin-account.json`
-  - User key: `<unique-id>-bigquery-user-account.json`
+  - Admin key: `<bucket-name>-bigquery-admin-account.json`
+  - User key: `<bucket-name>-bigquery-user-account.json`
 - Use the admin key for table management and the user key for querying
 - Access BigQuery through the [Google Cloud Console](https://console.cloud.google.com/bigquery)
 

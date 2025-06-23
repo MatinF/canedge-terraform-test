@@ -24,9 +24,9 @@ Once you have an input bucket set up, you can optionally deploy the processing p
 [One-click deployment URL](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_mdftoparquet.md)
 
 
-### Deploy BigQuery Analytics
+### Deploy BigQuery
 
-After setting up the MF4-to-Parquet pipeline, you can deploy BigQuery resources to query your Parquet data lake. Click the below URL to get started: 
+After setting up the MF4-to-Parquet pipeline, you can deploy BigQuery to query your Parquet data lake. Click the below URL to get started: 
 
 [One-click deployment URL](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_bigquery.md)
 

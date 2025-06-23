@@ -28,18 +28,16 @@ show_help() {
   echo
   echo "Optional:"
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
-  echo "  -i, --id UNIQUE_ID          Unique identifier (default: canedge-demo)"
   echo "  -e, --email EMAIL           Email address to receive notifications"
-  echo "  -z, --zip FUNCTION_ZIP      Cloud Function ZIP filename (default: mdf-to-parquet-google-function-v3.0.0.zip)"
+  echo "  -z, --zip FUNCTION_ZIP      Cloud Function ZIP filename (default: mdf-to-parquet-google-function-v3.0.6.zip)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-pipeline --zip mdf-to-parquet-google-function-v3.0.6.zip"
+  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --email user@example.com --zip mdf-to-parquet-google-function-v3.0.6.zip"
 }
 
 # Default values
-UNIQUE_ID="canedge-demo"
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
 NOTIFICATION_EMAIL=""         # Email for notifications
 FUNCTION_ZIP="mdf-to-parquet-google-function-v3.0.6.zip" # Default function ZIP filename
@@ -59,10 +57,7 @@ while [[ $# -gt 0 ]]; do
       BUCKET_NAME="$2"
       shift 2
       ;;
-    -i|--id)
-      UNIQUE_ID="$2"
-      shift 2
-      ;;
+    # --id parameter removed - now using bucket name instead
     -e|--email)
       NOTIFICATION_EMAIL="$2"
       shift 2
@@ -110,6 +105,8 @@ if [ $? -ne 0 ]; then
   exit 1
 else
   echo "✓ Input bucket found."
+  # Use the bucket name as the unique identifier
+  UNIQUE_ID="${BUCKET_NAME}"
 fi
 
 # Auto-detecting region from input bucket

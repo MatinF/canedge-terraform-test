@@ -4,20 +4,14 @@ Deploy input bucket for connecting CANedge devices.
 
 ## How to deploy
 
-1. **Make the deployment script executable**:
-   ```bash
-   chmod +x deploy_input_bucket.sh
-   ```
+```bash
+chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET_NAME
+```
 
-2. **Run the deployment with your project details**:
-   ```bash
-   ./deploy_input_bucket.sh --project YOUR_PROJECT_ID --region YOUR_REGION --bucket YOUR_BUCKET_NAME
-   ```
-
-   Example:
-   ```bash
-   ./deploy_input_bucket.sh --project my-project-123 --region europe-west1 --bucket canedge-test-bucket-gcp
-   ```
+Example:
+```bash
+chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project my-project-123 --region europe-west1 --bucket canedge-test-bucket-gcp
+```
 
 ---------
 
