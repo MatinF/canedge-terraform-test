@@ -32,12 +32,9 @@ chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh \
 
 - The `--id` parameter is required to uniquely identify your BigQuery resources
 - The `--dataset` parameter is required to name your BigQuery dataset
-- Region is auto-detected from your input bucket
 - Two service account keys are created and stored in your input bucket:
   - Admin key: `<unique-id>-bigquery-admin-account.json`
   - User key: `<unique-id>-bigquery-user-account.json`
-- Use the admin key for table management and the user key for querying
-- Access BigQuery through the [Google Cloud Console](https://console.cloud.google.com/bigquery)
 
 ## Updating an Existing Deployment
 
