@@ -46,6 +46,8 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
 - An output bucket is auto-created with the name `YOUR_INPUT_BUCKET_NAME-parquet`
 - Upload `.MF4`, `.MFC`, `.MFE`, or `.MFM` files to trigger auto-decoding
 - For encrypted files (`.MFE` or `.MFM`), store `passwords.json` in the bucket root
+- A logging metric monitors for "NEW EVENT" log entries and sends email alerts
+- The Cloud Function uses RETRY_POLICY_DO_NOT_RETRY to prevent infinite retry loops
 
 
 ## Updating an Existing Deployment

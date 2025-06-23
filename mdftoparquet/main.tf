@@ -44,14 +44,14 @@ module "iam" {
   output_bucket_name = module.output_bucket.output_bucket_name
 }
 
-# Temporarily disabled Pub/Sub Topic for troubleshooting
-# module "pubsub" {
-#   source = "./modules/pubsub"
-#
-#   project           = var.project
-#   unique_id         = var.unique_id
-#   notification_email = var.notification_email
-# }
+# Pub/Sub Topic for notifications
+module "pubsub" {
+  source = "./modules/pubsub"
+
+  project           = var.project
+  unique_id         = var.unique_id
+  notification_email = var.notification_email
+}
 
 # Cloud Function for MDF4 to Parquet conversion
 module "cloud_function" {
@@ -63,7 +63,7 @@ module "cloud_function" {
   input_bucket_name    = var.input_bucket_name
   output_bucket_name   = module.output_bucket.output_bucket_name
   service_account_email = module.iam.service_account_email
-  pubsub_topic_path    = "" # Temporarily disabled PubSub
+  pubsub_topic_path    = module.pubsub.topic_path
   function_zip         = var.function_zip
   
   # Pass explicit dependencies to ensure IAM permissions are fully applied before function creation
@@ -74,4 +74,16 @@ module "cloud_function" {
   ]
 }
 
-# Monitoring module temporarily removed for troubleshooting
+# Monitoring module for logging metrics and alert policies
+module "monitoring" {
+  source = "./modules/monitoring"
+
+  project            = var.project
+  unique_id          = var.unique_id
+  notification_email = var.notification_email
+  function_name      = module.cloud_function.function_name
+  
+  depends_on = [
+    module.cloud_function
+  ]
+}
