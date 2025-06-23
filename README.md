@@ -1,9 +1,10 @@
 # CANedge Google Cloud Platform Deployment
 
-This repository provides Terraform configurations to automate the deployment of CANedge data processing infrastructure on Google Cloud Platform. The deployment is split into two parts:
+This repository provides Terraform configurations to automate the deployment of CANedge data processing infrastructure on Google Cloud Platform. The deployment is split into three parts:
 
 1. **Input Bucket Deployment**: Creates an input bucket for storing uploaded CANedge log files
 2. **MF4-to-Parquet Deployment**: Creates an output bucket and Cloud Function for DBC decoding MDF to Parquet
+3. **BigQuery Deployment**: Creates BigQuery resources for querying Parquet data
 
 ----------
 
@@ -22,6 +23,13 @@ Once you have an input bucket set up, you can optionally deploy the processing p
 
 [One-click deployment URL](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_mdftoparquet.md)
 
+
+### Deploy BigQuery Analytics
+
+After setting up the MF4-to-Parquet pipeline, you can deploy BigQuery resources to query your Parquet data lake. Click the below URL to get started: 
+
+[One-click deployment URL](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/MatinF/canedge-terraform-test&cloudshell_tutorial=README_bigquery.md)
+
 ----------
 
 ## Project Structure
@@ -32,8 +40,13 @@ Once you have an input bucket set up, you can optionally deploy the processing p
     - `output_bucket/` - Module for creating the output bucket
     - `iam/` - Module for setting up IAM permissions
     - `cloud_function/` - Module for deploying the Cloud Function
+- `bigquery/` - Terraform configuration for BigQuery deployment
+  - `modules/` - Terraform modules specific to the BigQuery deployment
+    - `dataset/` - Module for creating the BigQuery dataset
+    - `service_accounts/` - Module for setting up service accounts
 - `deploy_input_bucket.sh` - Script for input bucket deployment
 - `deploy_mdftoparquet.sh` - Script for MF4-to-Parquet pipeline deployment
+- `deploy_bigquery.sh` - Script for BigQuery deployment
 
 ----------
 
