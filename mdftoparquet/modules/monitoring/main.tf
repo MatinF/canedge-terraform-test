@@ -56,7 +56,7 @@ resource "google_monitoring_alert_policy" "mdf_to_parquet_event_alert" {
   }
   
   documentation {
-    content = "The MF4-to-Parquet Cloud Function has detected a new custom event."
+    content = "The MF4-to-Parquet Cloud Function has detected a new custom event - click 'VIEW LOGS' for details."
     subject = "MDF-to-Parquet Event Detected"
   }
   
