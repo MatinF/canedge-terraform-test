@@ -23,9 +23,10 @@ output "service_account_key" {
   sensitive   = true
 }
 
-output "pubsub_topic_path" {
-  description = "Full resource path of the Pub/Sub topic for notifications"
-  value       = module.pubsub.topic_path
-}
+# Temporarily disabled for troubleshooting
+# output "pubsub_topic_path" {
+#   description = "Full resource path of the Pub/Sub topic for notifications"
+#   value       = module.pubsub.topic_path
+# }
 
 # Monitoring outputs temporarily removed for troubleshooting
