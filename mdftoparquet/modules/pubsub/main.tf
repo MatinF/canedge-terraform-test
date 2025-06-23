@@ -38,9 +38,9 @@ resource "google_pubsub_subscription" "email_subscription" {
     maximum_backoff = "60s" # Limit maximum backoff to just 1 minute
   }
   
-  # Set a short expiration period for messages to prevent long retry cycles
+  # Set expiration period for messages
   expiration_policy {
-    ttl = "300s" # 5 minutes maximum lifetime for undelivered messages
+    ttl = "86400s" # 24 hours (minimum allowed by Google) for undelivered messages
   }
   
   labels = {
