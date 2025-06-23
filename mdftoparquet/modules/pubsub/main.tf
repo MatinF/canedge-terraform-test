@@ -26,8 +26,8 @@ resource "google_pubsub_subscription" "email_subscription" {
     }
   }
   
-  # Default message retention - 7 days
-  message_retention_duration = "604800s"
+  # Message retention - set to 24 hours to match expiration policy
+  message_retention_duration = "86400s"
   
   # Set short acknowledgement deadline to fail quickly if there's an issue
   ack_deadline_seconds = 10
@@ -38,7 +38,7 @@ resource "google_pubsub_subscription" "email_subscription" {
     maximum_backoff = "60s" # Limit maximum backoff to just 1 minute
   }
   
-  # Set expiration period for messages
+  # Set expiration period for messages - must be >= message_retention_duration
   expiration_policy {
     ttl = "86400s" # 24 hours (minimum allowed by Google) for undelivered messages
   }
