@@ -5,8 +5,8 @@
 
 # Create a log-based metric that tracks when "NEW EVENT" appears in logs
 resource "google_logging_metric" "mdf_to_parquet_event_metric" {
-  name        = "mdf_to_parquet_event_metric"
-  filter      = "resource.type=\"cloud_function\" AND resource.labels.function_name=\"${var.function_name}\" AND textPayload:\"NEW EVENT\""
+  name        = "${var.unique_id}_event_metric"
+  filter      = "resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"${var.unique_id}-mdf-to-parquet\" AND textPayload=\"NEW EVENT\""
   description = "Tracks occurrences of \"NEW EVENT\" in MDF-to-Parquet function logs"
   
   metric_descriptor {
@@ -32,14 +32,14 @@ resource "google_monitoring_notification_channel" "email_channel" {
 
 # Create an alerting policy that triggers when the metric is detected
 resource "google_monitoring_alert_policy" "mdf_to_parquet_event_alert" {
-  display_name = "mdf_to_parquet_event_alert"
+  display_name = "${var.unique_id}_event_alert"
   combiner     = "OR"
   
   conditions {
     display_name = "MDF-to-Parquet Event Detected"
     
     condition_threshold {
-      filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.mdf_to_parquet_event_metric.name}\" AND resource.type=\"cloud_function\""
+      filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.mdf_to_parquet_event_metric.name}\""
       duration        = "0s"  # Alert immediately when event is detected
       comparison      = "COMPARISON_GT"
       threshold_value = 0     # Alert on any occurrence
@@ -56,10 +56,16 @@ resource "google_monitoring_alert_policy" "mdf_to_parquet_event_alert" {
   }
   
   documentation {
-    content = "The Cloud Function for MDF4-to-Parquet conversion has detected a new event."
+    content = "The MF4-to-Parquet Cloud Function has detected a new custom event."
+    subject = "MDF-to-Parquet Event Detected"
   }
   
   notification_channels = [
     google_monitoring_notification_channel.email_channel.name
   ]
+  
+  # Auto-close incidents after 30 minutes
+  alert_strategy {
+    auto_close = "1800s"
+  }
 }
