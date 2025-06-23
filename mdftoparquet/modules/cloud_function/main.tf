@@ -36,7 +36,6 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
     environment_variables  = {
       OUTPUT_BUCKET   = var.output_bucket_name
       FILE_EXTENSIONS = ".MF4,.MFC,.MFE,.MFM"
-      PUBSUB_TOPIC    = var.pubsub_topic_path
     }
     service_account_email  = var.service_account_email
   }

@@ -34,10 +34,6 @@ variable "iam_dependencies" {
   default     = []
 }
 
-variable "pubsub_topic_path" {
-  description = "Full resource path of the Pub/Sub topic for notifications"
-  type        = string
-}
 
 variable "function_zip" {
   description = "Filename of the Cloud Function ZIP file in the input bucket"

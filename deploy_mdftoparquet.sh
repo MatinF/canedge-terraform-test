@@ -35,14 +35,14 @@ show_help() {
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-pipeline --zip mdf-to-parquet-google-function-v3.0.0.zip"
+  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id my-pipeline --zip mdf-to-parquet-google-function-v3.0.6.zip"
 }
 
 # Default values
 UNIQUE_ID="canedge-demo"
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
 NOTIFICATION_EMAIL=""         # Email for notifications
-FUNCTION_ZIP="mdf-to-parquet-google-function-v3.0.0.zip" # Default function ZIP filename
+FUNCTION_ZIP="mdf-to-parquet-google-function-v3.0.6.zip" # Default function ZIP filename
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -225,7 +225,6 @@ if [ -z "$NOTIFICATION_EMAIL" ]; then
   echo
   if [ -z "$NOTIFICATION_EMAIL" ]; then
     echo "⚠️ Warning: No email provided. Notifications will be configured but no subscribers will receive them."
-    echo "   You can add subscribers to the Pub/Sub topic later via Google Cloud Console."
     echo
     # Set a placeholder email as Terraform requires this variable
     NOTIFICATION_EMAIL="no-reply@example.com"

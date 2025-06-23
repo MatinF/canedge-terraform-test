@@ -1,11 +1,11 @@
 # CANedge MDF4-to-Parquet Pipeline Deployment
 
-Deploy pipeline to automatically decode MDF4 files to Parquet format.
+Deploy pipeline to automatically decode MDF files to Parquet format.
 
 ## Prerequisites
 
-- Input bucket for MDF4 files (create using `deploy_input_bucket.sh`)
-- Function ZIP file uploaded to input bucket: `mdf-to-parquet-google-function-v3.0.5.zip`
+- Input bucket for MDF files (create using `deploy_input_bucket.sh`)
+- Function ZIP file uploaded to input bucket: `mdf-to-parquet-google-function-vX.X.X.zip`
 
 ## How to deploy
 
@@ -31,10 +31,8 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
       --bucket canedge-test-bucket-gcp \
       --id mypipeline \
       --email user@example.com \
-      --zip mdf-to-parquet-google-function-v3.0.5.zip
+      --zip mdf-to-parquet-google-function-v3.0.6.zip
    ```
-   
-   - If the `--zip` parameter is not provided, the default `mdf-to-parquet-google-function-v3.0.5.zip` will be used
 
 ---------
 
@@ -46,8 +44,6 @@ Deploy pipeline to automatically decode MDF4 files to Parquet format.
 - An output bucket is auto-created with the name `YOUR_INPUT_BUCKET_NAME-parquet`
 - Upload `.MF4`, `.MFC`, `.MFE`, or `.MFM` files to trigger auto-decoding
 - For encrypted files (`.MFE` or `.MFM`), store `passwords.json` in the bucket root
-- A logging metric monitors for "NEW EVENT" log entries and sends email alerts
-- The Cloud Function uses RETRY_POLICY_DO_NOT_RETRY to prevent infinite retry loops
 
 
 ## Updating an Existing Deployment

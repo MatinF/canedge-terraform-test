@@ -6,7 +6,7 @@
 # Create a log-based metric that tracks when "NEW EVENT" appears in logs
 resource "google_logging_metric" "mdf_to_parquet_event_metric" {
   name        = "${var.unique_id}_event_metric"
-  filter      = "resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"${var.unique_id}-mdf-to-parquet\" AND textPayload=\"NEW EVENT\""
+  filter      = "resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"${var.unique_id}-mdf-to-parquet\" AND textPayload:\"NEW EVENT\""
   description = "Tracks occurrences of \"NEW EVENT\" in MDF-to-Parquet function logs"
   
   metric_descriptor {

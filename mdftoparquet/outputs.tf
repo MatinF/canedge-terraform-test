@@ -23,10 +23,6 @@ output "service_account_key" {
   sensitive   = true
 }
 
-output "pubsub_topic_path" {
-  description = "Full resource path of the Pub/Sub topic for notifications"
-  value       = module.pubsub.topic_path
-}
 
 output "logging_metric_id" {
   description = "ID of the logging metric for monitoring 'NEW EVENT' occurrences"
