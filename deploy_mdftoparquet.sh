@@ -101,6 +101,16 @@ if [ -z "$BUCKET_NAME" ]; then
   exit 1
 fi
 
+# Automatically configure the current project
+echo "Setting project to '$PROJECT_ID'..."
+gcloud config set project "$PROJECT_ID" > /dev/null
+if [ $? -ne 0 ]; then
+  echo "❌ ERROR: Failed to set project to '$PROJECT_ID'. Please check your project ID and authentication."
+  exit 1
+else
+  echo "✓ Project set to '$PROJECT_ID'."
+fi
+
 # Checking input bucket...
 echo "Checking input bucket..."
 if ! gsutil ls -b "gs://${BUCKET_NAME}"; then
