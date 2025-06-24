@@ -32,7 +32,7 @@ show_help() {
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
-  echo "  -z, --zip ZIP_FILE          BigQuery table mapping job ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
+  echo "  -z, --zip ZIP_FILE          BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
   echo
   echo "Example:"
   echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --dataset lakedataset1"
@@ -40,7 +40,7 @@ show_help() {
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
-ZIP_FILE="bigquery-map-tables-v1.0.0.zip" # Default job zip file name
+ZIP_FILE="bigquery-map-tables-v1.0.0.zip" # Default function zip file name
 # No default for UNIQUE_ID - user must provide it
 
 # Parse command line arguments
@@ -233,7 +233,7 @@ if [ $DEPLOY_STATUS -eq 0 ]; then
   DATASET_ID=$(terraform output -raw dataset_id 2>/dev/null)
   ADMIN_SA=$(terraform output -raw bigquery_admin_service_account_email 2>/dev/null)
   USER_SA=$(terraform output -raw bigquery_user_service_account_email 2>/dev/null)
-  JOB_URI=$(terraform output -raw job_uri 2>/dev/null)
+  FUNCTION_URI=$(terraform output -raw function_uri 2>/dev/null)
   
   # Get the service account keys (base64-encoded JSON)
   ADMIN_KEY=$(terraform output -raw bigquery_admin_key 2>/dev/null)
@@ -279,13 +279,10 @@ if [ $DEPLOY_STATUS -eq 0 ]; then
   echo 
   echo "To map your Parquet data to BigQuery tables:"
   echo "1. Log in to Google Cloud Console in your browser"
-  echo "2. Open this URL to access the Cloud Run Job:"
-  echo "   ${JOB_URI}"
+  echo "2. Paste this URL in your browser to trigger the mapping function:"
+  echo "   ${FUNCTION_URI}"
   echo
-  echo "3. Click the 'EXECUTE' button to start the mapping process"
-  echo
-  echo "The job will automatically scan the output bucket for Parquet files"
+  echo "The function will automatically scan the output bucket for Parquet files"
   echo "and create BigQuery tables based on the device/message structure."
-  echo "You can view the logs and execution status directly in the console."
   echo
 fi

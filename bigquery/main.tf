@@ -34,18 +34,18 @@ module "service_accounts" {
   unique_id = var.unique_id
 }
 
-# BigQuery Table Mapping Cloud Run Job
-module "cloud_job" {
-  source              = "./modules/cloud_job"
+# BigQuery Table Mapping Cloud Function
+module "cloud_function" {
+  source              = "./modules/cloud_function"
   project             = var.project
   region              = var.region
   unique_id           = var.unique_id
   input_bucket_name   = var.input_bucket_name
   output_bucket_name  = "${var.input_bucket_name}-parquet"
   dataset_id          = var.dataset_id
-  job_zip             = var.function_zip
+  function_zip        = var.function_zip
   service_account_email = module.service_accounts.bigquery_admin_service_account_email
-  # Ensure IAM permissions are created before the job
+  # Ensure IAM permissions are created before the function
   iam_dependencies    = [
     module.service_accounts.bigquery_admin_service_account_email
   ]
@@ -78,7 +78,7 @@ output "bigquery_user_key" {
   sensitive = true
 }
 
-output "job_uri" {
-  description = "Cloud Console URI for the BigQuery table mapping job"
-  value       = module.cloud_job.job_uri
+output "function_uri" {
+  description = "URI to trigger the BigQuery table mapping function"
+  value       = module.cloud_function.function_uri
 }
