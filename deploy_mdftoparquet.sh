@@ -103,8 +103,7 @@ fi
 
 # Checking input bucket...
 echo "Checking input bucket..."
-gsutil ls -b "gs://${BUCKET_NAME}" > /dev/null 2>&1
-if [ $? -ne 0 ]; then
+if ! gsutil ls -b "gs://${BUCKET_NAME}"; then
   echo "❌ ERROR: Input bucket '${BUCKET_NAME}' not found in project '${PROJECT_ID}'."
   echo "Please create the input bucket first using deploy_input_bucket.sh"
   exit 1
