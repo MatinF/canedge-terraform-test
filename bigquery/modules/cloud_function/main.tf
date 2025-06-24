@@ -45,3 +45,11 @@ resource "google_cloudfunctions2_function" "bigquery_map_tables_function" {
     goog-terraform-provisioned = "true"
   }
 }
+
+# IAM binding to allow authenticated users to invoke the function
+resource "google_cloud_run_service_iam_binding" "invoker" {
+  location = var.region
+  service  = google_cloudfunctions2_function.bigquery_map_tables_function.name
+  role     = "roles/run.invoker"
+  members  = ["allAuthenticatedUsers"]
+}
