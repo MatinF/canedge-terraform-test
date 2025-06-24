@@ -99,8 +99,8 @@ echo "✓ Project set to '$PROJECT_ID'."
 
 # Enable required APIs
 echo "Enabling required GCP APIs..."
-gcloud services enable iam.googleapis.com cloudfunctions.googleapis.com cloudbuild.googleapis.com --quiet
-echo "✓ Required APIs enabled (IAM, Cloud Functions, Cloud Build)."
+gcloud services enable iam.googleapis.com cloudfunctions.googleapis.com cloudbuild.googleapis.com eventarc.googleapis.com --quiet
+echo "✓ Required APIs enabled (IAM, Cloud Functions, Cloud Build, Eventarc)."
 
 # Check if bucket name is provided
 if [ -z "$BUCKET_NAME" ]; then
