@@ -201,12 +201,16 @@ if gsutil stat "gs://${BUCKET_NAME}/${FUNCTION_ZIP}" > /dev/null 2>&1; then
   echo "✓ Found Cloud Function ZIP file '${FUNCTION_ZIP}' in bucket"
 else
   echo "⚠️ Warning: Cloud Function ZIP file '${FUNCTION_ZIP}' not found in bucket '${BUCKET_NAME}'."
-  echo "   You may need to upload it manually before the function will work correctly."
-  echo "   Continue anyway? (y/n)"
-  read -r response
-  if [[ "$response" != "y" && "$response" != "Y" ]]; then
-    echo "Deployment cancelled."
-    exit 1
+  if [[ "$AUTO_APPROVE" == "-auto-approve" ]]; then
+    echo "   Auto-approve enabled, continuing anyway..."
+  else
+    echo "   You may need to upload it manually before the function will work correctly."
+    echo "   Continue anyway? (y/n)"
+    read -r response
+    if [[ "$response" != "y" && "$response" != "Y" ]]; then
+      echo "Deployment cancelled."
+      exit 1
+    fi
   fi
 fi
 
@@ -230,16 +234,24 @@ if [ "$FUNCTION_EXISTS" = true ]; then
     module.cloud_function.google_cloudfunctions2_function.mdf_to_parquet_function "projects/${PROJECT_ID}/locations/${REGION}/functions/${FUNCTION_NAME}" > /dev/null 2>&1 || true
 fi
 
-# If notification email wasn't provided via command line, ask for it now
+# If notification email wasn't provided via command line, handle appropriately
 if [ -z "$NOTIFICATION_EMAIL" ]; then
-  echo -n "Enter email address for event notifications (leave blank to skip): "
-  read -r NOTIFICATION_EMAIL
-  echo
-  if [ -z "$NOTIFICATION_EMAIL" ]; then
-    echo "⚠️ Warning: No email provided. Notifications will be configured but no subscribers will receive them."
-    echo
+  if [[ "$AUTO_APPROVE" == "-auto-approve" ]]; then
+    # Auto-approve is enabled, but we still need an email for the variable
     # Set a placeholder email as Terraform requires this variable
+    echo "⚠️ Warning: No email provided. Notifications will be configured but no subscribers will receive them."
     NOTIFICATION_EMAIL="no-reply@example.com"
+  else
+    # Ask for email interactively
+    echo -n "Enter email address for event notifications (leave blank to skip): "
+    read -r NOTIFICATION_EMAIL
+    echo
+    if [ -z "$NOTIFICATION_EMAIL" ]; then
+      echo "⚠️ Warning: No email provided. Notifications will be configured but no subscribers will receive them."
+      echo
+      # Set a placeholder email as Terraform requires this variable
+      NOTIFICATION_EMAIL="no-reply@example.com"
+    fi
   fi
 fi
 
@@ -257,7 +269,7 @@ if [ "$FUNCTION_EXISTS" = true ]; then
     -out=tfplan
   
   # Apply the plan without asking for confirmation
-  echo "\nApplying the plan (no confirmation needed)..."
+  echo -e "\nApplying the plan (no confirmation needed)..."
   terraform apply -auto-approve tfplan
   
   # Clean up the plan file
@@ -265,7 +277,7 @@ if [ "$FUNCTION_EXISTS" = true ]; then
 else
   echo "Deploying new resources (this may take a few minutes) ... "
   # Run terraform apply with auto-approve
-  terraform apply ${AUTO_APPROVE} \
+  terraform apply -auto-approve \
     -var="project=${PROJECT_ID}" \
     -var="region=${REGION}" \
     -var="input_bucket_name=${BUCKET_NAME}" \

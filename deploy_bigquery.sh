@@ -222,7 +222,7 @@ fi
 
 # Apply Terraform configuration with variables
 echo "Deploying resources (this may take a few minutes) ... "
-terraform apply ${AUTO_APPROVE} \
+terraform apply -auto-approve \
   -var="project=${PROJECT_ID}" \
   -var="region=${REGION}" \
   -var="input_bucket_name=${BUCKET_NAME}" \

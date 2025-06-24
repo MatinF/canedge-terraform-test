@@ -25,7 +25,7 @@ chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh \
    --bucket canedge-test-bucket-gcp \
    --id canedge-demo \
    --email user@example.com \
-   --zip mdf-to-parquet-google-function-v3.0.6.zip
+   --zip mdf-to-parquet-google-function-v3.0.7.zip
 ```
 
 ---------
