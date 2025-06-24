@@ -114,6 +114,8 @@ echo "- Enabling IAM API..."
 gcloud services enable iam.googleapis.com --quiet
 echo "- Enabling Cloud Functions API..."
 gcloud services enable cloudfunctions.googleapis.com --quiet
+echo "- Enabling Cloud Run API..."
+gcloud services enable run.googleapis.com --quiet
 echo "- Enabling Cloud Build API..."
 gcloud services enable cloudbuild.googleapis.com --quiet
 echo "- Enabling Eventarc API..."
