@@ -92,6 +92,16 @@ if [ -z "$PROJECT_ID" ]; then
   exit 1
 fi
 
+# Automatically configure the current project
+echo "Setting project to '$PROJECT_ID'..."
+gcloud config set project "$PROJECT_ID"
+echo "✓ Project set to '$PROJECT_ID'."
+
+# Enable required APIs
+echo "Enabling required GCP APIs..."
+gcloud services enable iam.googleapis.com --quiet
+echo "✓ IAM API enabled."
+
 # Check if bucket name is provided
 if [ -z "$BUCKET_NAME" ]; then
   echo "Error: Input bucket name is required. Please specify with --bucket flag."
