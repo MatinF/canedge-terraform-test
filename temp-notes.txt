@@ -2,4 +2,4 @@
 
 ./deploy_mdftoparquet.sh --project bigquerytest-422109 --bucket canedge-test-bucket-gcp-16 --id test19 --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.6.zip
 
-chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquerytest-422109 --bucket canedge-test-bucket-gcp-16 --id test19 --dataset lakedataset2 --zip bigquery-map-tables-v1.0.0.zip
+chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquerytest-422109 --bucket canedge-test-bucket-gcp-16 --id test19 --dataset lakedataset2 --zip bigquery-map-tables-v1.0.3.zip
