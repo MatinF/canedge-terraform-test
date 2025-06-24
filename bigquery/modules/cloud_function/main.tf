@@ -51,7 +51,7 @@ resource "google_cloudfunctions2_function" "bigquery_map_tables_function" {
 
 # Get the underlying Cloud Run service name directly from the function's output
 # This is the reliable way to connect IAM permissions to Cloud Functions v2
-resource "google_cloud_run_service_iam_member" "invoker" {
+resource "google_cloud_run_service_iam_member" "member" {
   project  = var.project
   location = var.region
   service  = google_cloudfunctions2_function.bigquery_map_tables_function.name
