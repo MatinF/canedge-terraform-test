@@ -46,12 +46,19 @@ resource "google_cloudfunctions2_function" "bigquery_map_tables_function" {
   }
 }
 
-# IAM binding to allow authenticated users to invoke the function
-resource "google_cloud_run_service_iam_binding" "invoker" {
-  location = var.region
-  # For Cloud Functions v2, we need to use the service name from the function
-  service  = split("/", google_cloudfunctions2_function.bigquery_map_tables_function.service_config[0].service)[length(split("/", google_cloudfunctions2_function.bigquery_map_tables_function.service_config[0].service)) - 1]
+# IAM binding for Cloud Functions v2 using the gcloud-based approach
+# This uses the underlying Cloud Run service directly with the correct service name format
+
+# Get the underlying Cloud Run service name directly from the function's output
+# This is the reliable way to connect IAM permissions to Cloud Functions v2
+resource "google_cloud_run_service_iam_member" "invoker" {
   project  = var.project
+  location = var.region
+  service  = google_cloudfunctions2_function.bigquery_map_tables_function.name
   role     = "roles/run.invoker"
-  members  = ["allAuthenticatedUsers"]
+  member   = "allAuthenticatedUsers"
+  # Important: Make sure the function is fully deployed before setting IAM
+  depends_on = [
+    google_cloudfunctions2_function.bigquery_map_tables_function
+  ]
 }
