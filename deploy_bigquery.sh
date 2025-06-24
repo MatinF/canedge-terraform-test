@@ -125,8 +125,8 @@ echo "✓ Project set to '$PROJECT_ID'."
 
 # Enable required APIs
 echo "Enabling required GCP APIs..."
-gcloud services enable iam.googleapis.com --quiet
-echo "✓ IAM API enabled."
+gcloud services enable iam.googleapis.com cloudfunctions.googleapis.com bigquery.googleapis.com --quiet
+echo "✓ Required APIs enabled (IAM, Cloud Functions, BigQuery)."
 
 
 # Checking input bucket...
