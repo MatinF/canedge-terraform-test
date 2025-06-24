@@ -6,7 +6,7 @@ Deploy BigQuery to query your Parquet data lake.
 
 - Input bucket for CANedge MDF files 
 - Output bucket for DBC decoded Parquet files
-- Function ZIP file uploaded to input bucket: `bigquery-map-tables-vX.X.X.zip`
+- Job ZIP file uploaded to input bucket: `bigquery-map-tables-vX.X.X.zip`
 
 ## How to deploy
 
@@ -35,6 +35,7 @@ chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh \
 
 - The `--id` parameter is required to uniquely identify your BigQuery resources
 - The `--dataset` parameter is required to name your BigQuery dataset
+- The `--zip` parameter specifies the BigQuery table mapping job ZIP file
 - Two service account keys are created and stored in your input bucket:
   - Admin key: `<unique-id>-bigquery-admin-account.json`
   - User key: `<unique-id>-bigquery-user-account.json`

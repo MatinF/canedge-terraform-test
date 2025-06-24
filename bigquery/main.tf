@@ -34,7 +34,7 @@ module "service_accounts" {
   unique_id = var.unique_id
 }
 
-# BigQuery Table Mapping Cloud Function
+# BigQuery Table Mapping Cloud Run Job
 module "cloud_function" {
   source              = "./modules/cloud_function"
   project             = var.project
@@ -78,7 +78,7 @@ output "bigquery_user_key" {
   sensitive = true
 }
 
-output "function_uri" {
-  description = "URI to trigger the BigQuery table mapping function"
-  value       = module.cloud_function.function_uri
+output "job_uri" {
+  description = "Cloud Console URI for the BigQuery table mapping job"
+  value       = module.cloud_function.job_uri
 }
