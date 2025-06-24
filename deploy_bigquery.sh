@@ -30,6 +30,7 @@ show_help() {
   echo
   echo "Optional:"
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
+  echo "  -f, --function-zip FILE     BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
   echo
@@ -39,6 +40,7 @@ show_help() {
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
+FUNCTION_ZIP="bigquery-map-tables-v1.0.0.zip" # Default function zip file name
 # No default for UNIQUE_ID - user must provide it
 
 # Parse command line arguments
@@ -62,6 +64,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -d|--dataset)
       DATASET_ID="$2"
+      shift 2
+      ;;
+    -f|--function-zip)
+      FUNCTION_ZIP="$2"
       shift 2
       ;;
     -y|--auto-approve)
@@ -217,7 +223,8 @@ terraform apply ${AUTO_APPROVE} \
   -var="region=${REGION}" \
   -var="input_bucket_name=${BUCKET_NAME}" \
   -var="unique_id=${UNIQUE_ID}" \
-  -var="dataset_id=${DATASET_ID}"
+  -var="dataset_id=${DATASET_ID}" \
+  -var="function_zip=${FUNCTION_ZIP}"
 
 # Check if the deployment was successful
 DEPLOY_STATUS=$?

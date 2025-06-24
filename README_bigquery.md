@@ -6,6 +6,9 @@ Deploy BigQuery to query your Parquet data lake.
 
 - Input bucket for CANedge MDF files 
 - Output bucket for DBC decoded Parquet files
+- Cloud Function zip for BigQuery table mapping (`bigquery-map-tables-vX.X.X.zip`) uploaded to your input bucket
+  - Default version: `bigquery-map-tables-v1.0.0.zip`
+  - You can specify a different version with the `--function-zip` parameter
 
 ## How to deploy
 
