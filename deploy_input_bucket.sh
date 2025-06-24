@@ -77,6 +77,11 @@ echo "Setting project to '$PROJECT_ID'..."
 gcloud config set project "$PROJECT_ID"
 echo "✓ Project set to '$PROJECT_ID'."
 
+# Enable required APIs
+echo "Enabling required GCP APIs..."
+gcloud services enable iam.googleapis.com --quiet
+echo "✓ IAM API enabled."
+
 
 # Print deployment configuration
 echo "Deploying CANedge GCP Input Bucket with the following configuration:"
