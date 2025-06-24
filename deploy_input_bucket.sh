@@ -79,8 +79,8 @@ echo "✓ Project set to '$PROJECT_ID'."
 
 # Enable required APIs
 echo "Enabling required GCP APIs..."
-gcloud services enable iam.googleapis.com storage-api.googleapis.com storage.googleapis.com --quiet
-echo "✓ Required APIs enabled (IAM, Storage)."
+gcloud services enable cloudresourcemanager.googleapis.com iam.googleapis.com storage-api.googleapis.com storage.googleapis.com --quiet
+echo "✓ Required APIs enabled (Cloud Resource Manager, IAM, Storage)."
 
 
 # Print deployment configuration

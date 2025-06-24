@@ -97,10 +97,28 @@ echo "Setting project to '$PROJECT_ID'..."
 gcloud config set project "$PROJECT_ID"
 echo "✓ Project set to '$PROJECT_ID'."
 
+# Check authentication status
+echo "Checking GCP authentication status..."
+AUTH_CHECK=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>&1)
+if [[ -z "$AUTH_CHECK" ]]; then
+  echo "❌ ERROR: Not authenticated with GCP. Please run 'gcloud auth login' first."
+  exit 1
+fi
+echo "✓ Authenticated as $AUTH_CHECK"
+
 # Enable required APIs
 echo "Enabling required GCP APIs..."
-gcloud services enable iam.googleapis.com cloudfunctions.googleapis.com cloudbuild.googleapis.com eventarc.googleapis.com --quiet
-echo "✓ Required APIs enabled (IAM, Cloud Functions, Cloud Build, Eventarc)."
+echo "- Enabling Cloud Resource Manager API..."
+gcloud services enable cloudresourcemanager.googleapis.com --quiet
+echo "- Enabling IAM API..."
+gcloud services enable iam.googleapis.com --quiet
+echo "- Enabling Cloud Functions API..."
+gcloud services enable cloudfunctions.googleapis.com --quiet
+echo "- Enabling Cloud Build API..."
+gcloud services enable cloudbuild.googleapis.com --quiet
+echo "- Enabling Eventarc API..."
+gcloud services enable eventarc.googleapis.com --quiet
+echo "✓ All required APIs have been enabled."
 
 # Check if bucket name is provided
 if [ -z "$BUCKET_NAME" ]; then
