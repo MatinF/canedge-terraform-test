@@ -4,7 +4,9 @@ Our end users deploy the CANedge CAN bus data logger with WiFi/LTE, which can up
 
 This repo is a terraform stack that allows user of our  to create a new Google Cloud bucket and deploy a v2 Google Cloud Run Function based on a zip in the input bucket. The state of the terraform deployment is stored in the input bucket. It is currently assumed that the user already created the input bucket manually before using this script.
 
-See the README.md for overall details, as well as the README_input_bucket.md for details on deploying an input bucket and the README_mdftoparquet.md for details on deploying the output bucket and Google Cloud Function (v2). 
+Go through the README.md for overall details, as well as the README_input_bucket.md for details on deploying an input bucket and the README_mdftoparquet.md for details on deploying the output bucket and Google Cloud Function (v2). See the README_bigquery.md for details on the bigquery terraform stack. 
+
+----------
 
 ## Task 6
 In info/ there is a Python script that is used for mapping tables in BigQuery, bigquery-map-tables.py. Currently this is used offline by downloading the ADMIN_KEY_FILE created in deploy_big_query.sh. The info/requirements.txt relates to the requirements for this.
