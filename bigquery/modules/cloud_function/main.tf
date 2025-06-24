@@ -51,12 +51,22 @@ resource "google_cloudfunctions2_function" "bigquery_map_tables_function" {
 
 # Get the underlying Cloud Run service name directly from the function's output
 # This is the reliable way to connect IAM permissions to Cloud Functions v2
-resource "google_cloud_run_service_iam_member" "member" {
+# Use a data source to get current project details
+data "google_project" "current" {
+  project_id = var.project
+}
+
+# IAM binding to allow project owners to invoke the function
+resource "google_cloud_run_service_iam_binding" "owner_invoker" {
   project  = var.project
   location = var.region
   service  = google_cloudfunctions2_function.bigquery_map_tables_function.name
   role     = "roles/run.invoker"
-  member   = "allAuthenticatedUsers"
+  members  = [
+    "user:${data.google_project.current.creator_email}",  # Project creator is usually an owner
+    # You can add more explicit owner email addresses here if needed
+  ]
+  
   # Important: Make sure the function is fully deployed before setting IAM
   depends_on = [
     google_cloudfunctions2_function.bigquery_map_tables_function

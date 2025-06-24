@@ -85,14 +85,16 @@ def map_bigquery_tables(request):
                 'table_id': created_table.table_id,
                 'status': 'created'
             })
+            print(f"- SUCCESS: Created table {created_table.table_id}")
         except Exception as e:
             results['failed'].append({
                 'table_id': table_id,
                 'error': str(e)
             })
+            print(f"- WARNING: Failed to create table {created_table.table_id}")
     
     return ({
         'status': 'success',
         'results': results,
-        'message': f"Processed {len(results['processed'])} tables, skipped {len(results['skipped'])} existing tables, and failed for {len(results['failed'])} tables."
+        'message': f"\n\nProcessed {len(results['processed'])} tables, skipped {len(results['skipped'])} existing tables, and failed for {len(results['failed'])} tables."
     }, 200)
