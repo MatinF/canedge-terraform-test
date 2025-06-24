@@ -46,10 +46,10 @@ resource "google_cloudfunctions2_function" "bigquery_map_tables_function" {
   }
 }
 
-# IAM binding to allow unauthenticated users (anyone on the internet) to invoke the function
+# IAM binding to allow authenticated users to invoke the function
 resource "google_cloud_run_service_iam_binding" "invoker" {
   location = var.region
   service  = google_cloudfunctions2_function.bigquery_map_tables_function.name
   role     = "roles/run.invoker"
-  members  = ["allUsers"]
+  members  = ["allAuthenticatedUsers"]
 }
