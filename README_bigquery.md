@@ -6,9 +6,7 @@ Deploy BigQuery to query your Parquet data lake.
 
 - Input bucket for CANedge MDF files 
 - Output bucket for DBC decoded Parquet files
-- Cloud Function zip for BigQuery table mapping (`bigquery-map-tables-vX.X.X.zip`) uploaded to your input bucket
-  - Default version: `bigquery-map-tables-v1.0.0.zip`
-  - You can specify a different version with the `--function-zip` parameter
+- Function ZIP file uploaded to input bucket: `bigquery-map-tables-vX.X.X.zip`
 
 ## How to deploy
 
@@ -17,7 +15,8 @@ chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh \
    --project YOUR_PROJECT_ID \
    --bucket YOUR_INPUT_BUCKET_NAME \
    --id YOUR_UNIQUE_ID \
-   --dataset YOUR_DATASET_NAME
+   --dataset YOUR_DATASET_NAME \
+   --zip YOUR_FUNCTION_ZIP
 ```
 
 Example:
@@ -26,7 +25,8 @@ chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh \
    --project my-project-123 \
    --bucket canedge-test-bucket-gcp \
    --id canedge-demo \
-   --dataset lakedataset1
+   --dataset lakedataset1 \
+   --zip bigquery-map-tables-v1.0.0.zip
 ```
 
 ---------

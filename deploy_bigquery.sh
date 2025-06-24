@@ -30,9 +30,9 @@ show_help() {
   echo
   echo "Optional:"
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
-  echo "  -f, --function-zip FILE     BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
+  echo "  -z, --zip ZIP_FILE          BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
   echo
   echo "Example:"
   echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --dataset lakedataset1"
@@ -40,7 +40,7 @@ show_help() {
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
-FUNCTION_ZIP="bigquery-map-tables-v1.0.0.zip" # Default function zip file name
+ZIP_FILE="bigquery-map-tables-v1.0.0.zip" # Default function zip file name
 # No default for UNIQUE_ID - user must provide it
 
 # Parse command line arguments
@@ -66,8 +66,8 @@ while [[ $# -gt 0 ]]; do
       DATASET_ID="$2"
       shift 2
       ;;
-    -f|--function-zip)
-      FUNCTION_ZIP="$2"
+    -z|--zip)
+      ZIP_FILE="$2"
       shift 2
       ;;
     -y|--auto-approve)
@@ -224,7 +224,7 @@ terraform apply ${AUTO_APPROVE} \
   -var="input_bucket_name=${BUCKET_NAME}" \
   -var="unique_id=${UNIQUE_ID}" \
   -var="dataset_id=${DATASET_ID}" \
-  -var="function_zip=${FUNCTION_ZIP}"
+  -var="function_zip=${ZIP_FILE}"
 
 # Check if the deployment was successful
 DEPLOY_STATUS=$?
