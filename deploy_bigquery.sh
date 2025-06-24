@@ -17,7 +17,7 @@ fi
 
 # Display help information
 show_help() {
-  echo "CANedge BigQuery Analytics - Automated Deployment"
+  echo "CANedge BigQuery - Automated Deployment"
   echo
   echo "Usage:"
   echo "  ./deploy_bigquery.sh [options]"
@@ -29,10 +29,9 @@ show_help() {
   echo "  -d, --dataset DATASET_ID    BigQuery dataset ID"
   echo
   echo "Optional:"
-  echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
-  echo "  -z, --zip ZIP_FILE          BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
+  echo "  -z, --zip ZIP_FILE          BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.1.0.zip)"
   echo
   echo "Example:"
   echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --dataset lakedataset1"
@@ -40,8 +39,7 @@ show_help() {
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
-ZIP_FILE="bigquery-map-tables-v1.0.0.zip" # Default function zip file name
-# No default for UNIQUE_ID - user must provide it
+ZIP_FILE="bigquery-map-tables-v1.1.0.zip" # Default function zip file name
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -258,15 +256,13 @@ if [ $DEPLOY_STATUS -eq 0 ]; then
   # Clean up the local files
   rm ${ADMIN_KEY_FILE} ${USER_KEY_FILE}
 
-  # Note: BigQuery mapping script and requirements will be added in a future update
-
   echo
   echo
   echo
   echo "---------------------------"
   echo "✅  Deployment successful!"
   echo
-  echo "BigQuery Analytics details:"
+  echo "BigQuery details:"
   echo
   echo "Project ID:           ${PROJECT_ID}"
   echo "Dataset ID:           ${DATASET_ID}"
@@ -278,11 +274,15 @@ if [ $DEPLOY_STATUS -eq 0 ]; then
   echo "  - gs://${BUCKET_NAME}/${USER_KEY_FILE}"
   echo 
   echo "To map your Parquet data to BigQuery tables:"
-  echo "1. Log in to Google Cloud Console in your browser"
-  echo "2. Paste this URL in your browser to trigger the mapping function:"
-  echo "   ${FUNCTION_URI}"
+  echo "1. Open the Cloud Function in your browser:"
+  echo "   https://console.cloud.google.com/functions/details/${REGION}/${UNIQUE_ID}-bq-map-tables?project=${PROJECT_ID}"
+  echo "2. Click the 'Test' button at the top of the page"
+  echo "3. Copy the default 'CLI test command'"
+  echo "4. Click 'Test in Cloud Shell' button"
+  echo "5. Paste the command into Cloud Shell and press Enter"
+  echo "6. View detailed execution logs in the 'Logs' tab of the function"
   echo
-  echo "The function will automatically scan the output bucket for Parquet files"
-  echo "and create BigQuery tables based on the device/message structure."
+  echo "The function will delete all existing tables in the dataset and create new ones"
+  echo "by scanning the output bucket for Parquet files based on the device/message structure."
   echo
 fi

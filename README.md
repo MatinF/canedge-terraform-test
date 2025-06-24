@@ -40,10 +40,13 @@ After setting up the MF4-to-Parquet pipeline, you can deploy BigQuery to query y
     - `output_bucket/` - Module for creating the output bucket
     - `iam/` - Module for setting up IAM permissions
     - `cloud_function/` - Module for deploying the Cloud Function
+    - `monitoring/` - Module for setting up monitoring configurations
 - `bigquery/` - Terraform configuration for BigQuery deployment
   - `modules/` - Terraform modules specific to the BigQuery deployment
     - `dataset/` - Module for creating the BigQuery dataset
     - `service_accounts/` - Module for setting up service accounts
+    - `cloud_function/` - Module for deploying the BigQuery mapping function
+- `bigquery-function/` - Source code for BigQuery table mapping function
 - `deploy_input_bucket.sh` - Script for input bucket deployment
 - `deploy_mdftoparquet.sh` - Script for MF4-to-Parquet pipeline deployment
 - `deploy_bigquery.sh` - Script for BigQuery deployment
