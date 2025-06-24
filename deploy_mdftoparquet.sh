@@ -120,6 +120,16 @@ echo "- Enabling Eventarc API..."
 gcloud services enable eventarc.googleapis.com --quiet
 echo "✓ All required APIs have been enabled."
 
+# Ensure Eventarc service agent has proper permissions
+echo "Setting up Eventarc service agent permissions..."
+PROJECT_NUMBER=$(gcloud projects describe "$PROJECT_ID" --format='value(projectNumber)')
+gcloud projects add-iam-policy-binding "$PROJECT_ID" \
+  --member="serviceAccount:service-${PROJECT_NUMBER}@gcp-sa-eventarc.iam.gserviceaccount.com" \
+  --role="roles/eventarc.serviceAgent" --quiet
+echo "✓ Eventarc service agent permissions set."
+echo "Waiting 20 seconds for permissions to propagate..."
+sleep 20
+
 # Check if bucket name is provided
 if [ -z "$BUCKET_NAME" ]; then
   echo "Error: Input bucket name is required. Please specify with --bucket flag."
