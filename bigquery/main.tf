@@ -78,7 +78,7 @@ output "bigquery_user_key" {
   sensitive = true
 }
 
-output "table_mapping_function_uri" {
+output "function_uri" {
   description = "URI to trigger the BigQuery table mapping function"
   value       = module.cloud_function.function_uri
 }

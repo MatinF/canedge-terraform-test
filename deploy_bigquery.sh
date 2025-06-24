@@ -233,6 +233,7 @@ if [ $DEPLOY_STATUS -eq 0 ]; then
   DATASET_ID=$(terraform output -raw dataset_id 2>/dev/null)
   ADMIN_SA=$(terraform output -raw bigquery_admin_service_account_email 2>/dev/null)
   USER_SA=$(terraform output -raw bigquery_user_service_account_email 2>/dev/null)
+  FUNCTION_URI=$(terraform output -raw function_uri 2>/dev/null)
   
   # Get the service account keys (base64-encoded JSON)
   ADMIN_KEY=$(terraform output -raw bigquery_admin_key 2>/dev/null)
@@ -276,13 +277,12 @@ if [ $DEPLOY_STATUS -eq 0 ]; then
   echo "  - gs://${BUCKET_NAME}/${ADMIN_KEY_FILE}"
   echo "  - gs://${BUCKET_NAME}/${USER_KEY_FILE}"
   echo 
-  echo "BigQuery mapping script saved to:"
-  echo "  - gs://${BUCKET_NAME}/bigquery-map-tables.py"
-  echo
   echo "To map your Parquet data to BigQuery tables:"
-  echo "1. Download the BigQuery admin service account key"
-  echo "2. Place it next to the mapping script as 'bigquery-storage-admin-account.json'"
-  echo "3. Install the required dependencies: pip install -r requirements.txt"
-  echo "4. Run the script: python bigquery-map-tables.py"
+  echo "1. Log in to Google Cloud Console in your browser"
+  echo "2. Paste this URL in your browser to trigger the mapping function:"
+  echo "   ${FUNCTION_URI}"
+  echo
+  echo "The function will automatically scan the output bucket for Parquet files"
+  echo "and create BigQuery tables based on the device/message structure."
   echo
 fi
