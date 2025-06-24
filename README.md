@@ -60,4 +60,4 @@ If you encounter issues with either deployment:
 - Make sure you have proper permissions in your Google Cloud project
 - Use unique identifiers with the `--id` parameter to avoid resource conflicts
 - Check the Google Cloud Console logs for detailed error messages
-- For the MF4-to-Parquet, ensure the function ZIP file is uploaded to your input bucket before deployment
+- For the MF4-to-Parquet and BigQuery deployments, ensure the relevant function ZIP files are uploaded to your input bucket before deployment

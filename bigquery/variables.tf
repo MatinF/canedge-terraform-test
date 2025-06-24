@@ -26,7 +26,6 @@ variable "dataset_id" {
 }
 
 variable "function_zip" {
-  description = "Name of the ZIP file containing the BigQuery table mapping function code"
+  description = "Name of the ZIP file containing the BigQuery table mapping function code (e.g. bigquery-map-tables-vX.X.X.zip)"
   type        = string
-  default     = "bigquery-map-tables-v1.0.0.zip"
 }

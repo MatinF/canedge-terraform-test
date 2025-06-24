@@ -1,0 +1,16 @@
+./deploy_input_bucket.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-16
+
+chmod +x ./deploy_mdftoparquet.sh --project bigquerytest-422109 --bucket canedge-test-bucket-gcp-16 --id test19 --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.6.zip
+
+chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquerytest-422109 --bucket canedge-test-bucket-gcp-16 --id test19 --dataset lakedataset2 --zip bigquery-map-tables-v1.1.0.zip
+
+# TEST EXAMPLES 
+
+## DEPLOY INPUT BUCKET TEST
+chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project bigqueryterraformtest-463912 --region europe-west1 --bucket canedge-test-bucket-gcp-20
+
+## DEPLOY MDF TO PARQUET
+chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --project bigqueryterraformtest-463912 --bucket canedge-test-bucket-gcp-20 --id demolake --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.7.zip
+
+## DEPLOY BIGQUERY
+chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigqueryterraformtest-463912 --bucket canedge-test-bucket-gcp-20 --id demolake --dataset demodataset --zip bigquery-map-tables-v1.1.0.zip

@@ -27,19 +27,18 @@ show_help() {
   echo "  -b, --bucket BUCKET_NAME    Input bucket name"
   echo "  -i, --id UNIQUE_ID          Unique identifier for BigQuery resources"
   echo "  -d, --dataset DATASET_ID    BigQuery dataset ID"
+  echo "  -z, --zip ZIP_FILE          BigQuery table mapping function ZIP file (e.g. bigquery-map-tables-vX.X.X.zip)"
   echo
   echo "Optional:"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
-  echo "  -z, --zip ZIP_FILE          BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.1.0.zip)"
   echo
   echo "Example:"
-  echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --dataset lakedataset1"
+  echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --dataset lakedataset1 --zip bigquery-map-tables-vX.X.X.zip"
 }
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
-ZIP_FILE="bigquery-map-tables-v1.1.0.zip" # Default function zip file name
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -108,6 +107,13 @@ fi
 # Check if dataset ID is provided
 if [ -z "$DATASET_ID" ]; then
   echo "Error: Dataset ID is required. Please specify with --dataset flag."
+  show_help
+  exit 1
+fi
+
+# Check if function ZIP is provided
+if [ -z "$ZIP_FILE" ]; then
+  echo "Error: BigQuery function ZIP filename is required. Please specify with --zip flag."
   show_help
   exit 1
 fi

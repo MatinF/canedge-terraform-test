@@ -26,23 +26,21 @@ show_help() {
   echo "  -p, --project PROJECT_ID    GCP Project ID"
   echo "  -b, --bucket BUCKET_NAME    Input bucket name"
   echo "  -i, --id UNIQUE_ID          Unique identifier for pipeline resources"
+  echo "  -z, --zip FUNCTION_ZIP      Cloud Function ZIP filename (e.g. mdf-to-parquet-google-function-vX.X.X.zip)"
   echo
   echo "Optional:"
-  echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
   echo "  -e, --email EMAIL           Email address to receive notifications"
-  echo "  -z, --zip FUNCTION_ZIP      Cloud Function ZIP filename (default: mdf-to-parquet-google-function-v3.0.6.zip)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
   echo
   echo "Example:"
-  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --email user@example.com --zip mdf-to-parquet-google-function-v3.0.6.zip"
+  echo "  ./deploy_mdftoparquet.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --email user@example.com --zip mdf-to-parquet-google-function-vX.X.X.zip"
 }
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
 NOTIFICATION_EMAIL=""         # Email for notifications
-FUNCTION_ZIP="mdf-to-parquet-google-function-v3.0.6.zip" # Default function ZIP filename
-# No default for UNIQUE_ID - user must provide it
+# No default for UNIQUE_ID or FUNCTION_ZIP - user must provide them
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -115,6 +113,13 @@ fi
 # Check if unique ID is provided
 if [ -z "$UNIQUE_ID" ]; then
   echo "Error: Unique ID is required. Please specify with --id flag."
+  show_help
+  exit 1
+fi
+
+# Check if function ZIP is provided
+if [ -z "$FUNCTION_ZIP" ]; then
+  echo "Error: Function ZIP filename is required. Please specify with --zip flag."
   show_help
   exit 1
 fi

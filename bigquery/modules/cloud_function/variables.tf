@@ -28,9 +28,8 @@ variable "output_bucket_name" {
 }
 
 variable "function_zip" {
-  description = "Name of the ZIP file containing the function code"
+  description = "Name of the ZIP file containing the function code (e.g. bigquery-map-tables-vX.X.X.zip)"
   type        = string
-  default     = "bigquery-map-tables-v1.0.0.zip"
 }
 
 variable "dataset_id" {
