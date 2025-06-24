@@ -22,7 +22,7 @@ resource "google_cloud_run_v2_job" "bigquery_map_tables_job" {
   template {
     task_count = 1
     template {
-      max_retries = 0
+      max_retries = 1
       timeout = "3600s" # 60 minutes
       
       containers {
@@ -30,7 +30,7 @@ resource "google_cloud_run_v2_job" "bigquery_map_tables_job" {
         
         # Source code from ZIP file
         command = ["/bin/bash"]
-        args = ["-c", "apt-get update && apt-get install -y wget unzip && wget -O /tmp/code.zip https://storage.googleapis.com/${var.input_bucket_name}/${var.job_zip} && cd /tmp && unzip code.zip && pip install -r requirements.txt && python main.py"]
+        args = ["-c", "apt-get update && apt-get install -y wget unzip && echo 'Checking GCS permissions...' && gcloud auth list && echo 'Downloading ZIP file...' && wget --verbose -O /tmp/code.zip https://storage.googleapis.com/${var.input_bucket_name}/${var.job_zip} && cd /tmp && unzip code.zip && pip install -r requirements.txt && python main.py"]
         
         resources {
           limits = {
