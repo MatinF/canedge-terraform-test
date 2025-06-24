@@ -32,7 +32,7 @@ show_help() {
   echo "  -r, --region REGION         GCP region (auto-detected from bucket)"
   echo "  -y, --auto-approve          Skip approval prompt"
   echo "  -h, --help                  Show this help message"
-  echo "  -z, --zip ZIP_FILE          BigQuery table mapping function ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
+  echo "  -z, --zip ZIP_FILE          BigQuery table mapping job ZIP file (default: bigquery-map-tables-v1.0.0.zip)"
   echo
   echo "Example:"
   echo "  ./deploy_bigquery.sh --project my-project-123 --bucket canedge-test-bucket-gcp --id canedge-demo --dataset lakedataset1"
@@ -40,7 +40,7 @@ show_help() {
 
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
-ZIP_FILE="bigquery-map-tables-v1.0.0.zip" # Default function zip file name
+ZIP_FILE="bigquery-map-tables-v1.0.0.zip" # Default job zip file name
 # No default for UNIQUE_ID - user must provide it
 
 # Parse command line arguments
