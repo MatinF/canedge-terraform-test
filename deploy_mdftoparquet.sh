@@ -101,8 +101,9 @@ fi
 
 # Checking input bucket...
 echo "Checking input bucket..."
-gsutil ls -b "gs://${BUCKET_NAME}"
-if [ $? -ne 0 ]; then
+gsutil ls -b "gs://${BUCKET_NAME}" 2>&1
+BUCKET_CHECK_RESULT=$?
+if [ $BUCKET_CHECK_RESULT -ne 0 ]; then
   echo "❌ ERROR: Input bucket '${BUCKET_NAME}' not found in project '${PROJECT_ID}'."
   echo "Please create the input bucket first using deploy_input_bucket.sh"
   exit 1
@@ -132,7 +133,9 @@ echo "✓ Detected region: ${REGION}"
 # Check if output bucket already exists
 OUTPUT_BUCKET_NAME="${BUCKET_NAME}-parquet"
 echo "Checking if output bucket already exists..."
-if gsutil ls -b "gs://${OUTPUT_BUCKET_NAME}"; then
+gsutil ls -b "gs://${OUTPUT_BUCKET_NAME}" 2>&1
+OUTPUT_BUCKET_CHECK=$?
+if [ $OUTPUT_BUCKET_CHECK -eq 0 ]; then
   echo "✓ Output bucket already exists, will be reused"
   BUCKET_EXISTS=true
 else
@@ -169,7 +172,9 @@ fi
 # Check if cloud function already exists
 FUNCTION_NAME="${UNIQUE_ID}-mdf-to-parquet"
 echo "Checking if cloud function already exists..."
-if gcloud functions describe "$FUNCTION_NAME" --gen2 --project="$PROJECT_ID" --region="$REGION"; then
+gcloud functions describe "$FUNCTION_NAME" --gen2 --project="$PROJECT_ID" --region="$REGION" 2>&1
+FUNCTION_CHECK=$?
+if [ $FUNCTION_CHECK -eq 0 ]; then
   echo "✓ Cloud function already exists, will be reused"
   FUNCTION_EXISTS=true
 else
@@ -197,7 +202,9 @@ terraform init -reconfigure \
 
 # Check if the ZIP file exists in the bucket
 echo "Checking if Cloud Function ZIP file exists in bucket..."
-if gsutil stat "gs://${BUCKET_NAME}/${FUNCTION_ZIP}"; then
+gsutil stat "gs://${BUCKET_NAME}/${FUNCTION_ZIP}" 2>&1
+ZIP_CHECK=$?
+if [ $ZIP_CHECK -eq 0 ]; then
   echo "✓ Found Cloud Function ZIP file '${FUNCTION_ZIP}' in bucket"
 else
   echo "⚠️ Warning: Cloud Function ZIP file '${FUNCTION_ZIP}' not found in bucket '${BUCKET_NAME}'."
@@ -218,20 +225,20 @@ fi
 if [ "$BUCKET_EXISTS" = true ]; then
   echo "Importing existing output bucket into Terraform state..."
   terraform import -auto-approve -var="project=${PROJECT_ID}" -var="region=${REGION}" \
-    module.output_bucket.google_storage_bucket.output_bucket "${OUTPUT_BUCKET_NAME}" || true
+    module.output_bucket.google_storage_bucket.output_bucket "${OUTPUT_BUCKET_NAME}" 2>&1 || true
 fi
 
 # If the service account exists, ensure it's imported into Terraform state
 if [ "$SA_EXISTS" = true ]; then
   echo "Importing existing service account into Terraform state..."
   terraform import -auto-approve -var="project=${PROJECT_ID}" \
-    module.iam.google_service_account.function_service_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" || true
+    module.iam.google_service_account.function_service_account "projects/${PROJECT_ID}/serviceAccounts/${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" 2>&1 || true
 fi
 
 if [ "$FUNCTION_EXISTS" = true ]; then
   echo "Importing existing cloud function into Terraform state..."
   terraform import -auto-approve -var="project=${PROJECT_ID}" -var="region=${REGION}" \
-    module.cloud_function.google_cloudfunctions2_function.mdf_to_parquet_function "projects/${PROJECT_ID}/locations/${REGION}/functions/${FUNCTION_NAME}" || true
+    module.cloud_function.google_cloudfunctions2_function.mdf_to_parquet_function "projects/${PROJECT_ID}/locations/${REGION}/functions/${FUNCTION_NAME}" 2>&1 || true
 fi
 
 # If notification email wasn't provided via command line, handle appropriately
