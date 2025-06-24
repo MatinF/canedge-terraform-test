@@ -104,14 +104,8 @@ fi
 # Automatically configure the current project
 echo "Setting project to '$PROJECT_ID'..."
 gcloud config set project "$PROJECT_ID"
-# Make sure we have valid authentication
-gcloud auth print-access-token >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo "❌ ERROR: Authentication failed. Please run 'gcloud auth login' first."
-  exit 1
-else
-  echo "✓ Project set to '$PROJECT_ID'. Authentication confirmed."
-fi
+echo "✓ Project set to '$PROJECT_ID'."
+
 
 # Checking input bucket...
 echo "Checking input bucket..."
