@@ -12,9 +12,11 @@ This repository provides Terraform configurations to automate the deployment of 
 
 ### Setup Instructions
 
+![Google Cloud Console showing Project ID and Shell](http://canlogger1000.csselectronics.com/img/GCP-console-project-id-shell.png)
+
 1. Log in to the [Google Cloud Console](https://console.cloud.google.com/)
-2. Select your project from the dropdown at the top
-3. Click on the Cloud Shell icon (>_) in the top right corner to open Cloud Shell
+2. Select your project from the dropdown (top left)
+3. Click on the Cloud Shell icon (>_) to open Cloud Shell (top right)
 4. Once Cloud Shell is open, run the following command to clone this repository:
 
 ```bash
