@@ -31,9 +31,10 @@ resource "google_cloudfunctions2_function" "mdf_to_parquet_function" {
   }
 
   service_config {
-    available_memory       = "512Mi"
+    available_memory       = "1Gi"
     timeout_seconds        = 150
     max_instance_request_concurrency = 50
+    available_cpu          = "1"
     environment_variables  = {
       OUTPUT_BUCKET   = var.output_bucket_name
       FILE_EXTENSIONS = ".MF4,.MFC,.MFE,.MFM"
