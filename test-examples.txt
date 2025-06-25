@@ -14,7 +14,7 @@ cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/can
 chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project bigquerytest6 --region europe-west1 --bucket canedge-test-bucket-gcp-27
 
 ## DEPLOY MDF TO PARQUET
-chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --project bigquerytest6 --bucket canedge-test-bucket-gcp-24 --id demolake6 --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.7.zip
+chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --project bigquerytest6 --bucket canedge-test-bucket-gcp-24 --id demolake7 --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.7.zip
 
 ## DEPLOY BIGQUERY
-chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquerytest6 --bucket canedge-test-bucket-gcp-24 --id demolake6 --dataset demodataset --zip bigquery-map-tables-v1.1.0.zip
+chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquerytest6 --bucket canedge-test-bucket-gcp-24 --id demolake7 --dataset demodataset --zip bigquery-map-tables-v1.1.0.zip

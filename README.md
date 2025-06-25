@@ -21,6 +21,7 @@ This repository provides Terraform configurations to automate the deployment of 
 cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/canedge-terraform-test.git && cd canedge-terraform-test
 ```
 
+
 ### Deploy Input Bucket
 
 If you're just getting started, first deploy the input bucket where your CANedge devices will upload MF4 files:
@@ -30,9 +31,11 @@ chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project YOUR_PROJE
 ```
 
 Replace:
-- `YOUR_PROJECT_ID` with your Google Cloud project ID
-- `YOUR_REGION` with your desired region (e.g., `europe-west1`)
-- `YOUR_BUCKET_NAME` with your desired bucket name
+- `YOUR_PROJECT_ID` with your Google Cloud project ID (click your project to see this)
+- `YOUR_REGION` with your desired region (e.g., `europe-west1` - see [this link](https://cloud.google.com/storage/docs/locations#location-r) for available regions)
+- `YOUR_BUCKET_NAME` with your desired bucket name (should be globally unique)
+
+
 
 ### Deploy MF4-to-Parquet Pipeline
 
@@ -49,6 +52,7 @@ Replace:
 - `YOUR_EMAIL` with your email address to receive notifications
 - `YOUR_FUNCTION_ZIP` with the function ZIP file name (e.g., `mdf-to-parquet-google-function-v3.0.7.zip`)
 
+
 ### Deploy BigQuery
 
 After setting up the MF4-to-Parquet pipeline, you can deploy BigQuery to query your Parquet data lake:
@@ -63,6 +67,17 @@ Replace:
 - `YOUR_UNIQUE_ID` with the same unique identifier used in the previous step
 - `YOUR_DATASET_NAME` with your desired BigQuery dataset name
 - `YOUR_FUNCTION_ZIP` with the BigQuery function ZIP file name (e.g., `bigquery-map-tables-v1.1.0.zip`)
+
+----------
+
+## Troubleshooting
+
+If you encounter issues with either deployment:
+
+- Make sure you have proper permissions in your Google Cloud project
+- Use unique identifiers with the `--id` parameter to avoid resource conflicts
+- Check the Google Cloud Console logs for detailed error messages
+- For the MF4-to-Parquet and BigQuery deployments, ensure the relevant function ZIP files are uploaded to your input bucket before deployment
 
 ----------
 
@@ -84,14 +99,3 @@ Replace:
 - `deploy_input_bucket.sh` - Script for input bucket deployment
 - `deploy_mdftoparquet.sh` - Script for MF4-to-Parquet pipeline deployment
 - `deploy_bigquery.sh` - Script for BigQuery deployment
-
-----------
-
-## Troubleshooting
-
-If you encounter issues with either deployment:
-
-- Make sure you have proper permissions in your Google Cloud project
-- Use unique identifiers with the `--id` parameter to avoid resource conflicts
-- Check the Google Cloud Console logs for detailed error messages
-- For the MF4-to-Parquet and BigQuery deployments, ensure the relevant function ZIP files are uploaded to your input bucket before deployment
