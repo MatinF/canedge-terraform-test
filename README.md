@@ -20,11 +20,11 @@ This repository provides Terraform configurations to automate the deployment of 
 4. Once Cloud Shell is open, run the following command to clone this repository:
 
 ```bash
-cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/canedge-terraform-test.git && cd canedge-terraform-test
+cd ~ && rm -rf canedge-google-cloud-terraform && git clone https://github.com/CSS-Electronics/canedge-google-cloud-terraform.git && cd canedge-google-cloud-terraform
 ```
 
 
-### Deploy Input Bucket
+### 1: Deploy Input Bucket
 
 If you're just getting started, first deploy the input bucket where your CANedge devices will upload MF4 files:
 
@@ -39,7 +39,7 @@ Replace:
 
 
 
-### Deploy MF4-to-Parquet Pipeline
+### 2: Deploy MF4-to-Parquet Pipeline
 
 Once you have an input bucket set up, you can optionally deploy the processing pipeline to automatically DBC decode uploaded MF4 files to Parquet format:
 
@@ -52,10 +52,10 @@ Replace:
 - `YOUR_INPUT_BUCKET_NAME` with your input bucket name created in the previous step
 - `YOUR_UNIQUE_ID` with a unique identifier (used for service account naming)
 - `YOUR_EMAIL` with your email address to receive notifications
-- `YOUR_FUNCTION_ZIP` with the function ZIP file name (e.g., `mdf-to-parquet-google-function-v3.0.7.zip`)
+- `YOUR_FUNCTION_ZIP` with the function ZIP file name (`mdf-to-parquet-google-function-v3.X.X.zip`)
 
 
-### Deploy BigQuery
+### 3: Deploy BigQuery
 
 After setting up the MF4-to-Parquet pipeline, you can deploy BigQuery to query your Parquet data lake:
 
@@ -68,7 +68,7 @@ Replace:
 - `YOUR_INPUT_BUCKET_NAME` with your input bucket name
 - `YOUR_UNIQUE_ID` with the same unique identifier used in the previous step
 - `YOUR_DATASET_NAME` with your desired BigQuery dataset name
-- `YOUR_FUNCTION_ZIP` with the BigQuery function ZIP file name (e.g., `bigquery-map-tables-v1.1.0.zip`)
+- `YOUR_FUNCTION_ZIP` with the BigQuery function ZIP file name (`bigquery-map-tables-vX.X.X.zip`)
 
 ----------
 

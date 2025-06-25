@@ -1,20 +1,13 @@
-./deploy_input_bucket.sh --project bigquerytest-422109 --region europe-west1 --bucket canedge-test-bucket-gcp-16
-
-chmod +x ./deploy_mdftoparquet.sh --project bigquerytest-422109 --bucket canedge-test-bucket-gcp-16 --id test19 --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.6.zip
-
-chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquerytest-422109 --bucket canedge-test-bucket-gcp-16 --id test19 --dataset lakedataset2 --zip bigquery-map-tables-v1.1.0.zip
-
 # TEST EXAMPLES 
 
-cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/canedge-terraform-test.git && cd canedge-terraform-test
-
+cd ~ && rm -rf canedge-google-cloud-terraform && git clone https://github.com/CSS-Electronics/canedge-google-cloud-terraform.git && cd canedge-google-cloud-terraform
 
 
 ## DEPLOY INPUT BUCKET TEST
-chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project bigquery7-464008 --region europe-west1 --bucket canedge-test-bucket-gcp-27
+chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project bigquery7-464008 --region europe-west1 --bucket canedge-test-bucket-gcp-28
 
 ## DEPLOY MDF TO PARQUET
-chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --project bigquery7-464008 --bucket canedge-test-bucket-gcp-24 --id demolake7 --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.7.zip
+chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --project bigquery7-464008 --bucket canedge-test-bucket-gcp-28 --id demolake8 --email mf@csselectronics.com --zip mdf-to-parquet-google-function-v3.0.7.zip
 
 ## DEPLOY BIGQUERY
-chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquery7-464008 --bucket canedge-test-bucket-gcp-24 --id demolake7 --dataset demodataset --zip bigquery-map-tables-v1.1.0.zip
+chmod +x deploy_bigquery.sh && ./deploy_bigquery.sh --project bigquery7-464008 --bucket canedge-test-bucket-gcp-28 --id demolake8 --dataset demodataset --zip bigquery-map-tables-v1.1.0.zip
