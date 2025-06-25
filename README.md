@@ -33,9 +33,9 @@ chmod +x deploy_input_bucket.sh && ./deploy_input_bucket.sh --project YOUR_PROJE
 ```
 
 Replace:
-- `YOUR_PROJECT_ID` with your Google Cloud project ID (click your project to see this)
+- `YOUR_PROJECT_ID` with your active Google Cloud project ID (e.g. `bigquery7-464008`)
 - `YOUR_REGION` with your desired region (e.g., `europe-west1` - see [this link](https://cloud.google.com/storage/docs/locations#location-r) for available regions)
-- `YOUR_BUCKET_NAME` with your desired bucket name (should be globally unique)
+- `YOUR_BUCKET_NAME` with your desired bucket name (e.g. `canedge-test-bucket-20`)
 
 
 
@@ -49,10 +49,10 @@ chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --project YOUR_PROJE
 
 Replace:
 - `YOUR_PROJECT_ID` with your Google Cloud project ID
-- `YOUR_INPUT_BUCKET_NAME` with your input bucket name created in the previous step
-- `YOUR_UNIQUE_ID` with a unique identifier (used for service account naming)
+- `YOUR_INPUT_BUCKET_NAME` with your input bucket name
+- `YOUR_UNIQUE_ID` with a short unique identifier (e.g. `datalake1`)
 - `YOUR_EMAIL` with your email address to receive notifications
-- `YOUR_FUNCTION_ZIP` with the function ZIP file name (`mdf-to-parquet-google-function-v3.X.X.zip`)
+- `YOUR_FUNCTION_ZIP` with the function ZIP file name (e.g. `mdf-to-parquet-google-function-v3.1.0.zip`)
 
 
 ### 3: Deploy BigQuery
@@ -67,8 +67,8 @@ Replace:
 - `YOUR_PROJECT_ID` with your Google Cloud project ID
 - `YOUR_INPUT_BUCKET_NAME` with your input bucket name
 - `YOUR_UNIQUE_ID` with the same unique identifier used in the previous step
-- `YOUR_DATASET_NAME` with your desired BigQuery dataset name
-- `YOUR_FUNCTION_ZIP` with the BigQuery function ZIP file name (`bigquery-map-tables-vX.X.X.zip`)
+- `YOUR_DATASET_NAME` with your desired BigQuery dataset name (e.g. `dataset1`)
+- `YOUR_FUNCTION_ZIP` with the BigQuery function ZIP file name (e.g. `bigquery-map-tables-v1.1.0.zip`)
 
 ----------
 
@@ -80,6 +80,7 @@ If you encounter issues with either deployment:
 - Use unique identifiers with the `--id` parameter to avoid resource conflicts
 - Check the Google Cloud Console logs for detailed error messages
 - For the MF4-to-Parquet and BigQuery deployments, ensure the relevant function ZIP files are uploaded to your input bucket before deployment
+- [Contact us](https://www.csselectronics.com/pages/contact-us) if you need deployment support
 
 ----------
 
