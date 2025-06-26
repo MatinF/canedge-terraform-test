@@ -2,16 +2,6 @@
 * Output variables for the CANedge Input Container Terraform Stack for Azure
 */
 
-output "endpoint" {
-  description = "Azure Blob Storage endpoint"
-  value       = "https://${azurerm_storage_account.storage[0].name}.blob.core.windows.net"
-}
-
-output "port" {
-  description = "Port number for Azure Blob Storage endpoint"
-  value       = 443
-}
-
 output "container_name" {
   description = "Name of the created input container"
   value       = azurerm_storage_container.input_container.name
