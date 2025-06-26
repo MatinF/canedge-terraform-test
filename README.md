@@ -35,4 +35,7 @@ Replace:
 - `YOUR_REGION` with your desired region (e.g., `germanywestcentral` - see [this link](https://azuretracks.com/2021/04/current-azure-region-names-reference/) for available regions)
 - `YOUR_CONTAINER_NAME` with your desired container name (e.g. `canedge-test-container-20`)
 
+Optional parameters:
+- `--subid YOUR_SUBSCRIPTION_ID` to specify a particular Azure subscription ID (e.g. `ff652281-fac4-4dbb-b2ba-819cdf28ac83`). If not provided, your default subscription will be used.
+
 &nbsp;

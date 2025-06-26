@@ -13,6 +13,7 @@ show_help() {
   echo "  -s, --storageaccount ACCOUNT_NAME Azure Storage Account name (REQUIRED)"
   echo "  -r, --region REGION               Azure region for deployment (e.g., germanywestcentral) (REQUIRED)"
   echo "  -c, --container CONTAINER_NAME    Input container name to create (REQUIRED)"
+  echo "  -i, --subid SUBSCRIPTION_ID       Azure Subscription ID (OPTIONAL, default: current subscription)"
   echo "  -y, --auto-approve                Skip approval prompt"
   echo "  -h, --help                        Show this help message"
   echo
@@ -40,6 +41,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -c|--container)
       CONTAINER_NAME="$2"
+      shift 2
+      ;;
+    -i|--subid)
+      USER_SUBSCRIPTION_ID="$2"
       shift 2
       ;;
     -y|--auto-approve)
@@ -98,14 +103,20 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Get subscription ID from current account
-SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-if [ -z "$SUBSCRIPTION_ID" ]; then
-  echo "❌ Could not determine subscription ID. Please verify your Azure account."
-  exit 1
+# Get subscription ID - use user-provided value if available, otherwise get from current account
+if [ -z "$USER_SUBSCRIPTION_ID" ]; then
+  # No user-provided subscription ID, get it from current account
+  SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+  if [ -z "$SUBSCRIPTION_ID" ]; then
+    echo "❌ Could not determine subscription ID. Please verify your Azure account."
+    exit 1
+  fi
+  echo "✓ Using default subscription: $SUBSCRIPTION_ID"
+else
+  # Use the user-provided subscription ID
+  SUBSCRIPTION_ID="$USER_SUBSCRIPTION_ID"
+  echo "✓ Using specified subscription: $SUBSCRIPTION_ID"
 fi
-
-echo "✓ Using subscription: $SUBSCRIPTION_ID"
 
 # Print deployment configuration
 echo "Deploying CANedge Azure Input Container with the following configuration:"

@@ -76,26 +76,26 @@ resource "azurerm_storage_container" "input_container" {
   container_access_type = "private"
 }
 
-# Generate SAS token with appropriate permissions
+# Generate SAS token with appropriate permissions - valid for 10 years
 resource "time_rotating" "sas_expiry" {
-  rotation_days = 365
+  rotation_years = 10 # 10-year validity for the SAS token
 }
 
 data "azurerm_storage_account_sas" "sas" {
   connection_string = azurerm_storage_account.storage[0].primary_connection_string
-  https_only        = true
+  https_only        = false # Allow both HTTP and HTTPS access
   
   resource_types {
-    service   = false
-    container = true
-    object    = true
+    service   = true  # Allow access to service-level APIs
+    container = true  # Allow access to container-level APIs
+    object    = true  # Allow access to object-level APIs
   }
   
   services {
-    blob  = true
-    queue = false
-    table = false
-    file  = false
+    blob  = true  # Access to blob storage
+    queue = true  # Access to queues if needed
+    table = true  # Access to tables if needed
+    file  = true  # Access to files if needed
   }
   
   start  = timestamp()
@@ -109,8 +109,8 @@ data "azurerm_storage_account_sas" "sas" {
     add     = true
     create  = true
     update  = true
-    process = false
-    tag     = false
-    filter  = false
+    process = true  # Allow processing operations
+    tag     = true  # Allow tagging objects
+    filter  = true  # Allow filter operations
   }
 }
