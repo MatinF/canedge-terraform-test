@@ -141,16 +141,27 @@ if [ -z "$AUTO_APPROVE" ]; then
   AUTO_APPROVE="-auto-approve"
 fi
 
-# Run terraform apply with all progress visible but hide the outputs at the end
-TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
+# Run terraform apply with all progress visible and don't hide outputs
+terraform apply ${AUTO_APPROVE} \
   -var="subscription_id=${SUBSCRIPTION_ID}" \
   -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
   -var="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
   -var="location=${REGION}" \
-  -var="container_name=${CONTAINER_NAME}")
+  -var="container_name=${CONTAINER_NAME}"
 
-# Check if the deployment was successful
-if [ $? -ne 0 ]; then
+# Store exit code to check if deployment was successful
+TF_EXIT_CODE=$?
+
+# Get the outputs if the deployment was successful
+if [ $TF_EXIT_CODE -eq 0 ]; then
+  TERRAFORM_OUTPUT=$(terraform output -json)
+  
+  # Check if getting the outputs was successful
+  if [ $? -ne 0 ]; then
+    echo "❌  Failed to retrieve deployment outputs."
+    exit 1
+  fi
+else
   echo "❌  Deployment failed."
   exit 1
 fi
@@ -158,16 +169,15 @@ fi
 # Show the outputs
 echo
 echo
-echo 
 echo "---------------------------"
 echo "✅  Deployment successful!"
 echo
 echo "Deployment details:"
 echo
-echo "Resource Group:   $(terraform output -raw resource_group_name)"
-echo "Storage Account:  $(terraform output -raw storage_account_name)"
-echo "Container name:   $(terraform output -raw container_name)"
-echo "Region:           $(terraform output -raw region)"
-echo "SAS Token:        $(terraform output -raw sas_token)"
-echo 
+echo "Resource Group:   $(echo $TERRAFORM_OUTPUT | jq -r '.resource_group_name.value')"
+echo "Storage Account:  $(echo $TERRAFORM_OUTPUT | jq -r '.storage_account_name.value')"
+echo "Container name:   $(echo $TERRAFORM_OUTPUT | jq -r '.container_name.value')"
+echo "Region:           $(echo $TERRAFORM_OUTPUT | jq -r '.region.value')"
+echo "SAS Token:        $(echo $TERRAFORM_OUTPUT | jq -r '.sas_token.value')"
+echo
 echo
