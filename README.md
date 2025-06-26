@@ -26,7 +26,7 @@ cd ~ && rm -rf canedge-azure-cloud-terraform && git clone https://github.com/CSS
 If you're just getting started, first deploy the input container where your CANedge devices will upload MF4 files:
 
 ```bash
-chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegroup YOUR_RESOURCE_GROUP --storageaccount YOUR_STORAGE_ACCOUNT --region YOUR_REGION --bucket YOUR_CONTAINER_NAME
+chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegroup YOUR_RESOURCE_GROUP --storageaccount YOUR_STORAGE_ACCOUNT --region YOUR_REGION --container YOUR_CONTAINER_NAME
 ```
 
 Replace:

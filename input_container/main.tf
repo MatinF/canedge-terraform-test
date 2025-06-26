@@ -25,6 +25,8 @@ terraform {
 }
 
 provider "azurerm" {
+  # Use the default subscription from Azure CLI
+  use_cli = true
   features {}
 }
 
