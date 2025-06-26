@@ -32,14 +32,14 @@ data "azurerm_storage_account" "existing" {
 # Create output container for Parquet files
 resource "azurerm_storage_container" "output_container" {
   name                  = var.output_container_name
-  storage_account_name  = data.azurerm_storage_account.existing.name
+  storage_account_id    = data.azurerm_storage_account.existing.id
   container_access_type = "private"
 }
 
 # Create a storage queue for notifications
 resource "azurerm_storage_queue" "notification_queue" {
   name                 = var.notification_queue_name
-  storage_account_name = data.azurerm_storage_account.existing.name
+  storage_account_id   = data.azurerm_storage_account.existing.id
 }
 
 # Create App Service Plan for Azure Functions (Consumption plan)
@@ -67,7 +67,7 @@ resource "azurerm_windows_function_app" "function_app" {
 
   site_config {
     application_stack {
-      dotnet_version = "6.0"
+      dotnet_version = "v6.0"
     }
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
@@ -133,7 +133,7 @@ data "azurerm_storage_account_sas" "function_sas" {
 # Create Event Grid System Topic for Blob Storage events
 resource "azurerm_eventgrid_system_topic" "storage_events" {
   name                   = "evgt-${var.unique_id}"
-  location               = "global"
+  location               = data.azurerm_storage_account.existing.location
   resource_group_name    = var.resource_group_name
   source_arm_resource_id = data.azurerm_storage_account.existing.id
   topic_type             = "Microsoft.Storage.StorageAccounts"

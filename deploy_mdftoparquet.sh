@@ -31,7 +31,7 @@ show_help() {
 }
 
 # Default values
-AUTO_APPROVE=""
+AUTO_APPROVE="-auto-approve" # Auto-approve by default
 OUTPUT_CONTAINER="parquet"
 NOTIFICATION_QUEUE="notifications"
 FUNCTION_APP_NAME=""
@@ -84,8 +84,8 @@ while [[ $# -gt 0 ]]; do
       USER_SUBSCRIPTION_ID="$2"
       shift 2
       ;;
-    -y|--auto-approve)
-      AUTO_APPROVE="-auto-approve"
+    -n|--no-auto-approve)
+      AUTO_APPROVE="" # Disable auto-approve if flag is present
       shift
       ;;
     -h|--help)

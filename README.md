@@ -19,6 +19,9 @@ This repository provides Terraform configurations to automate the deployment of 
 cd ~ && rm -rf canedge-azure-cloud-terraform && git clone https://github.com/CSS-Electronics/canedge-azure-cloud-terraform.git && cd canedge-azure-cloud-terraform
 ```
 
+> [!NOTE]  
+> To paste the command, right-click and select 'Paste as plain text'
+
 &nbsp;
 
 ### 1: Deploy Input Container
