@@ -98,6 +98,15 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# Get subscription ID from current account
+SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+if [ -z "$SUBSCRIPTION_ID" ]; then
+  echo "❌ Could not determine subscription ID. Please verify your Azure account."
+  exit 1
+fi
+
+echo "✓ Using subscription: $SUBSCRIPTION_ID"
+
 # Print deployment configuration
 echo "Deploying CANedge Azure Input Container with the following configuration:"
 echo "   - Resource Group:    $RESOURCE_GROUP_NAME"
@@ -123,6 +132,7 @@ fi
 
 # Run terraform apply with all progress visible but hide the outputs at the end
 TERRAFORM_OUTPUT=$(terraform apply ${AUTO_APPROVE} \
+  -var="subscription_id=${SUBSCRIPTION_ID}" \
   -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
   -var="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
   -var="location=${REGION}" \
