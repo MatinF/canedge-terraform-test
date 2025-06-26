@@ -1,4 +1,2 @@
-azure-functions
-azure-storage-blob
-pyarrow
-pandas
+azure-functions>=1.17.0
+azure-storage-blob==12.17.0

@@ -1,0 +1,177 @@
+Applying Terraform configuration to create the MDF-to-Parquet pipeline...
+data.azurerm_storage_account.existing: Reading...
+azurerm_application_insights.insights: Refreshing state... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Insights/components/appinsights-demolake1]
+azurerm_service_plan.function_app_plan: Refreshing state... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Web/serverFarms/plan-demolake1]
+data.azurerm_storage_account.existing: Read complete after 0s [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Storage/storageAccounts/terraformsacc7]
+azurerm_eventgrid_system_topic.storage_events: Refreshing state... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.EventGrid/systemTopics/evgt-demolake1]
+azurerm_storage_container.output_container: Refreshing state... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Storage/storageAccounts/terraformsacc7/blobServices/default/containers/canedge-test-container-26-parquet]
+azurerm_storage_queue.notification_queue: Refreshing state... [id=https://terraformsacc7.queue.core.windows.net/notifications]
+azurerm_linux_function_app.function_app: Refreshing state... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Web/sites/mdftoparquet-demolake1]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.azurerm_function_app_host_keys.keys will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "azurerm_function_app_host_keys" "keys" {
+      + blobs_extension_key             = (sensitive value)
+      + default_function_key            = (sensitive value)
+      + durabletask_extension_key       = (sensitive value)
+      + event_grid_extension_config_key = (sensitive value)
+      + event_grid_extension_key        = (sensitive value)
+      + id                              = (known after apply)
+      + name                            = "mdftoparquet-demolake1"
+      + primary_key                     = (sensitive value)
+      + resource_group_name             = "terraform-group-7"
+      + signalr_extension_key           = (sensitive value)
+      + webpubsub_extension_key         = (sensitive value)
+    }
+
+  # data.azurerm_storage_account_sas.function_sas will be read during apply
+  # (config refers to values not yet known)
+ <= data "azurerm_storage_account_sas" "function_sas" {
+      + connection_string = (sensitive value)
+      + expiry            = (known after apply)
+      + https_only        = true
+      + id                = (known after apply)
+      + sas               = (sensitive value)
+      + start             = (known after apply)
+
+      + permissions {
+          + add     = false
+          + create  = false
+          + delete  = false
+          + filter  = false
+          + list    = false
+          + process = false
+          + read    = true
+          + tag     = false
+          + update  = false
+          + write   = false
+        }
+
+      + resource_types {
+          + container = false
+          + object    = true
+          + service   = false
+        }
+
+      + services {
+          + blob  = true
+          + file  = false
+          + queue = false
+          + table = false
+        }
+    }
+
+  # azurerm_eventgrid_system_topic_event_subscription.input_events will be created
+  + resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
+      + advanced_filtering_on_arrays_enabled = false
+      + event_delivery_schema                = "EventGridSchema"
+      + eventhub_endpoint_id                 = (known after apply)
+      + hybrid_connection_endpoint_id        = (known after apply)
+      + id                                   = (known after apply)
+      + included_event_types                 = [
+          + "Microsoft.Storage.BlobCreated",
+        ]
+      + name                                 = "evgs-demolake1"
+      + resource_group_name                  = "terraform-group-7"
+      + system_topic                         = "evgt-demolake1"
+
+      + advanced_filter {
+          + string_ends_with {
+              + key    = "subject"
+              + values = [
+                  + ".MF4",
+                  + ".mf4",
+                ]
+            }
+        }
+
+      + retry_policy {
+          + event_time_to_live    = 1
+          + max_delivery_attempts = 1
+        }
+
+      + storage_queue_endpoint {
+          + queue_name         = "notifications"
+          + storage_account_id = "/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Storage/storageAccounts/terraformsacc7"
+        }
+
+      + subject_filter {
+          + case_sensitive      = false
+          + subject_begins_with = "/blobServices/default/containers/canedge-test-container-26/blobs/"
+          + subject_ends_with   = ".MF4"
+        }
+    }
+
+  # azurerm_linux_function_app.function_app will be updated in-place
+  ~ resource "azurerm_linux_function_app" "function_app" {
+      ~ app_settings                                   = {
+          - "FUNCTIONS_WORKER_RUNTIME"       = "python"
+          - "InputContainerName"             = "canedge-test-container-26"
+          - "NotificationEmail"              = "m@csselectronics.com"
+          - "NotificationQueueName"          = "notifications"
+          - "OutputContainerName"            = "canedge-test-container-26-parquet"
+          - "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
+          - "StorageConnectionString"        = (sensitive value)
+          - "WEBSITE_RUN_FROM_PACKAGE"       = (sensitive value)
+        } -> (known after apply)
+        id                                             = "/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Web/sites/mdftoparquet-demolake1"
+        name                                           = "mdftoparquet-demolake1"
+        tags                                           = {}
+        # (33 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+Plan: 1 to add, 1 to change, 0 to destroy.
+data.azurerm_storage_account_sas.function_sas: Reading...
+data.azurerm_storage_account_sas.function_sas: Read complete after 0s [id=a039cfe04f2ff3d05f2d27594e8c2b02c59aa8ae22a7dc0295fbc6587d9f51d1]
+azurerm_linux_function_app.function_app: Modifying... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Web/sites/mdftoparquet-demolake1]
+azurerm_linux_function_app.function_app: Still modifying... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-...osoft.Web/sites/mdftoparquet-demolake1, 10s elapsed]
+azurerm_linux_function_app.function_app: Still modifying... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-...osoft.Web/sites/mdftoparquet-demolake1, 20s elapsed]
+azurerm_linux_function_app.function_app: Still modifying... [id=/subscriptions/714b7bef-30a3-4e30-9b9f-...osoft.Web/sites/mdftoparquet-demolake1, 30s elapsed]
+azurerm_linux_function_app.function_app: Modifications complete after 33s [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Web/sites/mdftoparquet-demolake1]
+data.azurerm_function_app_host_keys.keys: Reading...
+data.azurerm_function_app_host_keys.keys: Read complete after 1s [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.Web/sites/mdftoparquet-demolake1]
+azurerm_eventgrid_system_topic_event_subscription.input_events: Creating...
+azurerm_eventgrid_system_topic_event_subscription.input_events: Still creating... [10s elapsed]
+azurerm_eventgrid_system_topic_event_subscription.input_events: Creation complete after 13s [id=/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourceGroups/terraform-group-7/providers/Microsoft.EventGrid/systemTopics/evgt-demolake1/eventSubscriptions/evgs-demolake1]
+
+Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+application_insights_name = "appinsights-demolake1"
+eventgrid_subscription_name = "evgs-demolake1"
+eventgrid_topic_name = "evgt-demolake1"
+function_app_name = "mdftoparquet-demolake1"
+function_app_url = "https://mdftoparquet-demolake1.azurewebsites.net"
+input_container_name = "canedge-test-container-26"
+notification_queue_name = "notifications"
+output_container_name = "canedge-test-container-26-parquet"
+resource_group_name = "terraform-group-7"
+storage_account_name = "terraformsacc7"
+
+
+---------------------------
+✅  Deployment successful!
+
+Deployment details:
+
+Resource Group:       terraform-group-7
+Storage Account:      terraformsacc7
+Input Container:      canedge-test-container-26
+Output Container:     canedge-test-container-26-parquet   # Derived from input container name
+Function App:         mdftoparquet-demolake1
+Function App URL:     https://mdftoparquet-demolake1.azurewebsites.net
+Notification Queue:   notifications
+
+The MDF-to-Parquet pipeline has been successfully deployed!
+Any MF4 files uploaded to the input container will be automatically processed to Parquet format and stored in the output container.
+Notifications will be sent to: m@csselectronics.com

@@ -1,0 +1,885 @@
+﻿"timestamp [UTC]",message,severityLevel,itemType,customDimensions,customMeasurements,"operation_Name","operation_Id","operation_ParentId","operation_SyntheticSource","session_Id","user_Id","user_AuthenticatedId","user_AccountId","application_Version","client_Type","client_Model","client_OS","client_IP","client_City","client_StateOrProvince","client_CountryOrRegion","client_Browser","cloud_RoleName","cloud_RoleInstance",appId,appName,iKey,sdkVersion,itemId,itemCount,"_ResourceId"
+"6/26/2025, 1:34:29.282 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407720972604"",
+  ""computerName"": """",
+  ""processUptime"": 884480,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407720972604\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 884480,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,e9ac0f595e1cd922b29f6f8385e24fd1,d20006092266fc09,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","6d4adb3e-5292-11f0-9fa1-002248e47c12",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:34:26.162 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407720972604"",
+  ""computerName"": """",
+  ""processUptime"": 881360,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407720972604\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 881360,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,ef90e8cd14bffc87719c854f637736b8,af467c591eba9150,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","6d4adb3d-5292-11f0-9fa1-002248e47c12",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:33:16.859 PM","Host lock lease acquired by instance ID '0000000000000000000000006DE6B4FF'.",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host lock lease acquired by instance ID '{websiteInstanceId}'."",""LogLevel"":""Information"",""EventId"":""337"",""Category"":""Host.General"",""EventName"":""PrimaryHostCoordinatorLockLeaseAcquired"",""prop__websiteInstanceId"":""0000000000000000000000006DE6B4FF""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","28cc5f14-5292-11f0-9fa3-6045bd160e01",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.236 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407720972604"",
+  ""computerName"": """",
+  ""processUptime"": 782432,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407720972604\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 782432,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,988859cdef4a3baee73426972dd26b08,640ce826dec40a39,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af8-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.235 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407720972604"",
+  ""computerName"": """",
+  ""processUptime"": 782433,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407720972604\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 782433,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,8836b8e54c307c219e9d147ad61e7a82,5d042eacd85433df,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af7-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.228 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407720972604"",
+  ""computerName"": """",
+  ""processUptime"": 782426,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407720972604\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 782426,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,8d838d4dd65c6412775ddabf2ba32b8d,72976ce5c3f4534e,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af6-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.198 PM","Job host started",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Job host started"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af5-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.197 PM","Host started (76ms)",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host started ({ms}ms)"",""LogLevel"":""Information"",""EventId"":""413"",""prop__ms"":""76"",""Category"":""Host.Startup"",""EventName"":""ScriptHostStarted""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af4-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.180 PM","HttpOptions
+{
+  ""DynamicThrottlesEnabled"": false,
+  ""EnableChunkedRequestBinding"": false,
+  ""MaxConcurrentRequests"": -1,
+  ""MaxOutstandingRequests"": -1,
+  ""RoutePrefix"": ""api""
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""HttpOptions\n{\n  \""DynamicThrottlesEnabled\"": false,\n  \""EnableChunkedRequestBinding\"": false,\n  \""MaxConcurrentRequests\"": -1,\n  \""MaxOutstandingRequests\"": -1,\n  \""RoutePrefix\"": \""api\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af3-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.179 PM","Host initialized (58ms)",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host initialized ({ms}ms)"",""LogLevel"":""Information"",""EventId"":""412"",""prop__ms"":""58"",""Category"":""Host.Startup"",""EventName"":""ScriptHostInitialized""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af2-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.179 PM","Initializing function HTTP routes
+No HTTP routes mapped",1,trace,"{""prop__{OriginalFormat}"":""Initializing function HTTP routes\nNo HTTP routes mapped"",""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Script.WebHost.WebScriptHostHttpRoutesManager""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af1-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.168 PM","Found the following functions:
+Host.Functions.ProcessMdfToParquet",1,trace,"{""prop__{OriginalFormat}"":""Found the following functions:\nHost.Functions.ProcessMdfToParquet"",""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5af0-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.136 PM","Generating 1 job function(s)",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Generating 1 job function(s)"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5aef-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.136 PM","Worker process started and initialized.",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Worker process started and initialized."",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Script.Workers.Rpc.RpcFunctionInvocationDispatcher""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5aee-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.123 PM","1 functions loaded",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""{count} functions loaded"",""prop__count"":""1"",""LogLevel"":""Information"",""EventId"":""315"",""Category"":""Host.Startup"",""EventName"":""FunctionMetadataManagerFunctionsLoaded""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5aed-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.122 PM","0 functions found (Custom)",1,trace,"{""prop__provider"":""Custom"",""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""{count} functions found ({provider})"",""prop__count"":""0"",""LogLevel"":""Information"",""EventId"":""327"",""Category"":""Host.Startup"",""EventName"":""FunctionsReturnedByProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5aec-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.122 PM","Reading functions metadata (Custom)",1,trace,"{""prop__provider"":""Custom"",""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Reading functions metadata ({provider})"",""LogLevel"":""Information"",""EventId"":""326"",""Category"":""Host.Startup"",""EventName"":""ReadingFunctionMetadataFromProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5aeb-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.120 PM","Loading functions metadata",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Loading functions metadata"",""LogLevel"":""Information"",""EventId"":""314"",""Category"":""Host.Startup"",""EventName"":""FunctionMetadataManagerLoadingFunctionsMetadata""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5aea-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.120 PM","Starting Host (HostId=mdftoparquet-demolake1, InstanceId=1754472d-7670-4bd6-a122-00eba61db46b, Version=4.1039.500.1, ProcessId=54, AppDomainId=1, InDebugMode=True, InDiagnosticMode=False, FunctionsExtensionVersion=~4)",1,trace,"{""prop__hostId"":""mdftoparquet-demolake1"",""prop__extensionVersion"":""~4"",""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Starting Host (HostId={hostId}, InstanceId={instanceId}, Version={version}, ProcessId={processId}, AppDomainId={appDomainId}, InDebugMode={inDebugMode}, InDiagnosticMode={inDiagnosticMode}, FunctionsExtensionVersion={extensionVersion})"",""prop__inDiagnosticMode"":""False"",""prop__inDebugMode"":""True"",""LogLevel"":""Information"",""EventId"":""401"",""prop__appDomainId"":""1"",""Category"":""Host.Startup"",""prop__processId"":""54"",""prop__instanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""EventName"":""StartingHost"",""prop__version"":""4.1039.500.1""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae9-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.120 PM","Starting JobHost",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Starting JobHost"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.JobHostService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae8-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.119 PM","ScaleOptions
+{
+  ""ScaleMetricsMaxAge"": ""00:02:00"",
+  ""ScaleMetricsSampleInterval"": ""00:00:10"",
+  ""MetricsPurgeEnabled"": true,
+  ""IsTargetScalingEnabled"": true,
+  ""IsRuntimeScalingEnabled"": false
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""ScaleOptions\n{\n  \""ScaleMetricsMaxAge\"": \""00:02:00\"",\n  \""ScaleMetricsSampleInterval\"": \""00:00:10\"",\n  \""MetricsPurgeEnabled\"": true,\n  \""IsTargetScalingEnabled\"": true,\n  \""IsRuntimeScalingEnabled\"": false\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae7-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.118 PM","BlobsOptions
+{
+  ""MaxDegreeOfParallelism"": 8,
+  ""PoisonBlobThreshold"": 5
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""BlobsOptions\n{\n  \""MaxDegreeOfParallelism\"": 8,\n  \""PoisonBlobThreshold\"": 5\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae6-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.118 PM","SingletonOptions
+{
+  ""LockPeriod"": ""00:00:15"",
+  ""ListenerLockPeriod"": ""00:01:00"",
+  ""LockAcquisitionTimeout"": ""10675199.02:48:05.4775807"",
+  ""LockAcquisitionPollingInterval"": ""00:00:05"",
+  ""ListenerLockRecoveryPollingInterval"": ""00:01:00""
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""SingletonOptions\n{\n  \""LockPeriod\"": \""00:00:15\"",\n  \""ListenerLockPeriod\"": \""00:01:00\"",\n  \""LockAcquisitionTimeout\"": \""10675199.02:48:05.4775807\"",\n  \""LockAcquisitionPollingInterval\"": \""00:00:05\"",\n  \""ListenerLockRecoveryPollingInterval\"": \""00:01:00\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae5-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.115 PM","QueuesOptions
+{
+  ""BatchSize"": 16,
+  ""NewBatchThreshold"": 8,
+  ""MaxPollingInterval"": ""00:01:00"",
+  ""MaxDequeueCount"": 5,
+  ""VisibilityTimeout"": ""00:00:00"",
+  ""MessageEncoding"": ""Base64""
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""QueuesOptions\n{\n  \""BatchSize\"": 16,\n  \""NewBatchThreshold\"": 8,\n  \""MaxPollingInterval\"": \""00:01:00\"",\n  \""MaxDequeueCount\"": 5,\n  \""VisibilityTimeout\"": \""00:00:00\"",\n  \""MessageEncoding\"": \""Base64\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae4-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.115 PM","ConcurrencyOptions
+{
+  ""DynamicConcurrencyEnabled"": false,
+  ""MaximumFunctionConcurrency"": 500,
+  ""CPUThreshold"": 0.8,
+  ""SnapshotPersistenceEnabled"": true
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""ConcurrencyOptions\n{\n  \""DynamicConcurrencyEnabled\"": false,\n  \""MaximumFunctionConcurrency\"": 500,\n  \""CPUThreshold\"": 0.8,\n  \""SnapshotPersistenceEnabled\"": true\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae3-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.114 PM","FunctionResultAggregatorOptions
+{
+  ""BatchSize"": 1000,
+  ""FlushTimeout"": ""00:00:30"",
+  ""IsEnabled"": true
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""FunctionResultAggregatorOptions\n{\n  \""BatchSize\"": 1000,\n  \""FlushTimeout\"": \""00:00:30\"",\n  \""IsEnabled\"": true\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae2-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.114 PM","LoggerFilterOptions
+{
+  ""MinLevel"": ""None"",
+  ""Rules"": [
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": ""Warning"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""Trace"",
+      ""Filter"": null
+    }
+  ]
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""LoggerFilterOptions\n{\n  \""MinLevel\"": \""None\"",\n  \""Rules\"": [\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Warning\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Trace\"",\n      \""Filter\"": null\n    }\n  ]\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae1-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.113 PM","LoggerFilterOptions
+{
+  ""MinLevel"": ""None"",
+  ""Rules"": [
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": ""Warning"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""Trace"",
+      ""Filter"": null
+    }
+  ]
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""LoggerFilterOptions\n{\n  \""MinLevel\"": \""None\"",\n  \""Rules\"": [\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Warning\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Trace\"",\n      \""Filter\"": null\n    }\n  ]\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ae0-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.112 PM","ApplicationInsightsLoggerOptions
+{
+  ""SamplingSettings"": {
+    ""EvaluationInterval"": ""00:00:15"",
+    ""InitialSamplingPercentage"": 100.0,
+    ""MaxSamplingPercentage"": 100.0,
+    ""MaxTelemetryItemsPerSecond"": 20.0,
+    ""MinSamplingPercentage"": 0.1,
+    ""MovingAverageRatio"": 0.25,
+    ""SamplingPercentageDecreaseTimeout"": ""00:02:00"",
+    ""SamplingPercentageIncreaseTimeout"": ""00:15:00""
+  },
+  ""SamplingExcludedTypes"": ""Request"",
+  ""SamplingIncludedTypes"": null,
+  ""SnapshotConfiguration"": null,
+  ""EnablePerformanceCountersCollection"": true,
+  ""HttpAutoCollectionOptions"": {
+    ""EnableHttpTriggerExtendedInfoCollection"": true,
+    ""EnableW3CDistributedTracing"": true,
+    ""EnableResponseHeaderInjection"": true
+  },
+  ""LiveMetricsInitializationDelay"": ""00:00:15"",
+  ""EnableLiveMetrics"": true,
+  ""EnableLiveMetricsFilters"": false,
+  ""EnableQueryStringTracing"": false,
+  ""EnableDependencyTracking"": true,
+  ""DependencyTrackingOptions"": null,
+  ""TokenCredentialOptions"": null,
+  ""DiagnosticsEventListenerLogLevel"": null,
+  ""EnableAutocollectedMetricsExtractor"": false,
+  ""EnableMetricsCustomDimensionOptimization"": false,
+  ""EnableAdaptiveSamplingDelay"": true,
+  ""AdaptiveSamplingInitializationDelay"": ""00:00:15""
+}",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""ApplicationInsightsLoggerOptions\n{\n  \""SamplingSettings\"": {\n    \""EvaluationInterval\"": \""00:00:15\"",\n    \""InitialSamplingPercentage\"": 100.0,\n    \""MaxSamplingPercentage\"": 100.0,\n    \""MaxTelemetryItemsPerSecond\"": 20.0,\n    \""MinSamplingPercentage\"": 0.1,\n    \""MovingAverageRatio\"": 0.25,\n    \""SamplingPercentageDecreaseTimeout\"": \""00:02:00\"",\n    \""SamplingPercentageIncreaseTimeout\"": \""00:15:00\""\n  },\n  \""SamplingExcludedTypes\"": \""Request\"",\n  \""SamplingIncludedTypes\"": null,\n  \""SnapshotConfiguration\"": null,\n  \""EnablePerformanceCountersCollection\"": true,\n  \""HttpAutoCollectionOptions\"": {\n    \""EnableHttpTriggerExtendedInfoCollection\"": true,\n    \""EnableW3CDistributedTracing\"": true,\n    \""EnableResponseHeaderInjection\"": true\n  },\n  \""LiveMetricsInitializationDelay\"": \""00:00:15\"",\n  \""EnableLiveMetrics\"": true,\n  \""EnableLiveMetricsFilters\"": false,\n  \""EnableQueryStringTracing\"": false,\n  \""EnableDependencyTracking\"": true,\n  \""DependencyTrackingOptions\"": null,\n  \""TokenCredentialOptions\"": null,\n  \""DiagnosticsEventListenerLogLevel\"": null,\n  \""EnableAutocollectedMetricsExtractor\"": false,\n  \""EnableMetricsCustomDimensionOptimization\"": false,\n  \""EnableAdaptiveSamplingDelay\"": true,\n  \""AdaptiveSamplingInitializationDelay\"": \""00:00:15\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5adf-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.105 PM","Host initialization: ConsecutiveErrors=0, StartupCount=3, OperationId=5ef942ec-33f2-4407-b9e2-6cab76edd1df",1,trace,"{""prop__startCount"":""3"",""prop__operationId"":""5ef942ec-33f2-4407-b9e2-6cab76edd1df"",""prop__attemptCount"":""0"",""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Host initialization: ConsecutiveErrors={attemptCount}, StartupCount={startCount}, OperationId={operationId}"",""LogLevel"":""Information"",""EventId"":""504"",""Category"":""Host.Startup"",""EventName"":""Initialization""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ade-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.105 PM","Initializing Host. OperationId: '5ef942ec-33f2-4407-b9e2-6cab76edd1df'.",1,trace,"{""prop__operationId"":""5ef942ec-33f2-4407-b9e2-6cab76edd1df"",""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Initializing Host. OperationId: '{operationId}'."",""LogLevel"":""Information"",""EventId"":""503"",""Category"":""Host.Startup"",""EventName"":""Initializing""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5add-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:47.095 PM","registered http endpoint = https://mdftoparquet-demolake1.azurewebsites.net/runtime/webhooks/blobs",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""registered http endpoint = https://mdftoparquet-demolake1.azurewebsites.net/runtime/webhooks/blobs"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config.BlobsExtensionConfigProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5adc-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:46.995 PM","Initializing Warmup Extension.",1,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""Initializing Warmup Extension."",""LogLevel"":""Information"",""Category"":""Host.Triggers.Warmup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5adb-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:46.987 PM","The Dashboard setting is no longer supported. See https://aka.ms/functions-dashboard for details.",2,trace,"{""ProcessId"":""54"",""HostInstanceId"":""1754472d-7670-4bd6-a122-00eba61db46b"",""prop__{OriginalFormat}"":""The Dashboard setting is no longer supported. See https://aka.ms/functions-dashboard for details."",""LogLevel"":""Warning"",""Category"":""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.FunctionInstanceLogger""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407720972604","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","26ed5ada-5292-11f0-9fa3-6045bd160cfa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:13.007 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865383310803239"",
+  ""computerName"": """",
+  ""processUptime"": 3189351,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865383310803239\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 3189351,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,99a35a5a169c8ed0174c7c5e25e4dd96,f075725e9a2b03fc,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","0141000d-5292-11f0-9fa1-0022480e64a1",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:08.774 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865383310803239"",
+  ""computerName"": """",
+  ""processUptime"": 3185118,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865383310803239\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 3185118,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,a3e1a8248de2c25687eedfceb5aed8b9,8049a89ea3ac100c,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","0141000c-5292-11f0-9fa1-0022480e64a1",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:32:08.621 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865383310803239"",
+  ""computerName"": """",
+  ""processUptime"": 3184965,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865383310803239\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 3184965,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,c216a993ac361946d18bcab07c4c8c7b,725caab036f4fed7,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","0141000b-5292-11f0-9fa1-0022480e64a1",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.947 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865383310803239"",
+  ""computerName"": """",
+  ""processUptime"": 3103291,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865383310803239\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 3103291,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,a42fb47447418bb56ddf9187fecc8d24,cbe30bb2b090205d,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8b1-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.915 PM","Job host started",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Job host started"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8b0-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.914 PM","Host started (80ms)",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host started ({ms}ms)"",""LogLevel"":""Information"",""EventId"":""413"",""prop__ms"":""80"",""Category"":""Host.Startup"",""EventName"":""ScriptHostStarted""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8af-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.903 PM","Host initialized (69ms)",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host initialized ({ms}ms)"",""LogLevel"":""Information"",""EventId"":""412"",""prop__ms"":""69"",""Category"":""Host.Startup"",""EventName"":""ScriptHostInitialized""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8ae-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.902 PM","Initializing function HTTP routes
+No HTTP routes mapped",1,trace,"{""prop__{OriginalFormat}"":""Initializing function HTTP routes\nNo HTTP routes mapped"",""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Script.WebHost.WebScriptHostHttpRoutesManager""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8ad-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.902 PM","HttpOptions
+{
+  ""DynamicThrottlesEnabled"": false,
+  ""EnableChunkedRequestBinding"": false,
+  ""MaxConcurrentRequests"": -1,
+  ""MaxOutstandingRequests"": -1,
+  ""RoutePrefix"": ""api""
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""HttpOptions\n{\n  \""DynamicThrottlesEnabled\"": false,\n  \""EnableChunkedRequestBinding\"": false,\n  \""MaxConcurrentRequests\"": -1,\n  \""MaxOutstandingRequests\"": -1,\n  \""RoutePrefix\"": \""api\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8ab-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.894 PM","Found the following functions:
+Host.Functions.ProcessMdfToParquet",1,trace,"{""prop__{OriginalFormat}"":""Found the following functions:\nHost.Functions.ProcessMdfToParquet"",""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8aa-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.848 PM","Generating 1 job function(s)",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Generating 1 job function(s)"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a9-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.848 PM","Worker process started and initialized.",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Worker process started and initialized."",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Script.Workers.Rpc.RpcFunctionInvocationDispatcher""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a8-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.835 PM","1 functions loaded",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""{count} functions loaded"",""prop__count"":""1"",""LogLevel"":""Information"",""EventId"":""315"",""Category"":""Host.Startup"",""EventName"":""FunctionMetadataManagerFunctionsLoaded""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a7-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.835 PM","0 functions found (Custom)",1,trace,"{""prop__provider"":""Custom"",""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""{count} functions found ({provider})"",""prop__count"":""0"",""LogLevel"":""Information"",""EventId"":""327"",""Category"":""Host.Startup"",""EventName"":""FunctionsReturnedByProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a6-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","Reading functions metadata (Custom)",1,trace,"{""prop__provider"":""Custom"",""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Reading functions metadata ({provider})"",""LogLevel"":""Information"",""EventId"":""326"",""Category"":""Host.Startup"",""EventName"":""ReadingFunctionMetadataFromProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a5-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","Loading functions metadata",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Loading functions metadata"",""LogLevel"":""Information"",""EventId"":""314"",""Category"":""Host.Startup"",""EventName"":""FunctionMetadataManagerLoadingFunctionsMetadata""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a3-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","Starting Host (HostId=mdftoparquet-demolake1, InstanceId=dac2bfc4-5ebf-4e76-8807-7b05c4647819, Version=4.1039.500.1, ProcessId=53, AppDomainId=1, InDebugMode=False, InDiagnosticMode=False, FunctionsExtensionVersion=~4)",1,trace,"{""prop__hostId"":""mdftoparquet-demolake1"",""prop__extensionVersion"":""~4"",""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Starting Host (HostId={hostId}, InstanceId={instanceId}, Version={version}, ProcessId={processId}, AppDomainId={appDomainId}, InDebugMode={inDebugMode}, InDiagnosticMode={inDiagnosticMode}, FunctionsExtensionVersion={extensionVersion})"",""prop__inDiagnosticMode"":""False"",""prop__inDebugMode"":""False"",""LogLevel"":""Information"",""EventId"":""401"",""prop__appDomainId"":""1"",""Category"":""Host.Startup"",""prop__processId"":""53"",""prop__instanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""EventName"":""StartingHost"",""prop__version"":""4.1039.500.1""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a2-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","Starting JobHost",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Starting JobHost"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.JobHostService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a1-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","ScaleOptions
+{
+  ""ScaleMetricsMaxAge"": ""00:02:00"",
+  ""ScaleMetricsSampleInterval"": ""00:00:10"",
+  ""MetricsPurgeEnabled"": true,
+  ""IsTargetScalingEnabled"": true,
+  ""IsRuntimeScalingEnabled"": false
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""ScaleOptions\n{\n  \""ScaleMetricsMaxAge\"": \""00:02:00\"",\n  \""ScaleMetricsSampleInterval\"": \""00:00:10\"",\n  \""MetricsPurgeEnabled\"": true,\n  \""IsTargetScalingEnabled\"": true,\n  \""IsRuntimeScalingEnabled\"": false\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af8a0-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","BlobsOptions
+{
+  ""MaxDegreeOfParallelism"": 8,
+  ""PoisonBlobThreshold"": 5
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""BlobsOptions\n{\n  \""MaxDegreeOfParallelism\"": 8,\n  \""PoisonBlobThreshold\"": 5\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af89f-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","SingletonOptions
+{
+  ""LockPeriod"": ""00:00:15"",
+  ""ListenerLockPeriod"": ""00:01:00"",
+  ""LockAcquisitionTimeout"": ""10675199.02:48:05.4775807"",
+  ""LockAcquisitionPollingInterval"": ""00:00:05"",
+  ""ListenerLockRecoveryPollingInterval"": ""00:01:00""
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""SingletonOptions\n{\n  \""LockPeriod\"": \""00:00:15\"",\n  \""ListenerLockPeriod\"": \""00:01:00\"",\n  \""LockAcquisitionTimeout\"": \""10675199.02:48:05.4775807\"",\n  \""LockAcquisitionPollingInterval\"": \""00:00:05\"",\n  \""ListenerLockRecoveryPollingInterval\"": \""00:01:00\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af89e-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.833 PM","QueuesOptions
+{
+  ""BatchSize"": 16,
+  ""NewBatchThreshold"": 8,
+  ""MaxPollingInterval"": ""00:01:00"",
+  ""MaxDequeueCount"": 5,
+  ""VisibilityTimeout"": ""00:00:00"",
+  ""MessageEncoding"": ""Base64""
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""QueuesOptions\n{\n  \""BatchSize\"": 16,\n  \""NewBatchThreshold\"": 8,\n  \""MaxPollingInterval\"": \""00:01:00\"",\n  \""MaxDequeueCount\"": 5,\n  \""VisibilityTimeout\"": \""00:00:00\"",\n  \""MessageEncoding\"": \""Base64\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af89c-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.832 PM","ConcurrencyOptions
+{
+  ""DynamicConcurrencyEnabled"": false,
+  ""MaximumFunctionConcurrency"": 500,
+  ""CPUThreshold"": 0.8,
+  ""SnapshotPersistenceEnabled"": true
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""ConcurrencyOptions\n{\n  \""DynamicConcurrencyEnabled\"": false,\n  \""MaximumFunctionConcurrency\"": 500,\n  \""CPUThreshold\"": 0.8,\n  \""SnapshotPersistenceEnabled\"": true\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af89a-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.831 PM","FunctionResultAggregatorOptions
+{
+  ""BatchSize"": 1000,
+  ""FlushTimeout"": ""00:00:30"",
+  ""IsEnabled"": true
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""FunctionResultAggregatorOptions\n{\n  \""BatchSize\"": 1000,\n  \""FlushTimeout\"": \""00:00:30\"",\n  \""IsEnabled\"": true\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af898-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.830 PM","LoggerFilterOptions
+{
+  ""MinLevel"": ""None"",
+  ""Rules"": [
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": ""Warning"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""Trace"",
+      ""Filter"": null
+    }
+  ]
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""LoggerFilterOptions\n{\n  \""MinLevel\"": \""None\"",\n  \""Rules\"": [\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Warning\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Trace\"",\n      \""Filter\"": null\n    }\n  ]\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af896-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.827 PM","LoggerFilterOptions
+{
+  ""MinLevel"": ""None"",
+  ""Rules"": [
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": ""Warning"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""Trace"",
+      ""Filter"": null
+    }
+  ]
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""LoggerFilterOptions\n{\n  \""MinLevel\"": \""None\"",\n  \""Rules\"": [\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Warning\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Trace\"",\n      \""Filter\"": null\n    }\n  ]\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af894-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.826 PM","ApplicationInsightsLoggerOptions
+{
+  ""SamplingSettings"": {
+    ""EvaluationInterval"": ""00:00:15"",
+    ""InitialSamplingPercentage"": 100.0,
+    ""MaxSamplingPercentage"": 100.0,
+    ""MaxTelemetryItemsPerSecond"": 20.0,
+    ""MinSamplingPercentage"": 0.1,
+    ""MovingAverageRatio"": 0.25,
+    ""SamplingPercentageDecreaseTimeout"": ""00:02:00"",
+    ""SamplingPercentageIncreaseTimeout"": ""00:15:00""
+  },
+  ""SamplingExcludedTypes"": ""Request"",
+  ""SamplingIncludedTypes"": null,
+  ""SnapshotConfiguration"": null,
+  ""EnablePerformanceCountersCollection"": true,
+  ""HttpAutoCollectionOptions"": {
+    ""EnableHttpTriggerExtendedInfoCollection"": true,
+    ""EnableW3CDistributedTracing"": true,
+    ""EnableResponseHeaderInjection"": true
+  },
+  ""LiveMetricsInitializationDelay"": ""00:00:15"",
+  ""EnableLiveMetrics"": true,
+  ""EnableLiveMetricsFilters"": false,
+  ""EnableQueryStringTracing"": false,
+  ""EnableDependencyTracking"": true,
+  ""DependencyTrackingOptions"": null,
+  ""TokenCredentialOptions"": null,
+  ""DiagnosticsEventListenerLogLevel"": null,
+  ""EnableAutocollectedMetricsExtractor"": false,
+  ""EnableMetricsCustomDimensionOptimization"": false,
+  ""EnableAdaptiveSamplingDelay"": true,
+  ""AdaptiveSamplingInitializationDelay"": ""00:00:15""
+}",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""ApplicationInsightsLoggerOptions\n{\n  \""SamplingSettings\"": {\n    \""EvaluationInterval\"": \""00:00:15\"",\n    \""InitialSamplingPercentage\"": 100.0,\n    \""MaxSamplingPercentage\"": 100.0,\n    \""MaxTelemetryItemsPerSecond\"": 20.0,\n    \""MinSamplingPercentage\"": 0.1,\n    \""MovingAverageRatio\"": 0.25,\n    \""SamplingPercentageDecreaseTimeout\"": \""00:02:00\"",\n    \""SamplingPercentageIncreaseTimeout\"": \""00:15:00\""\n  },\n  \""SamplingExcludedTypes\"": \""Request\"",\n  \""SamplingIncludedTypes\"": null,\n  \""SnapshotConfiguration\"": null,\n  \""EnablePerformanceCountersCollection\"": true,\n  \""HttpAutoCollectionOptions\"": {\n    \""EnableHttpTriggerExtendedInfoCollection\"": true,\n    \""EnableW3CDistributedTracing\"": true,\n    \""EnableResponseHeaderInjection\"": true\n  },\n  \""LiveMetricsInitializationDelay\"": \""00:00:15\"",\n  \""EnableLiveMetrics\"": true,\n  \""EnableLiveMetricsFilters\"": false,\n  \""EnableQueryStringTracing\"": false,\n  \""EnableDependencyTracking\"": true,\n  \""DependencyTrackingOptions\"": null,\n  \""TokenCredentialOptions\"": null,\n  \""DiagnosticsEventListenerLogLevel\"": null,\n  \""EnableAutocollectedMetricsExtractor\"": false,\n  \""EnableMetricsCustomDimensionOptimization\"": false,\n  \""EnableAdaptiveSamplingDelay\"": true,\n  \""AdaptiveSamplingInitializationDelay\"": \""00:00:15\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af893-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.818 PM","Host initialization: ConsecutiveErrors=0, StartupCount=3, OperationId=7dd36771-7ec3-4415-875a-1cd0525a394e",1,trace,"{""prop__startCount"":""3"",""prop__operationId"":""7dd36771-7ec3-4415-875a-1cd0525a394e"",""prop__attemptCount"":""0"",""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Host initialization: ConsecutiveErrors={attemptCount}, StartupCount={startCount}, OperationId={operationId}"",""LogLevel"":""Information"",""EventId"":""504"",""Category"":""Host.Startup"",""EventName"":""Initialization""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af891-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.817 PM","Initializing Host. OperationId: '7dd36771-7ec3-4415-875a-1cd0525a394e'.",1,trace,"{""prop__operationId"":""7dd36771-7ec3-4415-875a-1cd0525a394e"",""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Initializing Host. OperationId: '{operationId}'."",""LogLevel"":""Information"",""EventId"":""503"",""Category"":""Host.Startup"",""EventName"":""Initializing""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af88e-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.810 PM","registered http endpoint = https://mdftoparquet-demolake1.azurewebsites.net/runtime/webhooks/blobs",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""registered http endpoint = https://mdftoparquet-demolake1.azurewebsites.net/runtime/webhooks/blobs"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config.BlobsExtensionConfigProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af88d-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.712 PM","Initializing Warmup Extension.",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""Initializing Warmup Extension."",""LogLevel"":""Information"",""Category"":""Host.Triggers.Warmup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af88b-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:30:46.703 PM","The Dashboard setting is no longer supported. See https://aka.ms/functions-dashboard for details.",2,trace,"{""ProcessId"":""53"",""HostInstanceId"":""dac2bfc4-5ebf-4e76-8807-7b05c4647819"",""prop__{OriginalFormat}"":""The Dashboard setting is no longer supported. See https://aka.ms/functions-dashboard for details."",""LogLevel"":""Warning"",""Category"":""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.FunctionInstanceLogger""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865383310803239","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","e01af886-5291-11f0-9fa1-002248e475f0",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:29:15.223 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407532184618"",
+  ""computerName"": """",
+  ""processUptime"": 590113,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407532184618\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 590113,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,893023c82a27511d98aa76788d9bf995,41ce6265f6a6e22e,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","a57c22d3-5291-11f0-9fa3-6045bd183caa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:29:15.150 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407532184618"",
+  ""computerName"": """",
+  ""processUptime"": 590041,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407532184618\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 590041,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,06d1fd99ef06bf106a4f2b33f1c95465,f8cc17673fb98132,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","a57c22d2-5291-11f0-9fa3-6045bd183caa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:29:14.987 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407532184618"",
+  ""computerName"": """",
+  ""processUptime"": 589877,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407532184618\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 589877,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,216a6d71a7945a7978a907f0287f924e,0b80c8615d549028,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","a57c22d1-5291-11f0-9fa3-6045bd183caa",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:28:23.828 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407532184618"",
+  ""computerName"": """",
+  ""processUptime"": 538718,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407532184618\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 538718,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,abb17f81c9693e6cfc76ea3c6d44da06,3dfc50f52f11f787,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","8ea1423d-5291-11f0-be51-0022485ce958",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:27:46.911 PM","Host lock lease acquired by instance ID '00000000000000000000000032A1C6AF'.",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host lock lease acquired by instance ID '{websiteInstanceId}'."",""LogLevel"":""Information"",""EventId"":""337"",""Category"":""Host.General"",""EventName"":""PrimaryHostCoordinatorLockLeaseAcquired"",""prop__websiteInstanceId"":""00000000000000000000000032A1C6AF""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","7265cd22-5291-11f0-9fa3-002248e547ef",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:13.182 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407532184618"",
+  ""computerName"": """",
+  ""processUptime"": 408073,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407532184618\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 408073,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,ba25d1611ec5d564934373f305baf867,538dfaa80f5906fc,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf522-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.973 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407532184618"",
+  ""computerName"": """",
+  ""processUptime"": 406863,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407532184618\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 406863,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,75feda999c3ea6df194770237d3d17a4,4adc63f3d304574c,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf520-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.971 PM","Host Status: {
+  ""id"": ""mdftoparquet-demolake1"",
+  ""state"": ""Running"",
+  ""version"": ""4.1039.500.1"",
+  ""versionDetails"": ""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1"",
+  ""platformVersion"": """",
+  ""instanceId"": ""A4355765-638865407532184618"",
+  ""computerName"": """",
+  ""processUptime"": 406861,
+  ""functionAppContentEditingState"": ""NotAllowed"",
+  ""extensionBundle"": {
+    ""id"": ""Microsoft.Azure.Functions.ExtensionBundle"",
+    ""version"": ""4.23.1""
+  }
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host Status: {\n  \""id\"": \""mdftoparquet-demolake1\"",\n  \""state\"": \""Running\"",\n  \""version\"": \""4.1039.500.1\"",\n  \""versionDetails\"": \""4.1039.500-dev.1.0+f3334c3a7115930a49ecd3b0bc00039bb92afcf1\"",\n  \""platformVersion\"": \""\"",\n  \""instanceId\"": \""A4355765-638865407532184618\"",\n  \""computerName\"": \""\"",\n  \""processUptime\"": 406861,\n  \""functionAppContentEditingState\"": \""NotAllowed\"",\n  \""extensionBundle\"": {\n    \""id\"": \""Microsoft.Azure.Functions.ExtensionBundle\"",\n    \""version\"": \""4.23.1\""\n  }\n}"",""LogLevel"":""Information"",""Category"":""Host.Controllers.Host""}",,,6e829fce0586537cfa3083c639e433fc,393183a49ca4d211,,,,,,,PC,,,"0.0.0.0","Frankfurt Am Main",Hessen,Germany,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf51d-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.951 PM","Job host started",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Job host started"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf51b-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.950 PM","Host started (73ms)",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host started ({ms}ms)"",""LogLevel"":""Information"",""EventId"":""413"",""prop__ms"":""73"",""Category"":""Host.Startup"",""EventName"":""ScriptHostStarted""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf519-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.940 PM","Host initialized (62ms)",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host initialized ({ms}ms)"",""LogLevel"":""Information"",""EventId"":""412"",""prop__ms"":""62"",""Category"":""Host.Startup"",""EventName"":""ScriptHostInitialized""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf517-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.939 PM","Initializing function HTTP routes
+No HTTP routes mapped",1,trace,"{""prop__{OriginalFormat}"":""Initializing function HTTP routes\nNo HTTP routes mapped"",""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Script.WebHost.WebScriptHostHttpRoutesManager""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf515-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.938 PM","HttpOptions
+{
+  ""DynamicThrottlesEnabled"": false,
+  ""EnableChunkedRequestBinding"": false,
+  ""MaxConcurrentRequests"": -1,
+  ""MaxOutstandingRequests"": -1,
+  ""RoutePrefix"": ""api""
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""HttpOptions\n{\n  \""DynamicThrottlesEnabled\"": false,\n  \""EnableChunkedRequestBinding\"": false,\n  \""MaxConcurrentRequests\"": -1,\n  \""MaxOutstandingRequests\"": -1,\n  \""RoutePrefix\"": \""api\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf513-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.931 PM","Found the following functions:
+Host.Functions.ProcessMdfToParquet",1,trace,"{""prop__{OriginalFormat}"":""Found the following functions:\nHost.Functions.ProcessMdfToParquet"",""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf511-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.894 PM","Generating 1 job function(s)",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Generating 1 job function(s)"",""LogLevel"":""Information"",""Category"":""Host.Startup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf50f-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.894 PM","Worker process started and initialized.",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Worker process started and initialized."",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Script.Workers.Rpc.RpcFunctionInvocationDispatcher""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf50d-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.882 PM","1 functions loaded",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""{count} functions loaded"",""prop__count"":""1"",""LogLevel"":""Information"",""EventId"":""315"",""Category"":""Host.Startup"",""EventName"":""FunctionMetadataManagerFunctionsLoaded""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf50a-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.882 PM","0 functions found (Custom)",1,trace,"{""prop__provider"":""Custom"",""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""{count} functions found ({provider})"",""prop__count"":""0"",""LogLevel"":""Information"",""EventId"":""327"",""Category"":""Host.Startup"",""EventName"":""FunctionsReturnedByProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf508-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.881 PM","Reading functions metadata (Custom)",1,trace,"{""prop__provider"":""Custom"",""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Reading functions metadata ({provider})"",""LogLevel"":""Information"",""EventId"":""326"",""Category"":""Host.Startup"",""EventName"":""ReadingFunctionMetadataFromProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf506-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.877 PM","Loading functions metadata",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Loading functions metadata"",""LogLevel"":""Information"",""EventId"":""314"",""Category"":""Host.Startup"",""EventName"":""FunctionMetadataManagerLoadingFunctionsMetadata""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf504-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.876 PM","Starting Host (HostId=mdftoparquet-demolake1, InstanceId=df61894d-f4cd-42e3-a768-52bceac44bf7, Version=4.1039.500.1, ProcessId=49, AppDomainId=1, InDebugMode=True, InDiagnosticMode=False, FunctionsExtensionVersion=~4)",1,trace,"{""prop__hostId"":""mdftoparquet-demolake1"",""prop__extensionVersion"":""~4"",""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Starting Host (HostId={hostId}, InstanceId={instanceId}, Version={version}, ProcessId={processId}, AppDomainId={appDomainId}, InDebugMode={inDebugMode}, InDiagnosticMode={inDiagnosticMode}, FunctionsExtensionVersion={extensionVersion})"",""prop__inDiagnosticMode"":""False"",""prop__inDebugMode"":""True"",""LogLevel"":""Information"",""EventId"":""401"",""prop__appDomainId"":""1"",""Category"":""Host.Startup"",""prop__processId"":""49"",""prop__instanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""EventName"":""StartingHost"",""prop__version"":""4.1039.500.1""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf502-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.875 PM","Starting JobHost",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Starting JobHost"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.JobHostService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf500-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.874 PM","ScaleOptions
+{
+  ""ScaleMetricsMaxAge"": ""00:02:00"",
+  ""ScaleMetricsSampleInterval"": ""00:00:10"",
+  ""MetricsPurgeEnabled"": true,
+  ""IsTargetScalingEnabled"": true,
+  ""IsRuntimeScalingEnabled"": false
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""ScaleOptions\n{\n  \""ScaleMetricsMaxAge\"": \""00:02:00\"",\n  \""ScaleMetricsSampleInterval\"": \""00:00:10\"",\n  \""MetricsPurgeEnabled\"": true,\n  \""IsTargetScalingEnabled\"": true,\n  \""IsRuntimeScalingEnabled\"": false\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4ff-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.874 PM","BlobsOptions
+{
+  ""MaxDegreeOfParallelism"": 8,
+  ""PoisonBlobThreshold"": 5
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""BlobsOptions\n{\n  \""MaxDegreeOfParallelism\"": 8,\n  \""PoisonBlobThreshold\"": 5\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4fd-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.873 PM","SingletonOptions
+{
+  ""LockPeriod"": ""00:00:15"",
+  ""ListenerLockPeriod"": ""00:01:00"",
+  ""LockAcquisitionTimeout"": ""10675199.02:48:05.4775807"",
+  ""LockAcquisitionPollingInterval"": ""00:00:05"",
+  ""ListenerLockRecoveryPollingInterval"": ""00:01:00""
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""SingletonOptions\n{\n  \""LockPeriod\"": \""00:00:15\"",\n  \""ListenerLockPeriod\"": \""00:01:00\"",\n  \""LockAcquisitionTimeout\"": \""10675199.02:48:05.4775807\"",\n  \""LockAcquisitionPollingInterval\"": \""00:00:05\"",\n  \""ListenerLockRecoveryPollingInterval\"": \""00:01:00\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4fc-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.873 PM","QueuesOptions
+{
+  ""BatchSize"": 16,
+  ""NewBatchThreshold"": 8,
+  ""MaxPollingInterval"": ""00:01:00"",
+  ""MaxDequeueCount"": 5,
+  ""VisibilityTimeout"": ""00:00:00"",
+  ""MessageEncoding"": ""Base64""
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""QueuesOptions\n{\n  \""BatchSize\"": 16,\n  \""NewBatchThreshold\"": 8,\n  \""MaxPollingInterval\"": \""00:01:00\"",\n  \""MaxDequeueCount\"": 5,\n  \""VisibilityTimeout\"": \""00:00:00\"",\n  \""MessageEncoding\"": \""Base64\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4fb-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.873 PM","ConcurrencyOptions
+{
+  ""DynamicConcurrencyEnabled"": false,
+  ""MaximumFunctionConcurrency"": 500,
+  ""CPUThreshold"": 0.8,
+  ""SnapshotPersistenceEnabled"": true
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""ConcurrencyOptions\n{\n  \""DynamicConcurrencyEnabled\"": false,\n  \""MaximumFunctionConcurrency\"": 500,\n  \""CPUThreshold\"": 0.8,\n  \""SnapshotPersistenceEnabled\"": true\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4fa-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.872 PM","FunctionResultAggregatorOptions
+{
+  ""BatchSize"": 1000,
+  ""FlushTimeout"": ""00:00:30"",
+  ""IsEnabled"": true
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""FunctionResultAggregatorOptions\n{\n  \""BatchSize\"": 1000,\n  \""FlushTimeout\"": \""00:00:30\"",\n  \""IsEnabled\"": true\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f9-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.871 PM","LoggerFilterOptions
+{
+  ""MinLevel"": ""None"",
+  ""Rules"": [
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": ""Warning"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""Trace"",
+      ""Filter"": null
+    }
+  ]
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""LoggerFilterOptions\n{\n  \""MinLevel\"": \""None\"",\n  \""Rules\"": [\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Warning\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Trace\"",\n      \""Filter\"": null\n    }\n  ]\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f8-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.871 PM","LoggerFilterOptions
+{
+  ""MinLevel"": ""None"",
+  ""Rules"": [
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": ""Warning"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": null,
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""None"",
+      ""Filter"": null
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": null,
+      ""Filter"": ""<AddFilter>b__0""
+    },
+    {
+      ""ProviderName"": ""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider"",
+      ""CategoryName"": null,
+      ""LogLevel"": ""Trace"",
+      ""Filter"": null
+    }
+  ]
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""LoggerFilterOptions\n{\n  \""MinLevel\"": \""None\"",\n  \""Rules\"": [\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Warning\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": null,\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""None\"",\n      \""Filter\"": null\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": null,\n      \""Filter\"": \""<AddFilter>b__0\""\n    },\n    {\n      \""ProviderName\"": \""Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\"",\n      \""CategoryName\"": null,\n      \""LogLevel\"": \""Trace\"",\n      \""Filter\"": null\n    }\n  ]\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f7-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.870 PM","ApplicationInsightsLoggerOptions
+{
+  ""SamplingSettings"": {
+    ""EvaluationInterval"": ""00:00:15"",
+    ""InitialSamplingPercentage"": 100.0,
+    ""MaxSamplingPercentage"": 100.0,
+    ""MaxTelemetryItemsPerSecond"": 20.0,
+    ""MinSamplingPercentage"": 0.1,
+    ""MovingAverageRatio"": 0.25,
+    ""SamplingPercentageDecreaseTimeout"": ""00:02:00"",
+    ""SamplingPercentageIncreaseTimeout"": ""00:15:00""
+  },
+  ""SamplingExcludedTypes"": ""Request"",
+  ""SamplingIncludedTypes"": null,
+  ""SnapshotConfiguration"": null,
+  ""EnablePerformanceCountersCollection"": true,
+  ""HttpAutoCollectionOptions"": {
+    ""EnableHttpTriggerExtendedInfoCollection"": true,
+    ""EnableW3CDistributedTracing"": true,
+    ""EnableResponseHeaderInjection"": true
+  },
+  ""LiveMetricsInitializationDelay"": ""00:00:15"",
+  ""EnableLiveMetrics"": true,
+  ""EnableLiveMetricsFilters"": false,
+  ""EnableQueryStringTracing"": false,
+  ""EnableDependencyTracking"": true,
+  ""DependencyTrackingOptions"": null,
+  ""TokenCredentialOptions"": null,
+  ""DiagnosticsEventListenerLogLevel"": null,
+  ""EnableAutocollectedMetricsExtractor"": false,
+  ""EnableMetricsCustomDimensionOptimization"": false,
+  ""EnableAdaptiveSamplingDelay"": true,
+  ""AdaptiveSamplingInitializationDelay"": ""00:00:15""
+}",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""ApplicationInsightsLoggerOptions\n{\n  \""SamplingSettings\"": {\n    \""EvaluationInterval\"": \""00:00:15\"",\n    \""InitialSamplingPercentage\"": 100.0,\n    \""MaxSamplingPercentage\"": 100.0,\n    \""MaxTelemetryItemsPerSecond\"": 20.0,\n    \""MinSamplingPercentage\"": 0.1,\n    \""MovingAverageRatio\"": 0.25,\n    \""SamplingPercentageDecreaseTimeout\"": \""00:02:00\"",\n    \""SamplingPercentageIncreaseTimeout\"": \""00:15:00\""\n  },\n  \""SamplingExcludedTypes\"": \""Request\"",\n  \""SamplingIncludedTypes\"": null,\n  \""SnapshotConfiguration\"": null,\n  \""EnablePerformanceCountersCollection\"": true,\n  \""HttpAutoCollectionOptions\"": {\n    \""EnableHttpTriggerExtendedInfoCollection\"": true,\n    \""EnableW3CDistributedTracing\"": true,\n    \""EnableResponseHeaderInjection\"": true\n  },\n  \""LiveMetricsInitializationDelay\"": \""00:00:15\"",\n  \""EnableLiveMetrics\"": true,\n  \""EnableLiveMetricsFilters\"": false,\n  \""EnableQueryStringTracing\"": false,\n  \""EnableDependencyTracking\"": true,\n  \""DependencyTrackingOptions\"": null,\n  \""TokenCredentialOptions\"": null,\n  \""DiagnosticsEventListenerLogLevel\"": null,\n  \""EnableAutocollectedMetricsExtractor\"": false,\n  \""EnableMetricsCustomDimensionOptimization\"": false,\n  \""EnableAdaptiveSamplingDelay\"": true,\n  \""AdaptiveSamplingInitializationDelay\"": \""00:00:15\""\n}"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f6-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.864 PM","Host initialization: ConsecutiveErrors=0, StartupCount=3, OperationId=2f72c16e-93fa-4110-a30b-24fd4c75e704",1,trace,"{""prop__startCount"":""3"",""prop__operationId"":""2f72c16e-93fa-4110-a30b-24fd4c75e704"",""prop__attemptCount"":""0"",""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Host initialization: ConsecutiveErrors={attemptCount}, StartupCount={startCount}, OperationId={operationId}"",""LogLevel"":""Information"",""EventId"":""504"",""Category"":""Host.Startup"",""EventName"":""Initialization""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f5-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.864 PM","Initializing Host. OperationId: '2f72c16e-93fa-4110-a30b-24fd4c75e704'.",1,trace,"{""prop__operationId"":""2f72c16e-93fa-4110-a30b-24fd4c75e704"",""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Initializing Host. OperationId: '{operationId}'."",""LogLevel"":""Information"",""EventId"":""503"",""Category"":""Host.Startup"",""EventName"":""Initializing""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f4-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.857 PM","registered http endpoint = https://mdftoparquet-demolake1.azurewebsites.net/runtime/webhooks/blobs",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""registered http endpoint = https://mdftoparquet-demolake1.azurewebsites.net/runtime/webhooks/blobs"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config.BlobsExtensionConfigProvider""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f3-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.740 PM","Initializing Warmup Extension.",1,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""Initializing Warmup Extension."",""LogLevel"":""Information"",""Category"":""Host.Triggers.Warmup""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f2-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:26:11.729 PM","The Dashboard setting is no longer supported. See https://aka.ms/functions-dashboard for details.",2,trace,"{""ProcessId"":""49"",""HostInstanceId"":""df61894d-f4cd-42e3-a768-52bceac44bf7"",""prop__{OriginalFormat}"":""The Dashboard setting is no longer supported. See https://aka.ms/functions-dashboard for details."",""LogLevel"":""Warning"",""Category"":""Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.FunctionInstanceLogger""}",,,,,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865407532184618","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","3ceaf4f1-5291-11f0-be51-0022485ce1c4",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:21:22.454 PM","Call to StopAsync complete, registered listeners are now stopped",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""255f3c0a-2b7a-4a99-b02f-653167793d92"",""prop__{OriginalFormat}"":""Call to StopAsync complete, registered listeners are now stopped"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Host.DrainModeManager""}",,,1e9dee6c43a9aeb2410aa712a409b71e,15ecd93691284d50,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865400414303048","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","90ec80c1-5290-11f0-be51-0022485cef37",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:21:22.453 PM","Calling StopAsync on the registered listeners",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""255f3c0a-2b7a-4a99-b02f-653167793d92"",""prop__{OriginalFormat}"":""Calling StopAsync on the registered listeners"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Host.DrainModeManager""}",,,1e9dee6c43a9aeb2410aa712a409b71e,15ecd93691284d50,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865400414303048","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","90ec80c0-5290-11f0-be51-0022485cef37",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"
+"6/26/2025, 1:21:22.450 PM","DrainMode mode enabled",1,trace,"{""ProcessId"":""53"",""HostInstanceId"":""255f3c0a-2b7a-4a99-b02f-653167793d92"",""prop__{OriginalFormat}"":""DrainMode mode enabled"",""LogLevel"":""Information"",""Category"":""Microsoft.Azure.WebJobs.Host.DrainModeManager""}",,,1e9dee6c43a9aeb2410aa712a409b71e,15ecd93691284d50,,,,,,,PC,,,"0.0.0.0",,,,,"mdftoparquet-demolake1","A4355765-638865400414303048","5400f38e-7d26-4943-aa35-0bf797d2e5b3","/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1","0bb99df7-82bd-46e3-8e97-b1496082273f","azurefunctions: 4.1039.500.1","90ec80bc-5290-11f0-be51-0022485cef37",1,"/subscriptions/714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e/resourcegroups/terraform-group-7/providers/microsoft.insights/components/appinsights-demolake1"

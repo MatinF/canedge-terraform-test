@@ -4,3 +4,15 @@ chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegrou
 
 
 chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip mdf-to-parquet-azure-function-v3.0.7.zip
+
+
+traces
+| where timestamp > ago(0.1h)
+| where customDimensions.Category == "Host.Function.Console"
+| order by timestamp desc
+
+
+
+traces
+| where timestamp > ago(1h)
+| order by timestamp desc
