@@ -117,7 +117,7 @@ resource "azurerm_windows_function_app" "function_app" {
     "AzureWebJobsStorage"               = data.azurerm_storage_account.existing.primary_connection_string
     "StorageConnectionString"           = data.azurerm_storage_account.existing.primary_connection_string
     "InputContainerName"                = var.input_container_name
-    "OutputContainerName"               = var.output_container_name
+    "OutputContainerName"               = local.output_container_name
     "NotificationQueueName"             = var.notification_queue_name
     "WEBSITE_RUN_FROM_PACKAGE"          = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
     "NotificationEmail"                 = var.email_address

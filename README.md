@@ -13,14 +13,12 @@ This repository provides Terraform configurations to automate the deployment of 
 
 1. Log in to [Azure](https://portal.azure.com/#home)
 3. Click on the Cloud Shell icon (>_) to open Cloud Shell (top right) and select 'Bash'
-4. Once Cloud Shell is open, run the following command to clone this repository:
+4. Once Cloud Shell is open, run below command to clone this repository (paste via **ctrl+shift+v**):
 
 ```bash
 cd ~ && rm -rf canedge-azure-cloud-terraform && git clone https://github.com/CSS-Electronics/canedge-azure-cloud-terraform.git && cd canedge-azure-cloud-terraform
 ```
 
-> [!NOTE]  
-> To paste the command, right-click and select 'Paste as plain text'
 
 &nbsp;
 
