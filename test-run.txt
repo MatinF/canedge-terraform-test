@@ -1,0 +1,3 @@
+cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/canedge-terraform-test.git && cd canedge-terraform-test
+
+chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegroup terraform-group --storageaccount terraformsacc1 --region germanywestcentral --bucket canedge-test-container-20

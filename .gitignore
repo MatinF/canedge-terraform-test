@@ -1,0 +1,22 @@
+# Ignore any files with AGENT in the name
+*AGENT*
+
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+crash.log
+
+# Local .terraform directories
+**/.terraform/*
+
+# Ignore override files as they are usually used to override resources locally
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
