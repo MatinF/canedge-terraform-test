@@ -37,6 +37,21 @@ NOTIFICATION_QUEUE="notifications"
 FUNCTION_APP_NAME=""
 REGION=""
 
+# Function to restart the Azure Function App after deployment
+restart_function_app() {
+  local function_app_name=$1
+  local resource_group=$2
+  
+  echo "\nRestarting Azure Function App: $function_app_name..."
+  az functionapp restart --name "$function_app_name" --resource-group "$resource_group"
+  
+  if [ $? -eq 0 ]; then
+    echo "Function App restart successful."
+  else
+    echo "Warning: Function App restart failed. You may need to restart it manually from the Azure Portal."
+  fi
+}
+
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -278,4 +293,11 @@ echo "The MDF-to-Parquet pipeline has been successfully deployed!"
 echo "Any MF4 files uploaded to the input container will be automatically processed to Parquet format and stored in the output container."
 echo "Notifications will be sent to: $EMAIL_ADDRESS"
 echo
+
+# Restart the function app to ensure changes are recognized
+FUNCTION_APP=$(echo $TERRAFORM_OUTPUT | jq -r '.function_app_name.value')
+if [ ! -z "$FUNCTION_APP" ]; then
+  restart_function_app "$FUNCTION_APP" "$RESOURCE_GROUP_NAME"
+fi
+
 echo

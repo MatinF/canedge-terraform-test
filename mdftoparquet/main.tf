@@ -213,25 +213,26 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
     "Microsoft.Storage.BlobCreated"
   ]
 
-  # Primary filter for MF4 files
+  # Filter for blob path prefix - common for all MF files
   subject_filter {
     subject_begins_with = "/blobServices/default/containers/${var.input_container_name}/blobs/"
-    subject_ends_with   = ".MF4"
     case_sensitive      = false
   }
 
-  # Case-insensitive file extension matching using advanced filters
+  # Case-insensitive MF file extension matching using advanced filters
+  # This allows matching multiple extensions: MF4, MFC, MFE, MFM 
   advanced_filter {
     string_ends_with {
       key = "subject"
-      values = [".MF4", ".mf4"]
+      values = [".MF4", ".MFC", ".MFE", ".MFM"]
     }
   }
   
-  # Use Event Grid with dead letter queue to avoid webhook validation issues
-  storage_queue_endpoint {
-    storage_account_id = data.azurerm_storage_account.existing.id
-    queue_name        = var.notification_queue_name
+  # Use Event Grid webhook to directly trigger the function
+  webhook_endpoint {
+    url = "https://${azurerm_linux_function_app.function_app.default_hostname}/api/ProcessMdfToParquet"
+    max_events_per_batch = 1
+    preferred_batch_size_in_kilobytes = 64
   }
 
   # Disable retries - if function fails, don't retry
@@ -249,7 +250,7 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
   # Lifecycle management for Event Grid subscription
   lifecycle {
     ignore_changes = [
-      storage_queue_endpoint
+      webhook_endpoint
     ]
   }
 }
