@@ -1,6 +1,6 @@
 cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/canedge-terraform-test.git && cd canedge-terraform-test
 
-chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegroup terraform-group-6 --storageaccount terraformsacc6 --region germanywestcentral --container canedge-test-container-26 --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
+chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --region germanywestcentral --container canedge-test-container-26 --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
 
 
-chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-6 --storageaccount terraformsacc6 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip mdf-to-parquet-azure-function-v3.0.7.zip
+chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip mdf-to-parquet-azure-function-v3.0.7.zip

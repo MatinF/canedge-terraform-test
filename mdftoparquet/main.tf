@@ -109,10 +109,15 @@ resource "azurerm_linux_function_app" "function_app" {
     "FUNCTIONS_WORKER_RUNTIME"          = "python"
     "FUNCTIONS_EXTENSION_VERSION"       = "~4" # Latest version
     "SCM_DO_BUILD_DURING_DEPLOYMENT"   = "true"
-    "INPUT_CONTAINER_NAME"              = var.input_container_name
-    "OUTPUT_CONTAINER_NAME"            = local.output_container_name
-    "NOTIFICATION_QUEUE_NAME"          = var.notification_queue_name
-    "EMAIL_RECIPIENT"                  = var.email_recipient
+    "AzureWebJobsStorage"               = data.azurerm_storage_account.existing.primary_connection_string
+    "StorageConnectionString"           = data.azurerm_storage_account.existing.primary_connection_string
+    "InputContainerName"                = var.input_container_name
+    "OutputContainerName"               = local.output_container_name
+    "NotificationQueueName"             = var.notification_queue_name
+    "WEBSITE_RUN_FROM_PACKAGE"          = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
+    "NotificationEmail"                 = var.email_recipient
+    "APPINSIGHTS_INSTRUMENTATIONKEY"    = azurerm_application_insights.insights.instrumentation_key
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
   }
 
   site_config {
@@ -122,19 +127,6 @@ resource "azurerm_linux_function_app" "function_app" {
     
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
-  }
-
-  app_settings = {
-    "FUNCTIONS_WORKER_RUNTIME"          = "dotnet"
-    "AzureWebJobsStorage"               = data.azurerm_storage_account.existing.primary_connection_string
-    "StorageConnectionString"           = data.azurerm_storage_account.existing.primary_connection_string
-    "InputContainerName"                = var.input_container_name
-    "OutputContainerName"               = local.output_container_name
-    "NotificationQueueName"             = var.notification_queue_name
-    "WEBSITE_RUN_FROM_PACKAGE"          = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
-    "NotificationEmail"                 = var.email_address
-    "APPINSIGHTS_INSTRUMENTATIONKEY"    = azurerm_application_insights.insights.instrumentation_key
-    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
   }
 }
 
