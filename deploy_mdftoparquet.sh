@@ -174,9 +174,16 @@ if [ -z "$USER_SUBSCRIPTION_ID" ]; then
   fi
   echo "✓ Using default subscription: $SUBSCRIPTION_ID"
 else
-  # Use the user-provided subscription ID
+  # Use the user-provided subscription ID and set it as active
   SUBSCRIPTION_ID="$USER_SUBSCRIPTION_ID"
   echo "✓ Using specified subscription: $SUBSCRIPTION_ID"
+  echo "Setting specified subscription as active..."
+  az account set --subscription "$SUBSCRIPTION_ID"
+  if [ $? -ne 0 ]; then
+    echo "❌ Failed to set subscription. Verify the subscription ID is correct."
+    exit 1
+  fi
+  echo "✓ Subscription set successfully"
 fi
 
 # Check if storage account exists and function zip file is in the container
