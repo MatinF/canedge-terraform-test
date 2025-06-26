@@ -115,7 +115,7 @@ resource "azurerm_linux_function_app" "function_app" {
     "OutputContainerName"               = local.output_container_name
     "NotificationQueueName"             = var.notification_queue_name
     "WEBSITE_RUN_FROM_PACKAGE"          = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
-    "NotificationEmail"                 = var.email_recipient
+    "NotificationEmail"                 = var.email_address
     "APPINSIGHTS_INSTRUMENTATIONKEY"    = azurerm_application_insights.insights.instrumentation_key
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
   }
