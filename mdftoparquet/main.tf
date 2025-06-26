@@ -228,20 +228,10 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
     }
   }
   
-  # Use webhook endpoint for function app with function key
-  webhook_endpoint {
-    url = "https://${azurerm_linux_function_app.function_app.default_hostname}/api/ProcessMdfToParquet?code=${data.azurerm_function_app_host_keys.keys.default_function_key}"
-    max_events_per_batch = 1
-    preferred_batch_size_in_kilobytes = 64
-    active_directory_tenant_id = null
-    active_directory_app_id_or_uri = null
-  }
-  
-  # Skip validation of the webhook endpoint
-  delivery_property {
-    header_name = "WebHook-Skip-Validation"
-    type = "Static"
-    value = "true"
+  # Use Event Grid with dead letter queue to avoid webhook validation issues
+  storage_queue_endpoint {
+    storage_account_id = data.azurerm_storage_account.existing.id
+    queue_name        = var.notification_queue_name
   }
 
   # Disable retries - if function fails, don't retry
@@ -256,10 +246,10 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
     data.azurerm_function_app_host_keys.keys
   ]
   
-  # Prevent changes to webhook configuration after creation to avoid validation issues
+  # Lifecycle management for Event Grid subscription
   lifecycle {
     ignore_changes = [
-      webhook_endpoint
+      storage_queue_endpoint
     ]
   }
 }
