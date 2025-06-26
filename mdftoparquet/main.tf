@@ -15,6 +15,10 @@ terraform {
       version = ">= 3.5.0"
     }
   }
+  # Store Terraform state in the input container
+  backend "azurerm" {
+    # These values will be provided via backend-config in the deployment script
+  }
 }
 
 provider "azurerm" {
@@ -29,17 +33,40 @@ data "azurerm_storage_account" "existing" {
   resource_group_name = var.resource_group_name
 }
 
-# Create output container for Parquet files
+# Create output container for Parquet files with name derived from input container
+locals {
+  output_container_name = "${var.input_container_name}-parquet"
+}
+
 resource "azurerm_storage_container" "output_container" {
-  name                  = var.output_container_name
+  name                  = local.output_container_name
   storage_account_id    = data.azurerm_storage_account.existing.id
   container_access_type = "private"
+  
+  # Prevent destruction of existing container
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      name,
+      storage_account_id,
+      container_access_type
+    ]
+  }
 }
 
 # Create a storage queue for notifications
 resource "azurerm_storage_queue" "notification_queue" {
   name                 = var.notification_queue_name
   storage_account_name = data.azurerm_storage_account.existing.name
+  
+  # Prevent destruction of existing queue
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      name,
+      storage_account_name
+    ]
+  }
 }
 
 # Create App Service Plan for Azure Functions (Consumption plan)
@@ -49,6 +76,18 @@ resource "azurerm_service_plan" "function_app_plan" {
   resource_group_name = var.resource_group_name
   os_type             = "Windows"
   sku_name            = "Y1" # Consumption plan
+  
+  # Prevent destruction of existing plan
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      name,
+      location,
+      resource_group_name,
+      os_type,
+      sku_name
+    ]
+  }
 }
 
 # Generate a random string for function app name if not provided
@@ -93,6 +132,17 @@ resource "azurerm_application_insights" "insights" {
   location            = var.location
   resource_group_name = var.resource_group_name
   application_type    = "web"
+  
+  # Prevent destruction of existing insights
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      name,
+      location,
+      resource_group_name,
+      application_type
+    ]
+  }
 }
 
 # Create SAS token for accessing the function ZIP

@@ -18,7 +18,7 @@ show_help() {
   echo "  -i, --id UNIQUE_ID                Unique ID for resources (REQUIRED)"
   echo "  -e, --email EMAIL_ADDRESS         Email for notifications (REQUIRED)"
   echo "  -z, --zip FUNCTION_ZIP_NAME       Function ZIP filename in input container (REQUIRED)"
-  echo "  -o, --output OUTPUT_CONTAINER     Output container name (default: parquet)"
+  # Output container is now automatically derived from input container name with '-parquet' suffix
   echo "  -n, --notify NOTIFICATION_QUEUE   Notification queue name (default: notifications)"
   echo "  -f, --function FUNCTION_APP_NAME  Optional: custom function app name"
   echo "  -r, --region REGION               Azure region (default: same as storage account)"
@@ -64,10 +64,7 @@ while [[ $# -gt 0 ]]; do
       FUNCTION_ZIP_NAME="$2"
       shift 2
       ;;
-    -o|--output)
-      OUTPUT_CONTAINER="$2"
-      shift 2
-      ;;
+    # Output container parameter removed as it's now derived from input container name with '-parquet' suffix
     -n|--notify)
       NOTIFICATION_QUEUE="$2"
       shift 2
@@ -208,18 +205,28 @@ echo "Deploying CANedge MDF-to-Parquet pipeline with the following configuration
 echo "   - Resource Group:      $RESOURCE_GROUP_NAME"
 echo "   - Storage Account:     $STORAGE_ACCOUNT_NAME"
 echo "   - Input Container:     $INPUT_CONTAINER_NAME"
-echo "   - Output Container:    $OUTPUT_CONTAINER"
+echo "   - Output Container:    ${INPUT_CONTAINER_NAME}-parquet    # Automatically derived"
 echo "   - Unique ID:           $UNIQUE_ID"
 echo "   - Email:               $EMAIL_ADDRESS"
 echo "   - Function ZIP:        $FUNCTION_ZIP_NAME"
 echo "   - Region:              $REGION"
 echo
 
+# Create terraform/state/mdftoparquet directory in input container
+echo "Setting up Terraform state storage..."
+
+# The state file itself will be created when Terraform initializes
+# No need to create placeholder files as Azure Blob handles this automatically
+
 # Initialize and apply Terraform
 cd "$(dirname "$0")/mdftoparquet" || exit 1
 
-echo "Initializing Terraform..."
-terraform init
+echo "Initializing Terraform with remote state..."
+terraform init \
+  -backend-config="resource_group_name=$RESOURCE_GROUP_NAME" \
+  -backend-config="storage_account_name=$STORAGE_ACCOUNT_NAME" \
+  -backend-config="container_name=$INPUT_CONTAINER_NAME" \
+  -backend-config="key=terraform/state/mdftoparquet/default.tfstate"
 
 echo "Applying Terraform configuration to create the MDF-to-Parquet pipeline..."
 terraform apply ${AUTO_APPROVE} \
@@ -227,7 +234,6 @@ terraform apply ${AUTO_APPROVE} \
   -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
   -var="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
   -var="input_container_name=${INPUT_CONTAINER_NAME}" \
-  -var="output_container_name=${OUTPUT_CONTAINER}" \
   -var="notification_queue_name=${NOTIFICATION_QUEUE}" \
   -var="location=${REGION}" \
   -var="unique_id=${UNIQUE_ID}" \
@@ -263,7 +269,7 @@ echo
 echo "Resource Group:       $(echo $TERRAFORM_OUTPUT | jq -r '.resource_group_name.value')"
 echo "Storage Account:      $(echo $TERRAFORM_OUTPUT | jq -r '.storage_account_name.value')"
 echo "Input Container:      $(echo $TERRAFORM_OUTPUT | jq -r '.input_container_name.value')"
-echo "Output Container:     $(echo $TERRAFORM_OUTPUT | jq -r '.output_container_name.value')"
+echo "Output Container:     $(echo $TERRAFORM_OUTPUT | jq -r '.output_container_name.value')   # Derived from input container name"
 echo "Function App:         $(echo $TERRAFORM_OUTPUT | jq -r '.function_app_name.value')"
 echo "Function App URL:     $(echo $TERRAFORM_OUTPUT | jq -r '.function_app_url.value')"
 echo "Notification Queue:   $(echo $TERRAFORM_OUTPUT | jq -r '.notification_queue_name.value')"

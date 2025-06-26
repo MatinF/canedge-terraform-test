@@ -42,11 +42,7 @@ variable "function_zip_name" {
   type        = string
 }
 
-variable "output_container_name" {
-  description = "Name of the output container for Parquet files"
-  type        = string
-  default     = "parquet"
-}
+# Output container name is now derived from input container name with '-parquet' suffix
 
 variable "notification_queue_name" {
   description = "Name of the notification queue"
