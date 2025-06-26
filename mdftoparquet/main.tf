@@ -228,9 +228,9 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
     }
   }
   
-  # Use Event Grid webhook to directly trigger the function
-  webhook_endpoint {
-    url = "https://${azurerm_linux_function_app.function_app.default_hostname}/api/ProcessMdfToParquet"
+  # Use Azure Function endpoint to directly trigger the function
+  azure_function_endpoint {
+    function_id = "${azurerm_linux_function_app.function_app.id}/functions/ProcessMdfToParquet"
     max_events_per_batch = 1
     preferred_batch_size_in_kilobytes = 64
   }
