@@ -1,8 +1,5 @@
 # Ignore any files with AGENT in the name
-*AGENT.md
-info/*
-google/*
-*.txt
+
 
 # Terraform files
 .terraform/
@@ -23,3 +20,5 @@ override.tf.json
 # OS generated files
 .DS_Store
 Thumbs.db
+
+*mdf2parquet_decode 

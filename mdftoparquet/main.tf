@@ -106,7 +106,7 @@ resource "azurerm_windows_function_app" "function_app" {
 
   site_config {
     application_stack {
-      dotnet_version = "v6.0"
+      dotnet_isolated_version = "v6.0"
     }
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
@@ -201,25 +201,52 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
   name                = "evgs-${var.unique_id}"
   system_topic        = azurerm_eventgrid_system_topic.storage_events.name
   resource_group_name = var.resource_group_name
+  
+  # Use standard Event Grid Schema
+  event_delivery_schema = "EventGridSchema"
 
   included_event_types = [
     "Microsoft.Storage.BlobCreated"
   ]
 
+  # Primary filter for MF4 files
   subject_filter {
     subject_begins_with = "/blobServices/default/containers/${var.input_container_name}/blobs/"
     subject_ends_with   = ".MF4"
     case_sensitive      = false
   }
 
+  # Case-insensitive file extension matching using advanced filters
+  advanced_filter {
+    string_ends_with {
+      key = "subject"
+      values = [".MF4", ".mf4"]
+    }
+  }
+  
+  # Use webhook endpoint for function app with function key
   webhook_endpoint {
     url = "https://${azurerm_windows_function_app.function_app.default_hostname}/api/ProcessMdfToParquet?code=${data.azurerm_function_app_host_keys.keys.default_function_key}"
     max_events_per_batch = 1
     preferred_batch_size_in_kilobytes = 64
   }
 
+  # Configure retry policy
   retry_policy {
     max_delivery_attempts = 30
     event_time_to_live    = 24
+  }
+  
+  # Wait for function app to be created before creating event subscription
+  depends_on = [
+    azurerm_windows_function_app.function_app,
+    data.azurerm_function_app_host_keys.keys
+  ]
+  
+  # Prevent changes to webhook configuration after creation to avoid validation issues
+  lifecycle {
+    ignore_changes = [
+      webhook_endpoint
+    ]
   }
 }
