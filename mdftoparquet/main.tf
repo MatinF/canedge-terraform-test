@@ -39,7 +39,7 @@ resource "azurerm_storage_container" "output_container" {
 # Create a storage queue for notifications
 resource "azurerm_storage_queue" "notification_queue" {
   name                 = var.notification_queue_name
-  storage_account_id   = data.azurerm_storage_account.existing.id
+  storage_account_name = data.azurerm_storage_account.existing.name
 }
 
 # Create App Service Plan for Azure Functions (Consumption plan)
