@@ -233,6 +233,15 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
     url = "https://${azurerm_linux_function_app.function_app.default_hostname}/api/ProcessMdfToParquet?code=${data.azurerm_function_app_host_keys.keys.default_function_key}"
     max_events_per_batch = 1
     preferred_batch_size_in_kilobytes = 64
+    active_directory_tenant_id = null
+    active_directory_app_id_or_uri = null
+  }
+  
+  # Skip validation of the webhook endpoint
+  delivery_property {
+    header_name = "WebHook-Skip-Validation"
+    type = "Bool"
+    value = "true"
   }
 
   # Disable retries - if function fails, don't retry
