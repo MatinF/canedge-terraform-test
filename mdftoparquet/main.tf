@@ -240,7 +240,7 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
   # Skip validation of the webhook endpoint
   delivery_property {
     header_name = "WebHook-Skip-Validation"
-    type = "Bool"
+    type = "Static"
     value = "true"
   }
 
