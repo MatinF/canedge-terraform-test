@@ -1,5 +1,8 @@
 # Ignore any files with AGENT in the name
-*AGENT*
+*AGENT.md
+info/*
+google/*
+*.txt
 
 # Terraform files
 .terraform/
