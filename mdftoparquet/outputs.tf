@@ -29,12 +29,12 @@ output "notification_queue_name" {
 
 output "function_app_name" {
   description = "Name of the Azure Function App"
-  value       = azurerm_windows_function_app.function_app.name
+  value       = azurerm_linux_function_app.function_app.name
 }
 
 output "function_app_url" {
   description = "URL of the Azure Function App"
-  value       = "https://${azurerm_windows_function_app.function_app.default_hostname}"
+  value       = "https://${azurerm_linux_function_app.function_app.default_hostname}"
 }
 
 output "application_insights_name" {

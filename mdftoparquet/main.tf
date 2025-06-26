@@ -74,7 +74,7 @@ resource "azurerm_service_plan" "function_app_plan" {
   name                = "plan-${var.unique_id}"
   location            = var.location
   resource_group_name = var.resource_group_name
-  os_type             = "Windows"
+  os_type             = "Linux"
   sku_name            = "Y1" # Consumption plan
   
   # Prevent destruction of existing plan
@@ -96,17 +96,18 @@ locals {
 }
 
 # Create Azure Function App
-resource "azurerm_windows_function_app" "function_app" {
+resource "azurerm_linux_function_app" "function_app" {
   name                       = local.function_app_name
   location                   = var.location
   resource_group_name        = var.resource_group_name
+  os_type                     = "linux"
   service_plan_id            = azurerm_service_plan.function_app_plan.id
   storage_account_name       = data.azurerm_storage_account.existing.name
   storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
 
   site_config {
     application_stack {
-      dotnet_isolated_version = "v6.0"
+      python_version = "3.11"
     }
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
@@ -191,9 +192,9 @@ resource "azurerm_eventgrid_system_topic" "storage_events" {
 
 # Get the function app host keys (this will only be available after the function app is deployed)
 data "azurerm_function_app_host_keys" "keys" {
-  name                = azurerm_windows_function_app.function_app.name
+  name                = azurerm_linux_function_app.function_app.name
   resource_group_name = var.resource_group_name
-  depends_on          = [azurerm_windows_function_app.function_app]
+  depends_on          = [azurerm_linux_function_app.function_app]
 }
 
 # Create Event Grid Subscription for input container events
@@ -226,20 +227,20 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
   
   # Use webhook endpoint for function app with function key
   webhook_endpoint {
-    url = "https://${azurerm_windows_function_app.function_app.default_hostname}/api/ProcessMdfToParquet?code=${data.azurerm_function_app_host_keys.keys.default_function_key}"
+    url = "https://${azurerm_linux_function_app.function_app.default_hostname}/api/ProcessMdfToParquet?code=${data.azurerm_function_app_host_keys.keys.default_function_key}"
     max_events_per_batch = 1
     preferred_batch_size_in_kilobytes = 64
   }
 
-  # Configure retry policy
+  # Disable retries - if function fails, don't retry
   retry_policy {
-    max_delivery_attempts = 30
-    event_time_to_live    = 24
+    max_delivery_attempts = 1
+    event_time_to_live    = 1
   }
   
   # Wait for function app to be created before creating event subscription
   depends_on = [
-    azurerm_windows_function_app.function_app,
+    azurerm_linux_function_app.function_app,
     data.azurerm_function_app_host_keys.keys
   ]
   
