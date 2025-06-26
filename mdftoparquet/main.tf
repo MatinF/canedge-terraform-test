@@ -100,15 +100,26 @@ resource "azurerm_linux_function_app" "function_app" {
   name                       = local.function_app_name
   location                   = var.location
   resource_group_name        = var.resource_group_name
-  os_type                     = "linux"
   service_plan_id            = azurerm_service_plan.function_app_plan.id
   storage_account_name       = data.azurerm_storage_account.existing.name
   storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
+  
+  # Configure app settings for Python function
+  app_settings = {
+    "FUNCTIONS_WORKER_RUNTIME"          = "python"
+    "FUNCTIONS_EXTENSION_VERSION"       = "~4" # Latest version
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"   = "true"
+    "INPUT_CONTAINER_NAME"              = var.input_container_name
+    "OUTPUT_CONTAINER_NAME"            = local.output_container_name
+    "NOTIFICATION_QUEUE_NAME"          = var.notification_queue_name
+    "EMAIL_RECIPIENT"                  = var.email_recipient
+  }
 
   site_config {
     application_stack {
       python_version = "3.11"
     }
+    
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
   }
