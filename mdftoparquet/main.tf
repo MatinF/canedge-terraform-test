@@ -108,8 +108,10 @@ resource "azurerm_linux_function_app" "function_app" {
   app_settings = {
     "FUNCTIONS_WORKER_RUNTIME"          = "python"
     "FUNCTIONS_EXTENSION_VERSION"       = "~4" # Latest version
-    "SCM_DO_BUILD_DURING_DEPLOYMENT"   = "true"
-    "ENABLE_ORYX_BUILD"                 = "true"
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"   = true
+    "ENABLE_ORYX_BUILD"                 = true
+    "BUILD_FLAGS"                      = "UseExpressBuild"
+    "XDG_CACHE_HOME"                   = "/tmp/.cache"
     "AzureWebJobsStorage"               = data.azurerm_storage_account.existing.primary_connection_string
     "StorageConnectionString"           = data.azurerm_storage_account.existing.primary_connection_string
     "InputContainerName"                = var.input_container_name
@@ -120,17 +122,24 @@ resource "azurerm_linux_function_app" "function_app" {
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
     "PYTHON_ENABLE_WORKER_EXTENSIONS"   = "1"
     "AzureWebJobsFeatureFlags"          = "EnableWorkerIndexing"
-    "WEBSITE_RUN_FROM_PACKAGE"          = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
   }
 
   site_config {
     application_stack {
       python_version = "3.11"
     }
-    
+    always_on = false
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
   }
+
+  identity {
+    type = "SystemAssigned"
+  }
+  
+  zip_deploy_file = data.archive_file.function_code.output_path
+  
+  depends_on = [data.archive_file.function_code]
 }
 
 # Create Application Insights for monitoring
@@ -152,39 +161,12 @@ resource "azurerm_application_insights" "insights" {
   }
 }
 
-# Create SAS token for accessing the function ZIP
-data "azurerm_storage_account_sas" "function_sas" {
-  connection_string = data.azurerm_storage_account.existing.primary_connection_string
-  https_only        = true
-  
-  resource_types {
-    service   = false
-    container = false
-    object    = true
-  }
-  
-  services {
-    blob  = true
-    queue = false
-    table = false
-    file  = false
-  }
-  
-  start  = timestamp()
-  expiry = timeadd(timestamp(), "8760h") # 1 year
-  
-  permissions {
-    read    = true
-    write   = false
-    delete  = false
-    list    = false
-    add     = false
-    create  = false
-    update  = false
-    process = false
-    tag     = false
-    filter  = false
-  }
+# Create archive of function code for deployment
+data "archive_file" "function_code" {
+  type        = "zip"
+  source_dir  = "${path.module}/../info/azure-function/updated-azure-function"
+  output_path = "${path.module}/function-deploy-package.zip"
+  excludes    = ["*.zip"]
 }
 
 # Create Event Grid System Topic for Blob Storage events

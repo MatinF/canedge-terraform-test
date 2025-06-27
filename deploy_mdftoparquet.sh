@@ -42,7 +42,7 @@ restart_function_app() {
   local function_app_name=$1
   local resource_group=$2
   
-  echo "\nRestarting Azure Function App: $function_app_name..."
+  echo "Restarting Azure Function App: $function_app_name..."
   az functionapp restart --name "$function_app_name" --resource-group "$resource_group"
   
   if [ $? -eq 0 ]; then
@@ -208,12 +208,13 @@ if [ "$CONTAINER_EXISTS" != "true" ]; then
   exit 1
 fi
 
-# Check if the function zip file exists
-ZIP_EXISTS=$(az storage blob exists --container-name "$INPUT_CONTAINER_NAME" --name "$FUNCTION_ZIP_NAME" --account-name "$STORAGE_ACCOUNT_NAME" --auth-mode key --account-key "$STORAGE_KEY" --query "exists" -o tsv)
-if [ "$ZIP_EXISTS" != "true" ]; then
-  echo "❌ Function ZIP file '$FUNCTION_ZIP_NAME' not found in container '$INPUT_CONTAINER_NAME'."
-  echo "Please upload the ZIP file to the input container before continuing."
-  exit 1
+# New approach: No need to check if zip exists in blob storage since we're using the local path
+echo "Using local function code from info/azure-function/updated-azure-function directory..."
+
+# Create a fresh function-deploy-package.zip from the updated-azure-function directory
+echo "Creating Function App deployment package..."
+if [ -f "./mdftoparquet/function-deploy-package.zip" ]; then
+    rm -f "./mdftoparquet/function-deploy-package.zip"
 fi
 
 # If region is not specified, get it from the storage account
