@@ -256,7 +256,6 @@ terraform apply ${AUTO_APPROVE} \
   -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
   -var="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
   -var="input_container_name=${INPUT_CONTAINER_NAME}" \
-  -var="notification_queue_name=${NOTIFICATION_QUEUE}" \
   -var="location=${REGION}" \
   -var="unique_id=${UNIQUE_ID}" \
   -var="email_address=${EMAIL_ADDRESS}" \
@@ -294,7 +293,6 @@ echo "Input Container:      $(echo $TERRAFORM_OUTPUT | jq -r '.input_container_n
 echo "Output Container:     $(echo $TERRAFORM_OUTPUT | jq -r '.output_container_name.value')"
 echo "Function App:         $(echo $TERRAFORM_OUTPUT | jq -r '.function_app_name.value')"
 echo "Function App URL:     $(echo $TERRAFORM_OUTPUT | jq -r '.function_app_url.value')"
-echo "Notification Queue:   $(echo $TERRAFORM_OUTPUT | jq -r '.notification_queue_name.value')"
 echo
 echo "The MDF-to-Parquet pipeline has been successfully deployed!"
 echo "Any MF4 files uploaded to the input container will be automatically processed to Parquet format and stored in the output container."

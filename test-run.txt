@@ -26,3 +26,7 @@ NOTE: there can be some delay e.g. 5 min even when using the logs tab (maybe the
 12:54: Upload split 3
 12:55: Now the function logs shows a result!
 
+
+
+
+To clean up the code, can you please restructure the code in the mdftoparquet library so that it contains a root set of terraform files (main, outputs, variables) and a modules/ folder. The modules/ folder should contain an output_container/ folder and a cloud_function/ folder

@@ -22,10 +22,6 @@ output "output_container_name" {
   value       = azurerm_storage_container.output_container.name
 }
 
-output "notification_queue_name" {
-  description = "Name of the notification queue"
-  value       = azurerm_storage_queue.notification_queue.name
-}
 
 output "function_app_name" {
   description = "Name of the Azure Function App"
