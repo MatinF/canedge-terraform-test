@@ -19,6 +19,8 @@ terraform {
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
+  # Explicitly set provider to use the subscription ID for all operations
+  skip_provider_registration = true
 }
 
 # Get existing resource group
@@ -32,15 +34,23 @@ data "azurerm_storage_account" "storage" {
   resource_group_name = var.resource_group_name
 }
 
-# Define the output container name and construct the filesystem ID
+# Define the output container name
 locals {
   output_container_name = "${var.input_container_name}-parquet"
-  
-  # Construct the filesystem ID using the known format for Azure Data Lake Gen2
-  # This is needed because the container already exists and we can't create it again
-  storage_data_lake_gen2_filesystem_id = "${data.azurerm_storage_account.storage.id}/blobServices/default/containers/${local.output_container_name}"
 }
 
+# Import the existing data lake filesystem as a managed resource
+# This allows us to reference it without trying to recreate it
+resource "azurerm_storage_data_lake_gen2_filesystem" "output" {
+  name               = local.output_container_name
+  storage_account_id = data.azurerm_storage_account.storage.id
+
+  # Important: tell Terraform this resource already exists
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = all
+  }
+}
 
 # Synapse workspace and resources
 module "synapse" {
@@ -49,6 +59,6 @@ module "synapse" {
   location                          = data.azurerm_resource_group.rg.location
   unique_id                         = var.unique_id
   storage_account_name              = var.storage_account_name
-  storage_data_lake_gen2_filesystem_id = local.storage_data_lake_gen2_filesystem_id
+  storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.output.id
   dataset_name                      = var.dataset_name
 }
