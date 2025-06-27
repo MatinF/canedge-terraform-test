@@ -126,9 +126,9 @@ resource "azurerm_linux_function_app" "function_app" {
   storage_account_name       = data.azurerm_storage_account.existing.name
   storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
   
-  # Configure app settings with dynamic hash to force redeployment when code changes
+  # Configure app settings with dynamic timestamp to force redeployment when ZIP file changes
   app_settings = merge(local.base_app_settings, {
-    "DEPLOYMENT_SOURCE_HASH" = data.archive_file.function_code.output_md5
+    "DEPLOYMENT_TIMESTAMP" = timestamp()
   })
 
   site_config {
@@ -145,9 +145,9 @@ resource "azurerm_linux_function_app" "function_app" {
   }
   
   # Deploy function code from the downloaded ZIP file
-  zip_deploy_file = local_file.function_zip.filename
+  zip_deploy_file = local.function_zip_path
   
-  depends_on = [local_file.function_zip]
+  depends_on = [null_resource.download_function_zip]
 }
 
 # Create Application Insights for monitoring
