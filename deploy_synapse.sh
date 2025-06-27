@@ -149,16 +149,34 @@ terraform init \
   -backend-config="container_name=$INPUT_CONTAINER" \
   -backend-config="key=terraform/state/synapse/default.tfstate"
 
-# Import the existing data lake filesystem resource
+# Create a terraform.tfvars file to avoid interactive prompts
+echo "Creating terraform.tfvars file..."
+cat > terraform.tfvars << EOF
+subscription_id = "$SUBSCRIPTION_ID"
+resource_group_name = "$RESOURCE_GROUP"
+storage_account_name = "$STORAGE_ACCOUNT"
+input_container_name = "$INPUT_CONTAINER"
+unique_id = "$UNIQUE_ID"
+dataset_name = "$DATASET_NAME"
+EOF
+
+# Set environment variables for Terraform to use
+export TF_VAR_subscription_id="$SUBSCRIPTION_ID"
+export TF_VAR_resource_group_name="$RESOURCE_GROUP"
+export TF_VAR_storage_account_name="$STORAGE_ACCOUNT"
+export TF_VAR_input_container_name="$INPUT_CONTAINER"
+export TF_VAR_unique_id="$UNIQUE_ID"
+export TF_VAR_dataset_name="$DATASET_NAME"
+export TF_IN_AUTOMATION="true"  # This prevents interactive prompts
+
 # Construct the Azure resource ID for the filesystem
 STORAGE_ACCOUNT_ID="/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT"
 FILESYSTEM_ID="$STORAGE_ACCOUNT_ID/blobServices/default/containers/${INPUT_CONTAINER}-parquet"
 
-echo "Importing existing data lake filesystem: $FILESYSTEM_ID"
-terraform import azurerm_storage_data_lake_gen2_filesystem.output "$FILESYSTEM_ID" || {
-  echo "Warning: Could not import data lake filesystem. It may already be in the state file or might not exist."
-  echo "Continuing with deployment..."
-}
+# Skip the import if we're having issues with it
+echo "Note: Skipping explicit import of the existing data lake filesystem."
+echo "The deployment will reference the existing filesystem through the resource block with lifecycle rules."
+
 
 # Apply the Terraform configuration
 echo "Applying Terraform configuration..."
