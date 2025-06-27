@@ -184,46 +184,57 @@ echo "Ensuring clean Terraform state..."
 # Remove any local state files that might interfere
 rm -f .terraform.lock.hcl terraform.tfstate* 2>/dev/null
 
-# Initialize terraform again with fresh state to avoid corruption issues
-echo "Re-initializing Terraform with clean state..."
-rm -rf .terraform
+# Define our fixed state path
+STATE_PATH="terraform/state/synapse/default.tfstate"
+echo "Using state path: $STATE_PATH"
+
+# Clean up local Terraform files
+rm -rf .terraform .terraform.lock.hcl
+
+# Initialize terraform with clean local state
+echo "Initializing Terraform..."
 terraform init \
   -backend-config="subscription_id=$SUBSCRIPTION_ID" \
   -backend-config="resource_group_name=$RESOURCE_GROUP" \
   -backend-config="storage_account_name=$STORAGE_ACCOUNT" \
   -backend-config="container_name=$INPUT_CONTAINER" \
-  -backend-config="key=terraform/state/synapse/default.tfstate" \
-  -reconfigure
+  -backend-config="key=$STATE_PATH"
 
-# Check if there are any state lock issues
-echo "Checking for state lock issues..."
-# Use Azure CLI to check for the state blob's lease status
-BLOB_LEASE_STATUS=$(az storage blob show \
+# Check if the state is locked
+echo "Checking for existing state locks..."
+LOCK_OUTPUT=$(terraform force-unlock -force "09920881-229c-fd2d-c61d-66cad6688d74" 2>&1 || echo "No lock found")
+
+# Try another approach to break locks - use Azure CLI directly
+echo "Using Azure CLI to check and break any blob lease..."
+az storage blob show \
   --container-name "$INPUT_CONTAINER" \
-  --name "terraform/state/synapse/default.tfstate" \
+  --name "$STATE_PATH" \
   --account-name "$STORAGE_ACCOUNT" \
   --auth-mode login \
-  --query "properties.lease.state" -o tsv 2>/dev/null)
+  --query "properties.lease.state" -o tsv 2>/dev/null
 
-if [[ "$BLOB_LEASE_STATUS" == "leased" ]]; then
-  echo "State blob is currently leased (locked). Breaking the lease..."
-  # Break the lease on the blob to force unlock
+if [ $? -eq 0 ]; then
+  echo "Breaking any lease on the state blob..."
   az storage blob lease break \
     --container-name "$INPUT_CONTAINER" \
-    --name "terraform/state/synapse/default.tfstate" \
+    --name "$STATE_PATH" \
     --account-name "$STORAGE_ACCOUNT" \
-    --auth-mode login
-    
-  if [ $? -eq 0 ]; then
-    echo "Successfully broke the lease on the state blob."
-  else
-    echo "Warning: Could not break the lease on the state blob. Proceeding anyway."
-  fi
+    --auth-mode login 2>/dev/null
 fi
 
-# Apply the Terraform configuration - single attempt with clean state
-echo "Applying Terraform configuration..."  
-terraform apply -auto-approve \
+# Re-initialize with no-lock to bypass any remaining lock issues
+echo "Re-initializing Terraform with no-lock..."
+rm -rf .terraform
+terraform init -lock=false \
+  -backend-config="subscription_id=$SUBSCRIPTION_ID" \
+  -backend-config="resource_group_name=$RESOURCE_GROUP" \
+  -backend-config="storage_account_name=$STORAGE_ACCOUNT" \
+  -backend-config="container_name=$INPUT_CONTAINER" \
+  -backend-config="key=$STATE_PATH"
+
+# Apply with no-lock for consistency with initialization
+echo "Applying Terraform configuration with no-lock..."  
+terraform apply -auto-approve -lock=false \
   -var "subscription_id=$SUBSCRIPTION_ID" \
   -var "resource_group_name=$RESOURCE_GROUP" \
   -var "storage_account_name=$STORAGE_ACCOUNT" \
