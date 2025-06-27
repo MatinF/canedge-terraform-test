@@ -4,6 +4,7 @@ import os
 import logging
 import azure.functions as func
 # from azure.storage.blob import BlobServiceClient
+import pandas as pd
 # from modules.mdf_to_parquet import mdf_to_parquet
 
 # Configure logging to reduce Azure SDK verbosity
@@ -12,11 +13,8 @@ import azure.functions as func
 # logging.getLogger('azure.storage').setLevel(logging.WARNING)
 
 # Cloud provider configuration
-logging.info("Trying to extract OS variables")
 storage_connection_string = os.getenv("StorageConnectionString")
 bucket_input = os.getenv("InputContainerName")
-logging.info(f"bucket_input: {bucket_input}")
-logging.info(f"storage_connection_string: {storage_connection_string}")
 
 cloud = "Azure"
 bucket_output = bucket_input + "-parquet"
@@ -28,5 +26,7 @@ app = func.FunctionApp()
 @app.function_name(name="ProcessMdfToParquet")
 @app.event_grid_trigger(arg_name="event")
 def MdfToParquet(event):
+    logging.info(f"bucket_input: {bucket_input}")
+    logging.info(f"storage_connection_string: {storage_connection_string}")
     logging.info(f"Processing Event Grid event: {event.event_type}")
     # mdf_to_parquet(cloud, storage_client, notification_client, event, bucket_input, bucket_output)

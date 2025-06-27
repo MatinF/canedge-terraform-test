@@ -104,19 +104,23 @@ resource "azurerm_linux_function_app" "function_app" {
   storage_account_name       = data.azurerm_storage_account.existing.name
   storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
   
-  # Configure app settings for Python function
+  # Configure app settings for Python function with enhanced dependency management
   app_settings = {
-    "FUNCTIONS_WORKER_RUNTIME"          = "python"
-    "FUNCTIONS_EXTENSION_VERSION"       = "~4" # Latest version
-    "SCM_DO_BUILD_DURING_DEPLOYMENT"   = "true"
-    "AzureWebJobsStorage"               = data.azurerm_storage_account.existing.primary_connection_string
-    "StorageConnectionString"           = data.azurerm_storage_account.existing.primary_connection_string
-    "InputContainerName"                = var.input_container_name
-    "OutputContainerName"               = local.output_container_name
-    "NotificationQueueName"             = var.notification_queue_name
-    "WEBSITE_RUN_FROM_PACKAGE"          = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
-    "NotificationEmail"                 = var.email_address
-    "APPINSIGHTS_INSTRUMENTATIONKEY"    = azurerm_application_insights.insights.instrumentation_key
+    "FUNCTIONS_WORKER_RUNTIME"              = "python"
+    "FUNCTIONS_EXTENSION_VERSION"           = "~4" # Latest version
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"       = "true"
+    "ENABLE_ORYX_BUILD"                     = "true"
+    "BUILD_FLAGS"                           = "UseExpressBuild"
+    "XDG_CACHE_HOME"                        = "/tmp/.cache"
+    "PYTHON_ISOLATE_WORKER_DEPENDENCIES"   = "1"
+    "AzureWebJobsStorage"                   = data.azurerm_storage_account.existing.primary_connection_string
+    "StorageConnectionString"               = data.azurerm_storage_account.existing.primary_connection_string
+    "InputContainerName"                    = var.input_container_name
+    "OutputContainerName"                   = local.output_container_name
+    "NotificationQueueName"                 = var.notification_queue_name
+    "WEBSITE_RUN_FROM_PACKAGE"              = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
+    "NotificationEmail"                     = var.email_address
+    "APPINSIGHTS_INSTRUMENTATIONKEY"        = azurerm_application_insights.insights.instrumentation_key
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
   }
 
