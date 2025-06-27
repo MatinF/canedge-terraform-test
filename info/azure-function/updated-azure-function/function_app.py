@@ -3,8 +3,8 @@
 import os
 import logging
 import azure.functions as func
-from azure.storage.blob import BlobServiceClient
-from modules.mdf_to_parquet import mdf_to_parquet
+# from azure.storage.blob import BlobServiceClient
+# from modules.mdf_to_parquet import mdf_to_parquet
 
 # Configure logging to reduce Azure SDK verbosity
 # logging.getLogger('azure').setLevel(logging.WARNING)
@@ -20,7 +20,7 @@ logging.info(f"storage_connection_string: {storage_connection_string}")
 
 cloud = "Azure"
 bucket_output = bucket_input + "-parquet"
-storage_client = BlobServiceClient.from_connection_string(storage_connection_string)
+# storage_client = BlobServiceClient.from_connection_string(storage_connection_string)
 notification_client = None
 
 app = func.FunctionApp()
@@ -29,4 +29,4 @@ app = func.FunctionApp()
 @app.event_grid_trigger(arg_name="event")
 def MdfToParquet(event):
     logging.info(f"Processing Event Grid event: {event.event_type}")
-    mdf_to_parquet(cloud, storage_client, notification_client, event, bucket_input, bucket_output)
+    # mdf_to_parquet(cloud, storage_client, notification_client, event, bucket_input, bucket_output)
