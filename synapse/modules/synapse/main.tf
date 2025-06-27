@@ -26,11 +26,7 @@ resource "azurerm_synapse_workspace" "synapse" {
   }
 }
 
-# Create output to expose the endpoint and password
-output "serverless_sql_endpoint" {
-  value = azurerm_synapse_workspace.synapse.connectivity_endpoints["sqlOnDemand"]
-}
-
+# Create output (moved to outputs.tf)
 output "sql_password" {
   value     = random_password.sql_password.result
   sensitive = true
