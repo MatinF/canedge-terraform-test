@@ -19,7 +19,6 @@ show_help() {
   echo "  -e, --email EMAIL_ADDRESS         Email for notifications (REQUIRED)"
   echo "  -z, --zip FUNCTION_ZIP_NAME       Function ZIP filename in input container (REQUIRED)"
   # Output container is now automatically derived from input container name with '-parquet' suffix
-  echo "  -n, --notify NOTIFICATION_QUEUE   Notification queue name (default: notifications)"
   echo "  -f, --function FUNCTION_APP_NAME  Optional: custom function app name"
   echo "  -r, --region REGION               Azure region (default: same as storage account)"
   echo "  -subid SUBSCRIPTION_ID            Azure Subscription ID (optional, default: current subscription)"
@@ -33,7 +32,6 @@ show_help() {
 # Default values
 AUTO_APPROVE="-auto-approve" # Auto-approve by default
 OUTPUT_CONTAINER="parquet"
-NOTIFICATION_QUEUE="notifications"
 FUNCTION_APP_NAME=""
 REGION=""
 
@@ -80,10 +78,6 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     # Output container parameter removed as it's now derived from input container name with '-parquet' suffix
-    -n|--notify)
-      NOTIFICATION_QUEUE="$2"
-      shift 2
-      ;;
     -f|--function)
       FUNCTION_APP_NAME="$2"
       shift 2
@@ -234,7 +228,6 @@ echo "Output Container:   ${INPUT_CONTAINER_NAME}-parquet"
 echo "Unique ID:          $UNIQUE_ID"
 echo "Email Address:      $EMAIL_ADDRESS"
 echo "Function ZIP:       [Using local source code]"
-echo "Notification Queue: $NOTIFICATION_QUEUE"
 echo "Function App Name:  $FUNCTION_APP_NAME"
 echo "Region:             $REGION"
 echo "Subscription ID:    $SUBSCRIPTION_ID"

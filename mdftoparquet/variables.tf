@@ -44,12 +44,6 @@ variable "function_zip_name" {
 
 # Output container name is now derived from input container name with '-parquet' suffix
 
-variable "notification_queue_name" {
-  description = "Name of the notification queue"
-  type        = string
-  default     = "notifications"
-}
-
 variable "function_app_name" {
   description = "Name of the Function App"
   type        = string

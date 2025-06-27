@@ -54,20 +54,7 @@ resource "azurerm_storage_container" "output_container" {
   }
 }
 
-# Create a storage queue for notifications
-resource "azurerm_storage_queue" "notification_queue" {
-  name                 = var.notification_queue_name
-  storage_account_name = data.azurerm_storage_account.existing.name
-  
-  # Prevent destruction of existing queue
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      name,
-      storage_account_name
-    ]
-  }
-}
+# Storage queue resource has been removed as we'll use Azure Monitor for notifications instead
 
 # Create App Service Plan for Azure Functions (Consumption plan)
 resource "azurerm_service_plan" "function_app_plan" {
@@ -106,7 +93,6 @@ locals {
     "StorageConnectionString"           = data.azurerm_storage_account.existing.primary_connection_string
     "InputContainerName"                = var.input_container_name
     "OutputContainerName"               = local.output_container_name
-    "NotificationQueueName"             = var.notification_queue_name
     "NotificationEmail"                 = var.email_address
     "APPINSIGHTS_INSTRUMENTATIONKEY"    = azurerm_application_insights.insights.instrumentation_key
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string

@@ -92,3 +92,27 @@ Replace:
 
 > [!NOTE]  
 > Make sure to upload the ZIP to your input bucket root before deployment 
+
+
+
+----------
+
+## Troubleshooting
+
+If you encounter issues with either deployment:
+
+- Make sure you have proper permissions in your Azure cloud
+- Try refreshing the page and restarting the shell (make sure to select 'Bash' mode)
+- For the MF4-to-Parquet and Synapse deployments, ensure the relevant function ZIP files are uploaded to your input bucket before deployment
+- Use unique identifiers with the `--id` parameter to avoid resource conflicts
+- When deploying the MF4-to-Parquet pipeline, it can take 5-10 min for the function to be fully deployed. You can then open the 'Logs' tab in the function in one tab and upload an MF4 test file to your input container to track the decoding results in real-time
+- If your function does not deploy properly within your Function App, check the Monitoring/Logs/KQL mode with below query for details:
+
+  ```
+  traces
+  | where timestamp > ago(0.1h)
+  | where customDimensions.Category == "Host.Function.Console"
+  | order by timestamp desc
+  ```
+
+- [Contact us](https://www.csselectronics.com/pages/contact-us) if you need deployment support

@@ -101,8 +101,6 @@ def get_log_file_object_paths(cloud, event, logger):
                 #             log_file_object_paths.append(Path(object_key))
             else:
                 data = event.get_json()
-                logger.info("FULL EVENT DATA:")
-                logger.info(data)      
                 url = data.get('url')
                 object_key = extract_blob_path(url)
                 logger.info(f"Extracted object key: {object_key}")
