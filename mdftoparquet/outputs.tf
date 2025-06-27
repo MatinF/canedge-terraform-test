@@ -19,31 +19,31 @@ output "input_container_name" {
 
 output "output_container_name" {
   description = "Name of the output container for Parquet files"
-  value       = azurerm_storage_container.output_container.name
+  value       = module.output_container.container_name
 }
 
 
 output "function_app_name" {
   description = "Name of the Azure Function App"
-  value       = azurerm_linux_function_app.function_app.name
+  value       = module.cloud_function.function_app_name
 }
 
 output "function_app_url" {
   description = "URL of the Azure Function App"
-  value       = "https://${azurerm_linux_function_app.function_app.default_hostname}"
+  value       = "https://${module.cloud_function.function_app_default_hostname}"
 }
 
 output "application_insights_name" {
   description = "Name of the Application Insights instance"
-  value       = azurerm_application_insights.insights.name
+  value       = module.cloud_function.application_insights_name
 }
 
 output "eventgrid_topic_name" {
   description = "Name of the Event Grid System Topic"
-  value       = azurerm_eventgrid_system_topic.storage_events.name
+  value       = module.cloud_function.eventgrid_topic_name
 }
 
 output "eventgrid_subscription_name" {
   description = "Name of the Event Grid Subscription"
-  value       = azurerm_eventgrid_system_topic_event_subscription.input_events.name
+  value       = module.cloud_function.eventgrid_subscription_name
 }

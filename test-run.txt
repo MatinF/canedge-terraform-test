@@ -3,30 +3,12 @@ cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/can
 chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --region germanywestcentral --container canedge-test-container-26 --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
 
 
-chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip test-function-23.zip --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
+chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip test-function-24.zip --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
+
+
 
 traces
 | where timestamp > ago(0.1h)
 | where customDimensions.Category == "Host.Function.Console"
 | order by timestamp desc
 
-
----------------
-
-Function not deployed: Issue with dependencies
-Function deployed, but not responding to triggers: Issue with function code breaking (but after dependencies)
-
-
-NOTE: there can be some delay e.g. 5 min even when using the logs tab (maybe the function has not fully booted)
-
-12:48: Terraform deployed (no manual restart)
-12:49: Uploaded split 1
-12:53: Still no update in logs, uploading split 2
-12:54: Still no update in logs - try to exit the log view and start it up again
-12:54: Upload split 3
-12:55: Now the function logs shows a result!
-
-
-
-
-To clean up the code, can you please restructure the code in the mdftoparquet library so that it contains a root set of terraform files (main, outputs, variables) and a modules/ folder. The modules/ folder should contain an output_container/ folder and a cloud_function/ folder

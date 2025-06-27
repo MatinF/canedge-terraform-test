@@ -1,5 +1,5 @@
 # MF4 decoder version: v24.10.17
-# Function script version: 1.3.0
+# Function script version: 1.4.0
 import os
 import logging
 import azure.functions as func
