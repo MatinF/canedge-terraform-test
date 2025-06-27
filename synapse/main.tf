@@ -28,10 +28,16 @@ data "azurerm_storage_account" "storage" {
   resource_group_name = var.resource_group_name
 }
 
-# Get output container as an existing Data Lake Gen2 filesystem
-data "azurerm_storage_data_lake_gen2_filesystem" "output" {
+# Reference the existing output container (parquet)
+resource "azurerm_storage_data_lake_gen2_filesystem" "output" {
   name               = "${var.input_container_name}-parquet"
   storage_account_id = data.azurerm_storage_account.storage.id
+  
+  # Adding lifecycle to prevent destroying the container as it likely already exists
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [name]
+  }
 }
 
 # Synapse workspace and resources
@@ -41,6 +47,6 @@ module "synapse" {
   location                          = data.azurerm_resource_group.rg.location
   unique_id                         = var.unique_id
   storage_account_name              = var.storage_account_name
-  storage_data_lake_gen2_filesystem_id = data.azurerm_storage_data_lake_gen2_filesystem.output.id
+  storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.output.id
   dataset_name                      = var.dataset_name
 }
