@@ -298,6 +298,12 @@ echo "The MDF-to-Parquet pipeline has been successfully deployed!"
 echo "Any MF4 files uploaded to the input container will be automatically processed to Parquet format and stored in the output container."
 echo "Notifications will be sent to: $EMAIL_ADDRESS"
 echo
+echo "IMPORTANT: If using a non-Azure AD email address for notifications, you must verify it:"
+echo "  1. Go to Azure Portal > Monitor > Action Groups"
+echo "  2. Select 'email-alerts-$UNIQUE_ID'"
+echo "  3. Check if email verification is needed (indicated by a warning icon)"
+echo "  4. The recipient must verify the email address to receive alerts"
+echo
 
 # Restart the function app to ensure changes are recognized
 FUNCTION_APP=$(echo $TERRAFORM_OUTPUT | jq -r '.function_app_name.value')

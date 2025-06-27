@@ -7,8 +7,3 @@ output "event_alert_id" {
   description = "The ID of the event alert rule"
   value       = azurerm_monitor_scheduled_query_rules_alert.new_event_alert.id
 }
-
-output "error_alert_id" {
-  description = "The ID of the error alert rule"
-  value       = azurerm_monitor_scheduled_query_rules_alert.error_alert.id
-}
