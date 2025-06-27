@@ -78,14 +78,32 @@ if [[ -z "$UNIQUE_ID" ]]; then
   exit 1
 fi
 
-# Set the Azure CLI to use the specified subscription
-echo "Setting Azure CLI to use subscription: $SUBSCRIPTION_ID"
+# Set the subscription context
+echo "Setting Azure subscription context to $SUBSCRIPTION_ID..."
 az account set --subscription "$SUBSCRIPTION_ID"
-if [ $? -ne 0 ]; then
-  echo "Error: Failed to set Azure CLI to use subscription: $SUBSCRIPTION_ID"
-  echo "Please make sure you are logged in to Azure CLI and the subscription ID is valid."
+
+# Check if subscription exists
+echo "Verifying subscription ID: $SUBSCRIPTION_ID..."
+SUB_NAME=$(az account show --subscription "$SUBSCRIPTION_ID" --query "name" -o tsv 2>/dev/null)
+if [ -z "$SUB_NAME" ]; then
+  echo "Error: Subscription ID $SUBSCRIPTION_ID not found or not accessible"
   exit 1
+else
+  echo "Found subscription: $SUB_NAME"
 fi
+
+# Register the Microsoft.Synapse resource provider
+echo "Registering the Microsoft.Synapse resource provider..."
+az provider register --namespace Microsoft.Synapse
+echo "Waiting for registration to complete (this may take a few minutes)..."
+az provider show -n Microsoft.Synapse --query "registrationState"
+
+# Wait for registration to complete
+while [ "$(az provider show -n Microsoft.Synapse --query "registrationState" -o tsv)" != "Registered" ]; do
+  echo "Still registering Microsoft.Synapse provider... (this can take several minutes)"
+  sleep 10
+done
+echo "Microsoft.Synapse provider is now registered."
 
 # Verify that the resource group exists
 echo "Verifying resource group: $RESOURCE_GROUP"
