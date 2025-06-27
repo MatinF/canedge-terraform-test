@@ -34,7 +34,7 @@ We'll leverage Azure Monitor and Application Insights to detect specific log pat
 
 ## Step 1: Modify Azure Function Code
 
-The function app code is stored in 
+The function app code is stored in info/azure-function/.
 
 Update the `modules/cloud_functions.py` file in the Azure Function App to emit specific log patterns that can trigger alerts:
 
@@ -43,10 +43,7 @@ Update the `modules/cloud_functions.py` file in the Azure Function App to emit s
 
 ```python
 elif cloud == "Azure":
-    # Use the same log pattern approach as Google implementation
     logger.info(f"NEW EVENT: {message}")
-    # Optional: Add additional structured logging that Azure Monitor can filter on
-    logger.info(f"ALERT_TYPE=NOTIFICATION ALERT_SUBJECT={subject} ALERT_MESSAGE={message}")
     return True
 ```
 
@@ -54,7 +51,7 @@ This approach uses specific log patterns that Azure Monitor can detect, similar 
 
 ## Step 2: Create Azure Monitor Resources in Terraform
 
-Add the following resources to the `mdftoparquet/main.tf` file:
+Add the following resources to the `mdftoparquet` folder in an alert.tf file, which can then be referenced from within the main.tf file. Make sure the email address passed to this notification system is the one provided by the user as part of the deploy_mdftoparquet.sh step as an input.
 
 1. Create an Azure Monitor Action Group for email notifications:
 
@@ -110,7 +107,7 @@ resource "azurerm_monitor_scheduled_query_rules_alert" "new_event_alert" {
 }
 ```
 
-3. (Optional) Add a Log Alert Rule to detect any errors:
+3. Also add a Log Alert Rule to detect any errors:
 
 ```hcl
 # Alert rule for ERROR logs
@@ -147,82 +144,5 @@ resource "azurerm_monitor_scheduled_query_rules_alert" "error_alert" {
 }
 ```
 
-## Step 3: Update Deployment Variables (Optional)
 
-If we want to make alert configuration customizable, add optional variables to the `variables.tf` file:
-
-```hcl
-variable "alert_frequency" {
-  description = "Frequency in minutes for checking alert conditions"
-  type        = number
-  default     = 5
-}
-
-variable "alert_time_window" {
-  description = "Time window in minutes for alert queries"
-  type        = number
-  default     = 10
-}
-
-variable "enable_error_alerts" {
-  description = "Whether to enable alerting on function errors"
-  type        = bool
-  default     = true
-}
-```
-
-## Step 4: Update the Deployment Script (Optional)
-
-Add options to the `deploy_mdftoparquet.sh` script to control alerting:
-
-```bash
-# Add these to the show_help function
-echo "  --alert-frequency MINUTES        Alert check frequency in minutes (default: 5)"
-echo "  --alert-window MINUTES           Alert time window in minutes (default: 10)"
-echo "  --disable-error-alerts           Disable alerts for function errors"
-
-# Add these to the argument parsing section
---alert-frequency)
-  ALERT_FREQUENCY="$2"
-  shift 2
-  ;;
---alert-window)
-  ALERT_TIME_WINDOW="$2" 
-  shift 2
-  ;;
---disable-error-alerts)
-  ENABLE_ERROR_ALERTS="false"
-  shift
-  ;;
-```
-
-## Step 5: Remove the Storage Queue (Optional)
-
-Since we're now using Azure Monitor for notifications, we can optionally remove the storage queue that's no longer needed:
-
-1. Remove the `azurerm_storage_queue` resource from `main.tf`
-2. Remove the `notification_queue_name` variable and its references
-3. Update the function app settings to remove the queue reference
-
-## Testing and Verification
-
-1. Deploy the updated Terraform stack with the new monitor resources
-2. Trigger the function by uploading a file to the input container
-3. Check Application Insights logs to verify the "NEW EVENT" log pattern
-4. Verify that email notifications are received when the alert criteria are met
-
-## Benefits of This Approach
-
-1. Uses Azure's native monitoring capabilities without third-party services
-2. No custom notification code needed in the function
-3. Similar to the Google Cloud approach with log-based triggering
-4. Highly customizable alert conditions using Kusto Query Language
-5. Can be extended to monitor various aspects of the function's performance and health
-
-## Next Steps
-
-After implementing this plan, consider:
-
-1. Creating additional alert rules for different log patterns
-2. Setting up alert rules for performance metrics like execution time
-3. Adding more advanced notification methods like webhooks or SMS
+Ensure the main.tf and deployment script is properly updated
