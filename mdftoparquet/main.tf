@@ -1,7 +1,6 @@
 /**
 * Main Terraform configuration for the CANedge MDF-to-Parquet pipeline on Azure
 * This creates a serverless architecture to convert MDF files to Parquet format using Azure Functions
-* Using Option 2: zip_deploy_file with ZIP downloaded from input container
 */
 
 terraform {
@@ -96,37 +95,7 @@ locals {
   function_app_name = var.function_app_name != "" ? var.function_app_name : "mdftoparquet-${var.unique_id}"
 }
 
-# Download the function ZIP from blob storage to local temp file
-resource "null_resource" "download_function_zip" {
-  triggers = {
-    function_zip_name = var.function_zip_name
-    storage_account   = var.storage_account_name
-    container         = var.input_container_name
-  }
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      # Create temp directory if it doesn't exist
-      mkdir -p /tmp/terraform-functions
-      
-      # Download the ZIP file from blob storage
-      az storage blob download \
-        --account-name ${var.storage_account_name} \
-        --container-name ${var.input_container_name} \
-        --name ${var.function_zip_name} \
-        --file /tmp/terraform-functions/${var.function_zip_name} \
-        --auth-mode login
-    EOT
-  }
-
-  # Clean up on destroy
-  provisioner "local-exec" {
-    when    = destroy
-    command = "rm -f /tmp/terraform-functions/${self.triggers.function_zip_name}"
-  }
-}
-
-# Create Azure Function App using zip_deploy_file
+# Create Azure Function App
 resource "azurerm_linux_function_app" "function_app" {
   name                       = local.function_app_name
   location                   = var.location
@@ -135,26 +104,22 @@ resource "azurerm_linux_function_app" "function_app" {
   storage_account_name       = data.azurerm_storage_account.existing.name
   storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
   
-  # Use zip_deploy_file instead of WEBSITE_RUN_FROM_PACKAGE
-  zip_deploy_file = "/tmp/terraform-functions/${var.function_zip_name}"
-  
-  # Configure app settings for Python function (without WEBSITE_RUN_FROM_PACKAGE)
+  # Configure app settings for Python function
   app_settings = {
-    "FUNCTIONS_WORKER_RUNTIME"              = "python"
-    "FUNCTIONS_EXTENSION_VERSION"           = "~4"
-    "SCM_DO_BUILD_DURING_DEPLOYMENT"       = "true"
-    "ENABLE_ORYX_BUILD"                     = "true"
-    "BUILD_FLAGS"                           = "UseExpressBuild"
-    "XDG_CACHE_HOME"                        = "/tmp/.cache"
-    "PYTHON_ISOLATE_WORKER_DEPENDENCIES"   = "1"
-    "AzureWebJobsStorage"                   = data.azurerm_storage_account.existing.primary_connection_string
-    "StorageConnectionString"               = data.azurerm_storage_account.existing.primary_connection_string
-    "InputContainerName"                    = var.input_container_name
-    "OutputContainerName"                   = local.output_container_name
-    "NotificationQueueName"                 = var.notification_queue_name
-    "NotificationEmail"                     = var.email_address
-    "APPINSIGHTS_INSTRUMENTATIONKEY"        = azurerm_application_insights.insights.instrumentation_key
+    "FUNCTIONS_WORKER_RUNTIME"          = "python"
+    "FUNCTIONS_EXTENSION_VERSION"       = "~4" # Latest version
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"   = "true"
+    "ENABLE_ORYX_BUILD"                 = "true"
+    "AzureWebJobsStorage"               = data.azurerm_storage_account.existing.primary_connection_string
+    "StorageConnectionString"           = data.azurerm_storage_account.existing.primary_connection_string
+    "InputContainerName"                = var.input_container_name
+    "OutputContainerName"               = local.output_container_name
+    "NotificationQueueName"             = var.notification_queue_name
+    "NotificationEmail"                 = var.email_address
+    "APPINSIGHTS_INSTRUMENTATIONKEY"    = azurerm_application_insights.insights.instrumentation_key
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
+    "PYTHON_ENABLE_WORKER_EXTENSIONS"   = "1"
+    "AzureWebJobsFeatureFlags"          = "EnableWorkerIndexing"
   }
 
   site_config {
@@ -165,9 +130,9 @@ resource "azurerm_linux_function_app" "function_app" {
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
   }
-
-  # Ensure the ZIP file is downloaded before deploying
-  depends_on = [null_resource.download_function_zip]
+  
+  # Use zip_deploy_file for proper dependency installation during build
+  zip_deploy_file = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
 }
 
 # Create Application Insights for monitoring
@@ -186,6 +151,41 @@ resource "azurerm_application_insights" "insights" {
       resource_group_name,
       application_type
     ]
+  }
+}
+
+# Create SAS token for accessing the function ZIP
+data "azurerm_storage_account_sas" "function_sas" {
+  connection_string = data.azurerm_storage_account.existing.primary_connection_string
+  https_only        = true
+  
+  resource_types {
+    service   = false
+    container = false
+    object    = true
+  }
+  
+  services {
+    blob  = true
+    queue = false
+    table = false
+    file  = false
+  }
+  
+  start  = timestamp()
+  expiry = timeadd(timestamp(), "8760h") # 1 year
+  
+  permissions {
+    read    = true
+    write   = false
+    delete  = false
+    list    = false
+    add     = false
+    create  = false
+    update  = false
+    process = false
+    tag     = false
+    filter  = false
   }
 }
 
