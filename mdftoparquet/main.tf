@@ -279,3 +279,19 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
     ]
   }
 }
+
+# Add monitoring and alerting module for email notifications
+module "monitoring" {
+  source = "./modules/monitoring"
+  
+  resource_group_name    = var.resource_group_name
+  location               = var.location
+  unique_id              = var.unique_id
+  notification_email     = var.email_address
+  application_insights_id = azurerm_application_insights.insights.id
+  
+  depends_on = [
+    azurerm_linux_function_app.function_app,
+    azurerm_application_insights.insights
+  ]
+}

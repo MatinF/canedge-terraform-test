@@ -367,16 +367,9 @@ def publish_notification(cloud, client, subject, message, logger):
         # Below will trigger a GCP Metric --> Alert --> Notification based on the payload containing 'NEW EVENT'
         logger.info(f"NEW EVENT: {message}")
     elif cloud == "Azure":
-        # Azure doesn't have a notification client properly setup in this implementation
-        # We'll log the notification for now
-        try:
-            # In a real implementation, we would use Azure Service Bus or Azure Event Grid
-            # For now, we just log the message that would be sent
-            logger.info(f"[MOCK AZURE NOTIFICATION] Subject: {subject}, Message: {message}, Target: {target}")
-            return True
-        except Exception as e:
-            logger.error(f"Error with Azure notification (mock): {e}")
-            return False
+        # Add NEW EVENT log pattern for Azure Monitor to detect
+        logger.info(f"NEW EVENT: {message}")
+        return True
     else:
         logger.error(f"Unsupported cloud provider: {cloud}")
         return False
