@@ -1,0 +1,89 @@
+Deploying Azure Functions using only Terraform
+At clients we often make use of Azure Functions. Ingesting data from HTTP and/or Eventhubs is relatively easy as the Azure Function SDK comes pre-bundled with triggers for those scenarios. However, deploying them with Terraform isn’t that trivial. Creating the App Service plan, etc is perfectly doable. But deploying the function code, or a new version of the code typically required making use of the func cli, or the deploy steps from Azure Devops. In this blogpost, I’ll explain how to remove these dependencies, and deploy everything from Terraform.
+
+Deployment options
+One of the deployment options Azure Function provides, is to make use of WEBSITE_RUN_FROM_PACKAGE. This is an app setting which makes it possible to provide a link to a zip-file, containing the Azure Function you want to run. The zip file should be completely self-contained, eg any dependencies need to be included in it. We’ll go into how you can achieve that.
+
+The App Setting
+resource "azurerm_function_app" "function-app" {
+  ...
+  identity {
+    type = "SystemAssigned"
+  }
+
+  app_settings = {
+    "WEBSITE_RUN_FROM_PACKAGE" = azurerm_storage_blob.storage_blob_function.url
+  }
+}
+Copy
+JSON
+Starting with the deployment of the function itself (I left out most of the code, but you can find it the github repo here). I specify the WEBSITE_RUN_FROM_PACKAGE to a file stored in a Storage Account. Also, we want make use of a managed identity to be able to access this file, hence the SystemAssigned identity.
+
+Creating the Storage Account
+resource "azurerm_storage_account" "storage_account_function" {
+  ...
+}
+
+resource "azurerm_storage_container" "storage_container_function" {
+  name                 = "function-releases"
+  storage_account_name = azurerm_storage_account.storage_account_function.name
+}
+
+resource "azurerm_role_assignment" "role_assignment_storage" {
+  scope                            = azurerm_storage_account.storage_account_function.id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = azurerm_function_app.function-app.identity.0.principal_id
+}
+Copy
+JSON
+The Storage Account is nothing special, we just need a place to store the code we want to run in the function. The code will be placed in a separate storage container (called function-releases). And we give the managed identity permissions to be able to download the zip file. I used Storage Blob Data Contributor in this example, as I’m actually using the same storage account to store the state associated with the Eventhub offsets etc, and hence need to be able to write data.
+
+Uploading the zip
+
+resource "azurerm_storage_blob" "storage_blob_function" {
+  name                   = "functions-${substr(data.archive_file.function.output_md5, 0, 6)}.zip"
+  storage_account_name   = azurerm_storage_account.storage_account_function.name
+  storage_container_name = azurerm_storage_container.storage_container_function.name
+  type                   = "Block"
+  content_md5            = data.archive_file.function.output_md5
+  source                 = "${path.module}/functions.zip"
+}
+Copy
+JSON
+The storage container is ready, and hence then next step is to upload the zip. Some things to note are, the unique name of the file. I make use of the md5 hash of the zip file to let the filename change if the contents of the zip changes. This makes it easier for the Azure Function runtime to detect that it needs to reload the code.
+
+Also, I needed to specify the content_md5 in order to let Terraform know it needed to re-upload the archive.
+
+Creating the Archive
+data "archive_file" "function" {
+  type        = "zip"
+  source_dir  = "${path.module}/functions"
+  output_path = "${path.module}/functions.zip"
+
+  depends_on = [null_resource.pip]
+}
+Copy
+JSON
+In order to create the zipfile, I use a Terraform provider. This works perfectly, if the data in the source_dir changes, a new zipfile is created.
+
+Including dependencies
+
+resource "null_resource" "pip" {
+  triggers = {
+    requirements_md5 = "${filemd5("${path.module}/functions/requirements.txt")}"
+  }
+  provisioner "local-exec" {    
+    command = "pip install --target='.python_packages/lib/site-packages' -r requirements.txt"
+    working_dir = "${path.module}/functions"
+  }
+}
+Copy
+JSON
+As I said above, the zip file needs to be self-contained, eg all dependencies need to be included. This null_resource does just that. I use a targeted pip install to the .python_packages folder which is used by the Azure Function to load additional packages. The trigger makes sure that if the requirements.txt file changes pip is executed again.
+
+One thing to note here. The python version of your local pip, and the version you specify while deploying the Azure Function needs to be the same.
+
+Closing remarks
+So that’s it, a complete deployment of an Azure Function from Terraform. There is no need for any additional steps. Running pip and recreating the zip file is only performed when actual code changes, and hence redeployment typically is really quick.
+
+A full example of this pipeline + two small functions publising/listening to an EventHub topic is hosted on github, so head there for a complete example. Also, if you have any remarks, open an issue in the github repo, and I’ll have a look to see if we can fix the Terraform code for your usecase.
