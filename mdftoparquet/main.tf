@@ -93,19 +93,9 @@ resource "azurerm_service_plan" "function_app_plan" {
 # Generate a random string for function app name if not provided
 locals {
   function_app_name = var.function_app_name != "" ? var.function_app_name : "mdftoparquet-${var.unique_id}"
-}
-
-# Create Azure Function App
-resource "azurerm_linux_function_app" "function_app" {
-  name                       = local.function_app_name
-  location                   = var.location
-  resource_group_name        = var.resource_group_name
-  service_plan_id            = azurerm_service_plan.function_app_plan.id
-  storage_account_name       = data.azurerm_storage_account.existing.name
-  storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
   
-  # Configure app settings for Python function
-  app_settings = {
+  # Define base app settings for the function app
+  base_app_settings = {
     "FUNCTIONS_WORKER_RUNTIME"          = "python"
     "FUNCTIONS_EXTENSION_VERSION"       = "~4" # Latest version
     "SCM_DO_BUILD_DURING_DEPLOYMENT"   = true
@@ -122,7 +112,24 @@ resource "azurerm_linux_function_app" "function_app" {
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
     "PYTHON_ENABLE_WORKER_EXTENSIONS"   = "1"
     "AzureWebJobsFeatureFlags"          = "EnableWorkerIndexing"
+    # Add the ZIP file name to app settings to force deployment when it changes
+    "DEPLOYMENT_ZIP_NAME"              = var.function_zip_name
   }
+}
+
+# Create Azure Function App
+resource "azurerm_linux_function_app" "function_app" {
+  name                       = local.function_app_name
+  location                   = var.location
+  resource_group_name        = var.resource_group_name
+  service_plan_id            = azurerm_service_plan.function_app_plan.id
+  storage_account_name       = data.azurerm_storage_account.existing.name
+  storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
+  
+  # Configure app settings with dynamic hash to force redeployment when code changes
+  app_settings = merge(local.base_app_settings, {
+    "DEPLOYMENT_SOURCE_HASH" = data.archive_file.function_code.output_md5
+  })
 
   site_config {
     application_stack {
@@ -137,9 +144,10 @@ resource "azurerm_linux_function_app" "function_app" {
     type = "SystemAssigned"
   }
   
-  zip_deploy_file = data.archive_file.function_code.output_path
+  # Deploy function code from the downloaded ZIP file
+  zip_deploy_file = local_file.function_zip.filename
   
-  depends_on = [data.archive_file.function_code]
+  depends_on = [local_file.function_zip]
 }
 
 # Create Application Insights for monitoring
@@ -161,12 +169,39 @@ resource "azurerm_application_insights" "insights" {
   }
 }
 
-# Create archive of function code for deployment
-data "archive_file" "function_code" {
-  type        = "zip"
-  source_dir  = "${path.module}/../info/azure-function/updated-azure-function"
-  output_path = "${path.module}/function-deploy-package.zip"
-  excludes    = ["*.zip"]
+# Create SAS token for accessing the function ZIP
+data "azurerm_storage_account_sas" "function_sas" {
+  connection_string = data.azurerm_storage_account.existing.primary_connection_string
+  https_only        = true
+  
+  resource_types {
+    service   = false
+    container = false
+    object    = true
+  }
+  
+  services {
+    blob  = true
+    queue = false
+    table = false
+    file  = false
+  }
+  
+  start  = timestamp()
+  expiry = timeadd(timestamp(), "8760h") # 1 year
+  
+  permissions {
+    read    = true
+    write   = false
+    delete  = false
+    list    = false
+    add     = false
+    create  = false
+    update  = false
+    process = false
+    tag     = false
+    filter  = false
+  }
 }
 
 # Create Event Grid System Topic for Blob Storage events

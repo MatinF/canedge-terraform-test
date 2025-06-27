@@ -21,3 +21,5 @@ traces
 traces
 | where timestamp > ago(1h)
 | order by timestamp desc
+
+

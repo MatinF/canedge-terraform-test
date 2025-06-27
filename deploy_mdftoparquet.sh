@@ -224,16 +224,22 @@ if [ -z "$REGION" ]; then
 fi
 
 # Print deployment configuration
-echo "Deploying CANedge MDF-to-Parquet pipeline with the following configuration:"
-echo "   - Resource Group:      $RESOURCE_GROUP_NAME"
-echo "   - Storage Account:     $STORAGE_ACCOUNT_NAME"
-echo "   - Input Container:     $INPUT_CONTAINER_NAME"
-echo "   - Output Container:    ${INPUT_CONTAINER_NAME}-parquet"
-echo "   - Unique ID:           $UNIQUE_ID"
-echo "   - Email:               $EMAIL_ADDRESS"
-echo "   - Function ZIP:        $FUNCTION_ZIP_NAME"
-echo "   - Region:              $REGION"
-echo
+echo "\n----------------------------------------------"
+echo "CANedge MDF-to-Parquet Deployment Configuration:"
+echo "----------------------------------------------"
+echo "Resource Group:     $RESOURCE_GROUP_NAME"
+echo "Storage Account:    $STORAGE_ACCOUNT_NAME"
+echo "Input Container:    $INPUT_CONTAINER_NAME"
+echo "Output Container:   ${INPUT_CONTAINER_NAME}-parquet"
+echo "Unique ID:          $UNIQUE_ID"
+echo "Email Address:      $EMAIL_ADDRESS"
+echo "Function ZIP:       [Using local source code]"
+echo "Notification Queue: $NOTIFICATION_QUEUE"
+echo "Function App Name:  $FUNCTION_APP_NAME"
+echo "Region:             $REGION"
+echo "Subscription ID:    $SUBSCRIPTION_ID"
+echo "Auto-Approve:       ${AUTO_APPROVE:1}"
+echo "----------------------------------------------\n"
 
 # Create terraform/state/mdftoparquet directory in input container
 echo "Setting up Terraform state storage..."
