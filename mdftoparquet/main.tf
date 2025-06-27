@@ -120,6 +120,7 @@ resource "azurerm_linux_function_app" "function_app" {
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
     "PYTHON_ENABLE_WORKER_EXTENSIONS"   = "1"
     "AzureWebJobsFeatureFlags"          = "EnableWorkerIndexing"
+    "WEBSITE_RUN_FROM_PACKAGE"          = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
   }
 
   site_config {
@@ -130,9 +131,6 @@ resource "azurerm_linux_function_app" "function_app" {
     application_insights_connection_string = azurerm_application_insights.insights.connection_string
     application_insights_key               = azurerm_application_insights.insights.instrumentation_key
   }
-  
-  # Use zip_deploy_file for proper dependency installation during build
-  zip_deploy_file = "https://${data.azurerm_storage_account.existing.name}.blob.core.windows.net/${var.input_container_name}/${var.function_zip_name}${data.azurerm_storage_account_sas.function_sas.sas}"
 }
 
 # Create Application Insights for monitoring
