@@ -53,6 +53,21 @@ def get_log_file_object_paths(cloud, event, logger):
     def has_valid_extension(filename):
         return any(filename.upper().endswith(ext) for ext in valid_extensions)
     
+    from urllib.parse import urlparse
+
+    def extract_blob_path(blob_url):
+        """
+        Extract the object path from an Azure Storage blob URL, regardless of base URL or container name.
+        Returns the full path including any subfolders within the container.
+        """
+        parsed_url = urlparse(blob_url)
+        path_parts = parsed_url.path.split('/')
+        if len(path_parts) >= 3:
+            object_path = '/'.join(path_parts[2:])
+            return object_path
+        else:
+            return None
+    
     log_file_object_paths = []
     
     try:
@@ -66,32 +81,31 @@ def get_log_file_object_paths(cloud, event, logger):
         elif cloud == "Azure":
             # Handle both list of objects and single object
             if isinstance(event, list):
-                for item in event:
-                    # Handle dictionary items (for local testing)
-                    if isinstance(item, dict) and 'name' in item:
-                        file_name = item['name']
-                        # Check if the file has a valid extension
-                        if has_valid_extension(file_name):
-                            parts = file_name.split('/')
-                            object_key = '/'.join(parts[1:])
-                            log_file_object_paths.append(Path(object_key))
-                    # Handle Azure blob objects (for cloud execution)
-                    elif hasattr(item, 'name'):
-                        file_name = item.name
-                        # Check if the file has a valid extension
-                        if has_valid_extension(file_name):
-                            parts = file_name.split('/')
-                            object_key = '/'.join(parts[1:])
-                            log_file_object_paths.append(Path(object_key))
+                pass
+                # for item in event:
+                #     # Handle dictionary items (for local testing)
+                #     if isinstance(item, dict) and 'name' in item:
+                #         file_name = item['name']
+                #         # Check if the file has a valid extension
+                #         if has_valid_extension(file_name):
+                #             parts = file_name.split('/')
+                #             object_key = '/'.join(parts[1:])
+                #             log_file_object_paths.append(Path(object_key))
+                #     # Handle Azure blob objects (for cloud execution)
+                #     elif hasattr(item, 'name'):
+                #         file_name = item.name
+                #         # Check if the file has a valid extension
+                #         if has_valid_extension(file_name):
+                #             parts = file_name.split('/')
+                #             object_key = '/'.join(parts[1:])
+                #             log_file_object_paths.append(Path(object_key))
             else:
-                # Original case - single object
-                file_name = event.name
-                # Check if the file has a valid extension
-                if has_valid_extension(file_name):
-                    parts = file_name.split('/')
-                    object_key = '/'.join(parts[1:])
+                data = event.get_json()
+                url = data.get('url')
+                object_key = extract_blob_path(url)
+                logger.info(f"Extracted object key: {object_key}")
+                if object_key and has_valid_extension(object_key):
                     log_file_object_paths.append(Path(object_key))
-            
                 
         elif cloud == "Google":
             # Handle list of events (for local testing)

@@ -3,31 +3,29 @@
 import os
 import logging
 import azure.functions as func
-
-# Add module-level logging to help debug function loading
-logging.warning('FUNCTION_APP.PY IS LOADING - Function module has been imported')
-
-# Only uncomment when testing initial deployment success
-# from azure.storage.blob import BlobServiceClient 
-# from modules.mdf_to_parquet import mdf_to_parquet
+from azure.storage.blob import BlobServiceClient
+from modules.mdf_to_parquet import mdf_to_parquet
 
 # Configure logging to reduce Azure SDK verbosity
 logging.getLogger('azure').setLevel(logging.WARNING)
 logging.getLogger('azure.core.pipeline').setLevel(logging.ERROR)
+logging.getLogger('azure.storage').setLevel(logging.WARNING)
 
-# Simplified configuration for initial testing
+# Cloud provider configuration
+storage_connection_string = os.getenv("StorageConnectionString")
+bucket_input = os.getenv("InputContainerName")
+
+cloud = "Azure"
+bucket_output = bucket_input + "-parquet"
+storage_client = BlobServiceClient.from_connection_string(storage_connection_string)
+notification_client = None
+
 app = func.FunctionApp()
 
 @app.function_name(name="ProcessMdfToParquet")
-@app.blob_trigger(
-    arg_name="myblob",
-    path="canedge-test-container-26/{name}.MF4",  # Hardcoded path for testing
-    connection="StorageConnectionString",
-    source="EventGrid"
-)
-def process_event_grid_blob(myblob: func.InputStream):
-    logging.info(f"Python Event Grid blob trigger function processed blob\n"
-                 f"Name: {myblob.name}\n"
-                 f"Blob Size: {myblob.length} bytes")
-    
-    # Very simplified function for testing deployment and Event Grid triggering
+@app.event_grid_trigger(arg_name="event")
+def MdfToParquet(event):
+    logging.info(f"bucket_input: {bucket_input}")
+    logging.info(f"storage_connection_string: {storage_connection_string}")
+    logging.info(f"Processing Event Grid event: {event.event_type}")
+    mdf_to_parquet(cloud, storage_client, notification_client, event, bucket_input, bucket_output)
