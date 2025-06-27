@@ -19,14 +19,9 @@ resource "null_resource" "download_function_zip" {
     timestamp = timestamp()
   }
 
-  # Use PowerShell to download the file
+  # Use curl to download the file (works in both Linux and Windows with Git Bash/WSL)
   provisioner "local-exec" {
-    command = <<-EOT
-      Write-Host "Downloading function ZIP from ${local.download_url}..."
-      Invoke-WebRequest -Uri "${local.download_url}" -OutFile "${local.function_zip_path}"
-      Write-Host "Function ZIP downloaded to ${local.function_zip_path}"
-    EOT
-    interpreter = ["PowerShell", "-Command"]
+    command = "curl -L -o ${local.function_zip_path} \"${local.download_url}\""
   }
 }
 
