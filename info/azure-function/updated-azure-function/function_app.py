@@ -7,9 +7,9 @@ from azure.storage.blob import BlobServiceClient
 from modules.mdf_to_parquet import mdf_to_parquet
 
 # Configure logging to reduce Azure SDK verbosity
-logging.getLogger('azure').setLevel(logging.WARNING)
-logging.getLogger('azure.core.pipeline').setLevel(logging.ERROR)
-logging.getLogger('azure.storage').setLevel(logging.WARNING)
+# logging.getLogger('azure').setLevel(logging.WARNING)
+# logging.getLogger('azure.core.pipeline').setLevel(logging.ERROR)
+# logging.getLogger('azure.storage').setLevel(logging.WARNING)
 
 # Cloud provider configuration
 storage_connection_string = os.getenv("StorageConnectionString")

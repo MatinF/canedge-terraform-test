@@ -10,3 +10,9 @@ This was the case previous in the info/main_old.tf script. But with the current 
 
 
 # Task 3
+Review the mdftoparquet/ and the info/main_old.tf. 
+
+Determine why the Azure Function App function is not properly getting updated in the mdftoparquet/ deployment when the user provides a new function zip. This may be related to how the function is temporarily being stored/cached as part of the deployment and dependency installation, i.e. I'm guessing we somehow keep deploying the same function over-and-over, rather than actually updating it with the new zip being provided by the user.
+
+Update the deployment to still use the zip deployment logic (so as to ensure dependencies are installed during deployment from the requirements.txt) - but make sure that the deployment gets updated with the contents of the zip file being provided by the user via the input --zip argument (stored in the input container).
+

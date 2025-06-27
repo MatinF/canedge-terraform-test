@@ -100,13 +100,13 @@ def get_log_file_object_paths(cloud, event, logger):
                 #             object_key = '/'.join(parts[1:])
                 #             log_file_object_paths.append(Path(object_key))
             else:
-                if event.event_type == "Microsoft.Storage.BlobCreated":
-                    data = event.get_json()
-                    logger.info("FULL EVENT DATA:")
-                    logger.info(data)
-                    url = data.get('url', 'No URL found')
-                    object_key = extract_blob_path(url)
-                    logger.info("object_key:", object_key)
+                data = event.get_json()
+                logger.info("FULL EVENT DATA:")
+                logger.info(data)      
+                url = data.get('url')
+                object_key = extract_blob_path(url)
+                logger.info(f"Extracted object key: {object_key}")
+                if object_key and has_valid_extension(object_key):
                     log_file_object_paths.append(Path(object_key))
                 
         elif cloud == "Google":
