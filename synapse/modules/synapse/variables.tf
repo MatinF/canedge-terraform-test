@@ -1,0 +1,29 @@
+variable "resource_group_name" {
+  description = "The name of the resource group"
+  type        = string
+}
+
+variable "location" {
+  description = "The Azure region where resources will be created"
+  type        = string
+}
+
+variable "unique_id" {
+  description = "A unique identifier for resources"
+  type        = string
+}
+
+variable "storage_account_name" {
+  description = "The storage account name that contains the data"
+  type        = string
+}
+
+variable "storage_data_lake_gen2_filesystem_id" {
+  description = "The ID of the Data Lake Gen2 filesystem in the storage account (output container)"
+  type        = string
+}
+
+variable "dataset_name" {
+  description = "The name of the dataset to be created in Synapse"
+  type        = string
+}

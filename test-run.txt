@@ -7,6 +7,10 @@ chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terr
 
 
 
+chmod +x deploy_synapse.sh && ./deploy_synapse.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --dataset datalake1 --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
+
+
+
 traces
 | where timestamp > ago(0.1h)
 | where customDimensions.Category == "Host.Function.Console"

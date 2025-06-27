@@ -85,9 +85,8 @@ Replace:
 - `YOUR_INPUT_CONTAINER_NAME` with your input container name from step 1 (e.g. `canedge-test-container-20`)
 - `YOUR_UNIQUE_ID` with a short unique identifier (e.g. `datalake1`)
 - `YOUR_DATASET_NAME` with your desired Synapse dataset name (e.g. `dataset1`)
-
 - `YOUR_EMAIL` with your email address to receive notifications
-- `YOUR_FUNCTION_ZIP` with the Synapse function ZIP file name (e.g. `bigquery-map-tables-v1.1.0.zip`)
+- `YOUR_FUNCTION_ZIP` with the Synapse function ZIP file name (e.g. `synapse-map-tables-v1.1.0.zip`)
   - *Download the ZIP from the [CANedge Intro](https://www.csselectronics.com/pages/can-bus-hardware-software-docs) (Process/MF4 decoders/Parquet data lake - interfaces/Azure)*
 
 > [!NOTE]  

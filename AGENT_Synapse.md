@@ -3,7 +3,13 @@ This repository contains terraform stacks and deployment scripts for deploying r
 
 We now wish to also deploy Azure Synapse resources so that we can query the Parquet data lake stored in our output container. The steps that should be taken by the user to deploy this are described in the README.md.
 
+For inspiration see also google/bigquery and google/deploy_bigquery.sh. 
+
+See info/synapse-syntax.txt for terraform syntax. Make sure to review this and compare your syntax vs. this.
+
 ## Task 1: Deploy Synapse resources
+
+This deployment should be a separate deployment vs the previous input_container and mdftoparquet. Create a separate folder for this purpose with a main, variables and outputs. Also create a modules/ subfolder that contains a folder called synapse with a main, variables and outputs. Create a deployment shell script as well.
 
 The Synapse deployment should consist of the following:
 
