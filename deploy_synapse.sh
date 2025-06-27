@@ -178,8 +178,51 @@ echo "Note: Skipping explicit import of the existing data lake filesystem."
 echo "The deployment will reference the existing filesystem through the resource block with lifecycle rules."
 
 
-# Apply the Terraform configuration
-echo "Applying Terraform configuration..."
+# Proactively ensure clean state before starting
+echo "Ensuring clean Terraform state..."
+
+# Remove any local state files that might interfere
+rm -f .terraform.lock.hcl terraform.tfstate* 2>/dev/null
+
+# Initialize terraform again with fresh state to avoid corruption issues
+echo "Re-initializing Terraform with clean state..."
+rm -rf .terraform
+terraform init \
+  -backend-config="subscription_id=$SUBSCRIPTION_ID" \
+  -backend-config="resource_group_name=$RESOURCE_GROUP" \
+  -backend-config="storage_account_name=$STORAGE_ACCOUNT" \
+  -backend-config="container_name=$INPUT_CONTAINER" \
+  -backend-config="key=terraform/state/synapse/default.tfstate" \
+  -reconfigure
+
+# Check if there are any state lock issues
+echo "Checking for state lock issues..."
+# Use Azure CLI to check for the state blob's lease status
+BLOB_LEASE_STATUS=$(az storage blob show \
+  --container-name "$INPUT_CONTAINER" \
+  --name "terraform/state/synapse/default.tfstate" \
+  --account-name "$STORAGE_ACCOUNT" \
+  --auth-mode login \
+  --query "properties.lease.state" -o tsv 2>/dev/null)
+
+if [[ "$BLOB_LEASE_STATUS" == "leased" ]]; then
+  echo "State blob is currently leased (locked). Breaking the lease..."
+  # Break the lease on the blob to force unlock
+  az storage blob lease break \
+    --container-name "$INPUT_CONTAINER" \
+    --name "terraform/state/synapse/default.tfstate" \
+    --account-name "$STORAGE_ACCOUNT" \
+    --auth-mode login
+    
+  if [ $? -eq 0 ]; then
+    echo "Successfully broke the lease on the state blob."
+  else
+    echo "Warning: Could not break the lease on the state blob. Proceeding anyway."
+  fi
+fi
+
+# Apply the Terraform configuration - single attempt with clean state
+echo "Applying Terraform configuration..."  
 terraform apply -auto-approve \
   -var "subscription_id=$SUBSCRIPTION_ID" \
   -var "resource_group_name=$RESOURCE_GROUP" \
@@ -188,14 +231,47 @@ terraform apply -auto-approve \
   -var "unique_id=$UNIQUE_ID" \
   -var "dataset_name=$DATASET_NAME"
 
-# Show connection details
-echo "========================================================"
-echo "Deployment complete! Showing connection details..."
-echo "========================================================"
+TERRAFORM_EXIT_CODE=$?
 
-# Get the output and strip sensitive values markers
-terraform output -json synapse_connection_details | sed 's/"sensitive": true,//g' | jq -r '.'
+if [ $TERRAFORM_EXIT_CODE -ne 0 ]; then
+  echo "Terraform apply failed."
+  # We'll still try to show output in case it partially succeeded
+else
+  echo "Terraform apply succeeded!"
+fi
 
-echo "========================================================"
-echo "Synapse deployment completed successfully"
-echo "========================================================"
+# Function to show connection details
+show_connection_details() {
+  echo "======================================================="
+  echo "Deployment complete! Showing connection details..." 
+  echo "======================================================="
+  
+  # Get the output and strip sensitive values markers
+  terraform output -json synapse_connection_details 2>/dev/null | sed 's/"sensitive": true,//g' | jq -r '.'
+  
+  # Check if output was successful
+  if [ $? -ne 0 ]; then
+    echo "Failed to get connection details. This may indicate that the deployment was not successful."
+    echo "Check the Azure portal to verify if the Synapse workspace was created."
+    return 1
+  fi
+  return 0
+}
+
+# Only show connection details if deployment was successful
+if [ $TERRAFORM_EXIT_CODE -eq 0 ]; then
+  show_connection_details
+  echo "======================================================="
+  echo "Synapse deployment completed successfully"
+  echo "======================================================="
+  exit 0
+else
+  echo "======================================================="
+  echo "Attempting to show connection details despite errors..." 
+  echo "======================================================="
+  show_connection_details
+  echo "======================================================="
+  echo "Deployment had issues. Please check the output above for more details."
+  echo "======================================================="
+  exit $TERRAFORM_EXIT_CODE
+fi
