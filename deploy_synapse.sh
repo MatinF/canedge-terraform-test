@@ -96,9 +96,16 @@ echo "========================================================"
 # Navigate to the synapse terraform directory
 cd "$(dirname "$0")/synapse"
 
-# Initialize Terraform
-echo "Initializing Terraform..."
-terraform init
+# Set up Terraform state storage in the input container
+echo "Setting up Terraform state storage in the input container..."
+
+# Initialize Terraform with remote state
+echo "Initializing Terraform with remote state..."
+terraform init \
+  -backend-config="resource_group_name=$RESOURCE_GROUP" \
+  -backend-config="storage_account_name=$STORAGE_ACCOUNT" \
+  -backend-config="container_name=$INPUT_CONTAINER" \
+  -backend-config="key=terraform/state/synapse/default.tfstate"
 
 # Apply the Terraform configuration
 echo "Applying Terraform configuration..."

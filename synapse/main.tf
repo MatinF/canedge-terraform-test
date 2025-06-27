@@ -10,6 +10,10 @@ terraform {
       version = "~> 3.0"
     }
   }
+  # Store Terraform state in the input container
+  backend "azurerm" {
+    # These values will be provided via backend-config in the deployment script
+  }
 }
 
 provider "azurerm" {
@@ -28,17 +32,15 @@ data "azurerm_storage_account" "storage" {
   resource_group_name = var.resource_group_name
 }
 
-# Reference the existing output container (parquet)
-resource "azurerm_storage_data_lake_gen2_filesystem" "output" {
-  name               = "${var.input_container_name}-parquet"
-  storage_account_id = data.azurerm_storage_account.storage.id
+# Define the output container name and construct the filesystem ID
+locals {
+  output_container_name = "${var.input_container_name}-parquet"
   
-  # Adding lifecycle to prevent destroying the container as it likely already exists
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [name]
-  }
+  # Construct the filesystem ID using the known format for Azure Data Lake Gen2
+  # This is needed because the container already exists and we can't create it again
+  storage_data_lake_gen2_filesystem_id = "${data.azurerm_storage_account.storage.id}/blobServices/default/containers/${local.output_container_name}"
 }
+
 
 # Synapse workspace and resources
 module "synapse" {
@@ -47,6 +49,6 @@ module "synapse" {
   location                          = data.azurerm_resource_group.rg.location
   unique_id                         = var.unique_id
   storage_account_name              = var.storage_account_name
-  storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.output.id
+  storage_data_lake_gen2_filesystem_id = local.storage_data_lake_gen2_filesystem_id
   dataset_name                      = var.dataset_name
 }
