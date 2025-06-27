@@ -118,6 +118,16 @@ locals {
 }
 
 # Create Azure Function App
+# Generate a unique identifier for each deployment to force Azure to recognize changes
+resource "random_uuid" "deployment_id" {
+  keepers = {
+    # This forces a new UUID for each run
+    timestamp = timestamp()
+    # This ensures a new UUID when the ZIP name changes
+    zip_name = var.function_zip_name
+  }
+}
+
 resource "azurerm_linux_function_app" "function_app" {
   name                       = local.function_app_name
   location                   = var.location
@@ -126,9 +136,11 @@ resource "azurerm_linux_function_app" "function_app" {
   storage_account_name       = data.azurerm_storage_account.existing.name
   storage_account_access_key = data.azurerm_storage_account.existing.primary_access_key
   
-  # Configure app settings with dynamic timestamp to force redeployment when ZIP file changes
+  # Configure app settings with multiple values to force redeployment
   app_settings = merge(local.base_app_settings, {
     "DEPLOYMENT_TIMESTAMP" = timestamp()
+    "DEPLOYMENT_ID" = random_uuid.deployment_id.result
+    "FUNCTION_ZIP_NAME" = var.function_zip_name
   })
 
   site_config {
@@ -148,6 +160,13 @@ resource "azurerm_linux_function_app" "function_app" {
   zip_deploy_file = local.function_zip_path
   
   depends_on = [null_resource.download_function_zip]
+  
+  # This ensures a new deployment happens each time
+  lifecycle {
+    replace_triggered_by = [
+      null_resource.download_function_zip
+    ]
+  }
 }
 
 # Create Application Insights for monitoring
