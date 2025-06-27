@@ -121,21 +121,27 @@ if [ "$STORAGE_EXISTS" == "true" ]; then
   exit 1
 fi
 
-# Verify that the container exists
-echo "Verifying container: $INPUT_CONTAINER"
-CONTAINER_EXISTS=$(az storage container exists --account-name "$STORAGE_ACCOUNT" --name "$INPUT_CONTAINER" --auth-mode login --query "exists" -o tsv)
-if [ "$CONTAINER_EXISTS" != "true" ]; then
-  echo "Error: Container '$INPUT_CONTAINER' does not exist in storage account '$STORAGE_ACCOUNT'."
+# Verify that the input container exists
+echo "Verifying input container: $INPUT_CONTAINER"
+az storage container show --name "$INPUT_CONTAINER" --account-name "$STORAGE_ACCOUNT" --auth-mode login > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Error: Input container $INPUT_CONTAINER does not exist in storage account $STORAGE_ACCOUNT"
   exit 1
 fi
+echo "Input container $INPUT_CONTAINER exists"
 
-# Verify that the output container exists
-echo "Verifying output container: ${INPUT_CONTAINER}-parquet"
-OUTPUT_CONTAINER_EXISTS=$(az storage container exists --account-name "$STORAGE_ACCOUNT" --name "${INPUT_CONTAINER}-parquet" --auth-mode login --query "exists" -o tsv)
-if [ "$OUTPUT_CONTAINER_EXISTS" != "true" ]; then
-  echo "Error: Output container '${INPUT_CONTAINER}-parquet' does not exist. Make sure you've run the MDF-to-Parquet deployment first."
+# Verify that the output container (created by MDF-to-Parquet) exists
+OUTPUT_CONTAINER="${INPUT_CONTAINER}-parquet"
+echo "Verifying output container: $OUTPUT_CONTAINER"
+az storage container show --name "$OUTPUT_CONTAINER" --account-name "$STORAGE_ACCOUNT" --auth-mode login > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Error: Output container $OUTPUT_CONTAINER does not exist in storage account $STORAGE_ACCOUNT"
+  echo "Make sure you've run the MDF-to-Parquet deployment first."
   exit 1
 fi
+echo "Output container $OUTPUT_CONTAINER exists"
+
+
 
 if [[ -z "$DATASET_NAME" ]]; then
   DATASET_NAME="canedge"
