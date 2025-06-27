@@ -39,4 +39,5 @@ output "function_zip_details" {
   }
 
   depends_on = [null_resource.download_function_zip]
+  sensitive = true
 }

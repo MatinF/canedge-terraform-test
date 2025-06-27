@@ -9,7 +9,7 @@ chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terr
 chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip minimal-function-20252606_185645.zip --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
 
 
-chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip test-function-12.zip --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
+chmod +x deploy_mdftoparquet.sh && ./deploy_mdftoparquet.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --container canedge-test-container-26 --id demolake1 --email m@csselectronics.com --zip test-function-19.zip --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e
 
 traces
 | where timestamp > ago(0.1h)
