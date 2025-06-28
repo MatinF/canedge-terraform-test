@@ -214,12 +214,6 @@ export TF_IN_AUTOMATION="true"  # This prevents interactive prompts
 STORAGE_ACCOUNT_ID="/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT"
 FILESYSTEM_ID="$STORAGE_ACCOUNT_ID/blobServices/default/containers/${INPUT_CONTAINER}-parquet"
 
-# Proactively ensure clean state before starting
-echo "Ensuring clean Terraform state..."
-
-# Remove any local state files that might interfere
-rm -f .terraform.lock.hcl terraform.tfstate* 2>/dev/null
-
 # Define our fixed state path
 STATE_PATH="terraform/state/synapse/default.tfstate"
 echo "Using state path: $STATE_PATH"
@@ -227,7 +221,7 @@ echo "Using state path: $STATE_PATH"
 # Clean up local Terraform files
 rm -rf .terraform .terraform.lock.hcl
 
-# Initialize terraform with clean local state
+# Simple Terraform initialization
 echo "Initializing Terraform..."
 terraform init \
   -backend-config="subscription_id=$SUBSCRIPTION_ID" \
@@ -236,41 +230,9 @@ terraform init \
   -backend-config="container_name=$INPUT_CONTAINER" \
   -backend-config="key=$STATE_PATH"
 
-# Check if the state is locked
-echo "Checking for existing state locks..."
-LOCK_OUTPUT=$(terraform force-unlock -force "09920881-229c-fd2d-c61d-66cad6688d74" 2>&1 || echo "No lock found")
-
-# Try another approach to break locks - use Azure CLI directly
-echo "Using Azure CLI to check and break any blob lease..."
-az storage blob show \
-  --container-name "$INPUT_CONTAINER" \
-  --name "$STATE_PATH" \
-  --account-name "$STORAGE_ACCOUNT" \
-  --auth-mode login \
-  --query "properties.lease.state" -o tsv 2>/dev/null
-
-if [ $? -eq 0 ]; then
-  echo "Breaking any lease on the state blob..."
-  az storage blob lease break \
-    --container-name "$INPUT_CONTAINER" \
-    --name "$STATE_PATH" \
-    --account-name "$STORAGE_ACCOUNT" \
-    --auth-mode login 2>/dev/null
-fi
-
-# Re-initialize with no-lock to bypass any remaining lock issues
-echo "Re-initializing Terraform with no-lock..."
-rm -rf .terraform
-terraform init -lock=false \
-  -backend-config="subscription_id=$SUBSCRIPTION_ID" \
-  -backend-config="resource_group_name=$RESOURCE_GROUP" \
-  -backend-config="storage_account_name=$STORAGE_ACCOUNT" \
-  -backend-config="container_name=$INPUT_CONTAINER" \
-  -backend-config="key=$STATE_PATH"
-
-# Apply with no-lock for consistency with initialization
-echo "Applying Terraform configuration with no-lock..."  
-terraform apply -auto-approve -lock=false \
+# Apply the configuration
+echo "Applying Terraform configuration..."  
+terraform apply -auto-approve \
   -var "subscription_id=$SUBSCRIPTION_ID" \
   -var "resource_group_name=$RESOURCE_GROUP" \
   -var "storage_account_name=$STORAGE_ACCOUNT" \
