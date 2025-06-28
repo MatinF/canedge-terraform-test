@@ -17,12 +17,6 @@ resource "azurerm_synapse_workspace" "synapse" {
   sql_administrator_login_password     = random_password.sql_password.result
   managed_virtual_network_enabled      = false
   public_network_access_enabled        = true
-  
-  aad_admin {
-    login     = var.admin_email
-    object_id = var.current_user_object_id
-    tenant_id = var.tenant_id
-  }
 
   identity {
     type = "SystemAssigned"
@@ -54,15 +48,20 @@ resource "azurerm_role_assignment" "synapse_container_contributor" {
   principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
 }
 
-# From your manual deployment, we're removing the 'Allow Azure services' rule
-# and only adding specific client IP access as needed
-
 # Allow management from client IP addresses (can be adjusted as needed)
 resource "azurerm_synapse_firewall_rule" "client_ip" {
   name                 = "ClientIPAccess"
   synapse_workspace_id = azurerm_synapse_workspace.synapse.id
   start_ip_address     = "0.0.0.0"  # Replace with specific IP range if needed
   end_ip_address       = "255.255.255.255" # Replace with specific IP range if needed
+}
+
+# Set the Microsoft Entra admin using the dedicated resource instead of the deprecated block
+resource "azurerm_synapse_workspace_aad_admin" "admin" {
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  login                = "AzureAD Admin"  # This is a display name shown in portal
+  object_id            = var.current_user_object_id
+  tenant_id            = var.tenant_id
 }
 
 # Create output (moved to outputs.tf)
