@@ -27,3 +27,13 @@ variable "dataset_name" {
   description = "The name of the dataset to be created in Synapse"
   type        = string
 }
+
+variable "tenant_id" {
+  description = "The Azure AD tenant ID for the Synapse admin"
+  type        = string
+}
+
+variable "current_user_object_id" {
+  description = "The object ID of the current user to be set as Synapse admin"
+  type        = string
+}

@@ -44,6 +44,9 @@ locals {
   storage_data_lake_gen2_filesystem_id = "https://${var.storage_account_name}.dfs.core.windows.net/${local.output_container_name}"
 }
 
+# Get current Azure client details for admin configuration
+data "azurerm_client_config" "current" {}
+
 # Synapse workspace and resources
 module "synapse" {
   source                            = "./modules/synapse"
@@ -53,4 +56,6 @@ module "synapse" {
   storage_account_name              = var.storage_account_name
   storage_data_lake_gen2_filesystem_id = local.storage_data_lake_gen2_filesystem_id
   dataset_name                      = var.dataset_name
+  tenant_id                         = data.azurerm_client_config.current.tenant_id
+  current_user_object_id            = data.azurerm_client_config.current.object_id
 }
