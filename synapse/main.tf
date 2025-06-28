@@ -47,7 +47,19 @@ locals {
 # Get current Azure client details for admin configuration
 data "azurerm_client_config" "current" {}
 
-# Synapse workspace and resources
+# Define admin email using a local variable until it's provided as a parameter
+locals {
+  # The output container is always named as <input_container>-parquet by the MDF-to-Parquet component
+  output_container_name = "${var.input_container_name}-parquet"
+  
+  # Construct the filesystem URL in the format required by Synapse:
+  # https://<storageaccountname>.dfs.core.windows.net/<filesystem>
+  storage_data_lake_gen2_filesystem_id = "https://${var.storage_account_name}.dfs.core.windows.net/${local.output_container_name}"
+  
+  # Use provided admin email or fallback to a generated one
+  admin_email = coalesce(var.admin_email, "${data.azurerm_client_config.current.client_id}@${data.azurerm_client_config.current.tenant_id}.onmicrosoft.com")
+}
+
 module "synapse" {
   source                            = "./modules/synapse"
   resource_group_name               = var.resource_group_name
@@ -58,4 +70,6 @@ module "synapse" {
   dataset_name                      = var.dataset_name
   tenant_id                         = data.azurerm_client_config.current.tenant_id
   current_user_object_id            = data.azurerm_client_config.current.object_id
+  admin_email                       = local.admin_email
+  output_container_name             = local.output_container_name
 }

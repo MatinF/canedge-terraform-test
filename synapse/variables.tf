@@ -28,3 +28,9 @@ variable "dataset_name" {
   type        = string
   default     = "canedge"
 }
+
+variable "admin_email" {
+  description = "The email address to be set as the SQL Microsoft Entra admin"
+  type        = string
+  default     = ""  # Will be dynamically determined if not provided
+}

@@ -19,7 +19,7 @@ resource "azurerm_synapse_workspace" "synapse" {
   public_network_access_enabled        = true
   
   aad_admin {
-    login     = "AzureAD Admin"
+    login     = var.admin_email
     object_id = var.current_user_object_id
     tenant_id = var.tenant_id
   }
@@ -40,29 +40,29 @@ data "azurerm_storage_account" "synapse_storage" {
   resource_group_name = var.resource_group_name
 }
 
-# Grant the Synapse workspace Storage Blob Data Owner access on the storage account
-# This provides full permissions needed for listing directories and reading files
-resource "azurerm_role_assignment" "synapse_storage_owner" {
-  scope                = data.azurerm_storage_account.synapse_storage.id
-  role_definition_name = "Storage Blob Data Owner"
+# Get the container reference to grant permissions specifically at container level
+data "azurerm_storage_container" "output_container" {
+  name                 = var.output_container_name
+  storage_account_name = var.storage_account_name
+}
+
+# Grant the Synapse workspace Storage Blob Data Contributor access on the specific container
+# This matches the permission model from the manual deployment
+resource "azurerm_role_assignment" "synapse_container_contributor" {
+  scope                = "${data.azurerm_storage_account.synapse_storage.id}/blobServices/default/containers/${var.output_container_name}"
+  role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
 }
 
-# Add firewall rule to allow Azure services
-resource "azurerm_synapse_firewall_rule" "allow_azure" {
-  name                 = "AllowAllWindowsAzureIps"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  start_ip_address     = "0.0.0.0"
-  end_ip_address       = "0.0.0.0"
-}
+# From your manual deployment, we're removing the 'Allow Azure services' rule
+# and only adding specific client IP access as needed
 
-# Add firewall rule to allow client access from any IP
-# This is needed for development/testing - restrict in production
-resource "azurerm_synapse_firewall_rule" "allow_all" {
-  name                 = "AllowAll"
+# Allow management from client IP addresses (can be adjusted as needed)
+resource "azurerm_synapse_firewall_rule" "client_ip" {
+  name                 = "ClientIPAccess"
   synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  start_ip_address     = "0.0.0.0"
-  end_ip_address       = "255.255.255.255"
+  start_ip_address     = "0.0.0.0"  # Replace with specific IP range if needed
+  end_ip_address       = "255.255.255.255" # Replace with specific IP range if needed
 }
 
 # Create output (moved to outputs.tf)

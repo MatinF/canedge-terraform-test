@@ -74,7 +74,7 @@ Replace:
 After setting up the MF4-to-Parquet pipeline, you can deploy Synapse to query your Parquet data lake:
 
 ```bash
-chmod +x deploy_synapse.sh && ./deploy_synapse.sh --subid YOUR_SUBSCRIPTION_ID --resourcegroup YOUR_RESOURCE_GROUP --storageaccount YOUR_STORAGE_ACCOUNT --container YOUR_INPUT_CONTAINER_NAME --id YOUR_UNIQUE_ID --dataset YOUR_DATASET_NAME --zip YOUR_FUNCTION_ZIP
+chmod +x deploy_synapse.sh && ./deploy_synapse.sh --subid YOUR_SUBSCRIPTION_ID --resourcegroup YOUR_RESOURCE_GROUP --storageaccount YOUR_STORAGE_ACCOUNT --container YOUR_INPUT_CONTAINER_NAME --id YOUR_UNIQUE_ID --dataset YOUR_DATASET_NAME
 
 ```
 

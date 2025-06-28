@@ -37,3 +37,13 @@ variable "current_user_object_id" {
   description = "The object ID of the current user to be set as Synapse admin"
   type        = string
 }
+
+variable "admin_email" {
+  description = "The email address to be set as the SQL Microsoft Entra admin"
+  type        = string
+}
+
+variable "output_container_name" {
+  description = "The name of the container where parquet files are stored"
+  type        = string
+}
