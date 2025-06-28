@@ -34,20 +34,10 @@ data "azurerm_storage_account" "storage" {
   resource_group_name = var.resource_group_name
 }
 
-# Define the output container name as per the MDF-to-Parquet deployment
-locals {
-  # The output container is always named as <input_container>-parquet by the MDF-to-Parquet component
-  output_container_name = "${var.input_container_name}-parquet"
-  
-  # Construct the filesystem URL in the format required by Synapse:
-  # https://<storageaccountname>.dfs.core.windows.net/<filesystem>
-  storage_data_lake_gen2_filesystem_id = "https://${var.storage_account_name}.dfs.core.windows.net/${local.output_container_name}"
-}
-
 # Get current Azure client details for admin configuration
 data "azurerm_client_config" "current" {}
 
-# Define admin email using a local variable until it's provided as a parameter
+# Define all local values in a single block to avoid duplicates
 locals {
   # The output container is always named as <input_container>-parquet by the MDF-to-Parquet component
   output_container_name = "${var.input_container_name}-parquet"
