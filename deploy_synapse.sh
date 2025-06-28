@@ -149,32 +149,20 @@ if [[ -z "$DATASET_NAME" ]]; then
   echo "Using default dataset name: $DATASET_NAME"
 fi
 
-# Auto-detect the current user's email address using Azure CLI in the format that matches manual deployment
+# Auto-detect the current user's email address using Azure CLI
 echo "Detecting current user's email address..."
+ADMIN_EMAIL=$(az ad signed-in-user show --query userPrincipalName -o tsv 2>/dev/null)
 
-# First try to get the email in the format that matches manual deployment
-USER_PRINCIPAL_ID=$(az ad signed-in-user show --query id -o tsv 2>/dev/null)
-USER_EMAIL=""
-
-# Try to get user email from different sources to match manual deployment format
-USER_EMAIL=$(az ad user show --id $USER_PRINCIPAL_ID --query "mail" -o tsv 2>/dev/null)
-if [ -z "$USER_EMAIL" ]; then
-  USER_EMAIL=$(az ad user show --id $USER_PRINCIPAL_ID --query "userPrincipalName" -o tsv 2>/dev/null)
-  
-  # Convert to live.com#user@email.com format if it's from a Microsoft account (hotmail, outlook, live, etc)
-  if [[ "$USER_EMAIL" == *"hotmail"* || "$USER_EMAIL" == *"live"* || "$USER_EMAIL" == *"outlook"* ]]; then
-    DOMAIN="live.com"
-    ADMIN_EMAIL="${DOMAIN}#${USER_EMAIL}"
-  else
-    # For organizational accounts, use as-is
-    ADMIN_EMAIL="$USER_EMAIL"
-  fi
+# Fallback in case direct email detection fails
+if [ -z "$ADMIN_EMAIL" ]; then
+  echo "Could not detect email directly, using account information..."
+  OBJECT_ID=$(az ad signed-in-user show --query id -o tsv 2>/dev/null)
+  TENANT_ID=$(az account show --query tenantId -o tsv 2>/dev/null)
+  ADMIN_EMAIL="$OBJECT_ID@$TENANT_ID"
+  echo "Using generated admin identity: $ADMIN_EMAIL"
 else
-  # If we got a mail attribute, use that
-  ADMIN_EMAIL="$USER_EMAIL"
+  echo "Detected user email: $ADMIN_EMAIL"
 fi
-
-echo "Using admin identity: $ADMIN_EMAIL"
 
 echo "========================================================"
 echo "Starting deployment with the following parameters:"
