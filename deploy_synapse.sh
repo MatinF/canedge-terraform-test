@@ -269,9 +269,29 @@ show_connection_details() {
   return 0
 }
 
+# Function to show container app job information
+show_job_information() {
+  echo "======================================================="
+  echo "Container App Job for Synapse Table Mapping" 
+  echo "======================================================="
+  
+  # Get the job instructions output
+  terraform output -json synapse_table_mapper_instructions 2>/dev/null | jq -r '.'
+  
+  # Check if output was successful
+  if [ $? -ne 0 ]; then
+    echo "Failed to get Container App Job information."
+    echo "Check the Azure portal to verify if the Container App Job was created."
+    return 1
+  fi
+  return 0
+}
+
 # Only show connection details if deployment was successful
 if [ $TERRAFORM_EXIT_CODE -eq 0 ]; then
   show_connection_details
+  # Show Container App Job information
+  show_job_information
   echo "======================================================="
   echo "Synapse deployment completed successfully"
   echo "======================================================="

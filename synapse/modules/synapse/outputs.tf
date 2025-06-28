@@ -28,3 +28,14 @@ output "sql_admin_password" {
   value       = random_password.sql_password.result
   sensitive   = true
 }
+
+output "sql_password" {
+  description = "The SQL admin password for the Synapse workspace (alias for container app job)"
+  value       = random_password.sql_password.result
+  sensitive   = true
+}
+
+output "synapse_workspace_endpoint" {
+  description = "The SQL Server endpoint for the Synapse workspace"
+  value       = azurerm_synapse_workspace.synapse.connectivity_endpoints["sql"]
+}
