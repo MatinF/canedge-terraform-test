@@ -40,18 +40,11 @@ data "azurerm_storage_account" "synapse_storage" {
   resource_group_name = var.resource_group_name
 }
 
-# Grant the Synapse workspace Storage Blob Data Contributor access on the storage account
-# This is required for Synapse to be able to read and write data
-resource "azurerm_role_assignment" "synapse_storage_contributor" {
+# Grant the Synapse workspace Storage Blob Data Owner access on the storage account
+# This provides full permissions needed for listing directories and reading files
+resource "azurerm_role_assignment" "synapse_storage_owner" {
   scope                = data.azurerm_storage_account.synapse_storage.id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
-}
-
-# Grant the Synapse workspace Storage Blob Data Reader access to ensure it can read from blob storage
-resource "azurerm_role_assignment" "synapse_storage_reader" {
-  scope                = data.azurerm_storage_account.synapse_storage.id
-  role_definition_name = "Storage Blob Data Reader"
+  role_definition_name = "Storage Blob Data Owner"
   principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
 }
 
