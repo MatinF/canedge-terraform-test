@@ -26,6 +26,27 @@ resource "azurerm_synapse_workspace" "synapse" {
   }
 }
 
+# Get information about the storage account to assign permissions
+data "azurerm_storage_account" "synapse_storage" {
+  name                = var.storage_account_name
+  resource_group_name = var.resource_group_name
+}
+
+# Grant the Synapse workspace Storage Blob Data Contributor access on the storage account
+# This is required for Synapse to be able to read and write data
+resource "azurerm_role_assignment" "synapse_storage_contributor" {
+  scope                = data.azurerm_storage_account.synapse_storage.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
+}
+
+# Grant the Synapse workspace Storage Blob Data Reader access to ensure it can read from blob storage
+resource "azurerm_role_assignment" "synapse_storage_reader" {
+  scope                = data.azurerm_storage_account.synapse_storage.id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = azurerm_synapse_workspace.synapse.identity[0].principal_id
+}
+
 # Create output (moved to outputs.tf)
 output "sql_password" {
   value     = random_password.sql_password.result
