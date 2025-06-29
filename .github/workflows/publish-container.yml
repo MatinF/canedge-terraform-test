@@ -11,8 +11,10 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+    # Enhanced permissions for package operations
     permissions:
       contents: read
+      id-token: write
       packages: write
 
     steps:
@@ -46,10 +48,42 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      # Try to make the package public using GitHub Script
       - name: Make package public
-        run: |
-          curl -X PATCH \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/orgs/${{ github.repository_owner }}/packages/container/${{ env.IMAGE_NAME }}/visibility \
-            -d '{"visibility":"public"}'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const packageName = 'canedge-synapse-map-tables';
+            
+            console.log(`Attempting to make package public: ${packageName} for ${owner}`);
+            
+            try {
+              // Try organization endpoint first
+              console.log('Trying organization endpoint...');
+              await github.rest.packages.setPackageVisibilityForOrg({
+                package_type: 'container',
+                package_name: packageName,
+                org: owner,
+                visibility: 'public'
+              });
+              console.log('Successfully set package to public using org endpoint');
+            } catch (error) {
+              console.log(`Error with org endpoint: ${error.message}`);
+              
+              try {
+                // Fall back to user endpoint
+                console.log('Trying user endpoint...');
+                await github.rest.packages.setPackageVisibilityForUser({
+                  package_type: 'container',
+                  package_name: packageName,
+                  username: owner,
+                  visibility: 'public'
+                });
+                console.log('Successfully set package to public using user endpoint');
+              } catch (error2) {
+                console.log(`Error with user endpoint: ${error2.message}`);
+                console.log('Both methods failed to set package visibility');
+              }
+            }
