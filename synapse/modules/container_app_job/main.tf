@@ -36,13 +36,22 @@ data "azurerm_storage_account" "storage" {
 
 # Create Container App Job
 resource "azurerm_container_app_job" "map_tables" {
-  name                     = "${var.job_name}-${var.unique_id}"
+  name                         = "${var.job_name}-${var.unique_id}"
   container_app_environment_id = azurerm_container_app_environment.job_env.id
-  resource_group_name      = var.resource_group_name
-  tags                     = var.tags
+  resource_group_name          = var.resource_group_name
+  location                     = var.location
+  tags                         = var.tags
+  
+  # Required field
+  replica_timeout_in_seconds   = 1800
   
   template {
-    containers {
+    # Using max retries here instead of at template level
+    max_replicas               = 1
+    min_replicas               = 1
+    revision_suffix            = "v1"
+    
+    container {
       name   = "synapse-map-tables"
       image  = var.container_image
       cpu    = var.cpu
@@ -61,7 +70,7 @@ resource "azurerm_container_app_job" "map_tables" {
       env {
         name  = "STORAGE_CONNECTION_STRING"
         value = "DefaultEndpointsProtocol=https;AccountName=${var.storage_account_name};AccountKey=${data.azurerm_storage_account.storage.primary_access_key};EndpointSuffix=core.windows.net"
-        secure = true
+        secret_name = "storage-connection-string"
       }
       
       env {
@@ -72,13 +81,13 @@ resource "azurerm_container_app_job" "map_tables" {
       env {
         name  = "SYNAPSE_PASSWORD"
         value = var.synapse_sql_password
-        secure = true
+        secret_name = "synapse-password"
       }
       
       env {
         name  = "MASTER_KEY_PASSWORD"
         value = random_password.master_key.result
-        secure = true
+        secret_name = "master-key-password"
       }
       
       env {
@@ -91,18 +100,26 @@ resource "azurerm_container_app_job" "map_tables" {
         value = "sqladminuser"
       }
     }
-    
-    max_retry_count = var.max_retry_count
   }
   
-  trigger {
-    type = var.trigger_type
+  # Manual trigger configuration
+  manual_trigger {
+    name = "run-mapping-job"
   }
   
-  # Ensure job creation doesn't block until first execution
-  lifecycle {
-    ignore_changes = [
-      trigger.0.schedule
-    ]
+  # Secrets configuration
+  secret {
+    name  = "storage-connection-string"
+    value = "DefaultEndpointsProtocol=https;AccountName=${var.storage_account_name};AccountKey=${data.azurerm_storage_account.storage.primary_access_key};EndpointSuffix=core.windows.net"
+  }
+  
+  secret {
+    name  = "synapse-password"
+    value = var.synapse_sql_password
+  }
+  
+  secret {
+    name  = "master-key-password"
+    value = random_password.master_key.result
   }
 }
