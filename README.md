@@ -3,7 +3,7 @@
 This repository provides Terraform configurations to automate the deployment of CANedge data processing infrastructure on Azure.
 
 1. **Input Container Deployment**: Creates an input container for storing uploaded CANedge log files
-2. **MF4-to-Parquet Deployment**: Creates an output container and Azure Function for DBC decoding MDF to Parquet
+2. **MF4-to-Parquet Deployment**: Creates an output container and Function for DBC decoding MDF to Parquet
 3. **Synapse Deployment**: Creates Synapse resources for querying Parquet data
 
 ----------

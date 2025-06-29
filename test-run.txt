@@ -16,3 +16,48 @@ traces
 | where customDimensions.Category == "Host.Function.Console"
 | order by timestamp desc
 
+
+Outputs:
+
+serverless_sql_endpoint = "synapse-demolake1-ondemand.sql.azuresynapse.net"
+sql_server_endpoint = "synapse-demolake1.sql.azuresynapse.net"
+synapse_connection_details = <sensitive>
+synapse_workspace_name = "synapse-demolake1"
+web_endpoint = "https://web.azuresynapse.net?workspace=%2fsubscriptions%2f714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e%2fresourceGroups%2fterraform-group-7%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapse-demolake1"
+Terraform apply succeeded!
+=======================================================
+Deployment complete! Showing connection details...
+=======================================================
+  
+The following details can be used for connecting to the Synapse deployment: 
+
+Name: Microsoft SQL Server
+Host: synapse-demolake1-ondemand.sql.azuresynapse.net
+Database: datalake1
+Authentication: SQL Server Authentication
+User: sqladminuser
+Password: zqQH275l6XF_ap%3
+Min time interval: 1ms
+
+  
+The following details can be used for connecting to the Synapse deployment: 
+
+Name: Microsoft SQL Server
+Host: synapse-demolake1-ondemand.sql.azuresynapse.net
+Database: datalake1
+Authentication: SQL Server Authentication
+User: sqladminuser
+Password: zqQH275l6XF_ap%3
+Min time interval: 1ms
+
+
+
+SELECT TOP 100 *
+FROM OPENROWSET(
+    BULK 'https://terraformsacc7.dfs.core.windows.net/canedge-test-container-26-parquet/0BFD7754/CAN9_GnssSpeed/2023/06/25/00000011_00000006.parquet',
+    FORMAT = 'PARQUET'
+) AS [result]
+
+
+
+NEXT STEP: Make it work with manually created synapse studio as a start to test this. Review if 

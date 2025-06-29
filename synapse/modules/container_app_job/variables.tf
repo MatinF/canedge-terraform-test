@@ -22,7 +22,7 @@ variable "job_name" {
 variable "container_image" {
   description = "Container image to use for the job"
   type        = string
-  default     = "ghcr.io/martinfhotmail/canedge-synapse-map-tables:latest"
+  default     = "ghcr.io/matinf/canedge-synapse-map-tables:latest"
 }
 
 variable "storage_account_name" {
