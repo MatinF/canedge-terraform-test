@@ -45,6 +45,12 @@ resource "azurerm_container_app_job" "map_tables" {
   # Required field
   replica_timeout_in_seconds   = 1800
   
+  # Manual trigger configuration
+  manual_trigger_config {
+    parallelism      = 1
+    replica_completion_count = 1
+  }
+  
   template {
     container {
       name   = "synapse-map-tables"
