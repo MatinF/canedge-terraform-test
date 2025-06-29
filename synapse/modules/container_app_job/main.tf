@@ -46,11 +46,6 @@ resource "azurerm_container_app_job" "map_tables" {
   replica_timeout_in_seconds   = 1800
   
   template {
-    # Using max retries here instead of at template level
-    max_replicas               = 1
-    min_replicas               = 1
-    revision_suffix            = "v1"
-    
     container {
       name   = "synapse-map-tables"
       image  = var.container_image
@@ -100,11 +95,6 @@ resource "azurerm_container_app_job" "map_tables" {
         value = "sqladminuser"
       }
     }
-  }
-  
-  # Manual trigger configuration
-  manual_trigger {
-    name = "run-mapping-job"
   }
   
   # Secrets configuration
