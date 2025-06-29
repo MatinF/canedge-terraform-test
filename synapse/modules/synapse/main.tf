@@ -64,8 +64,5 @@ resource "azurerm_synapse_workspace_aad_admin" "admin" {
   tenant_id            = var.tenant_id
 }
 
-# Create output (moved to outputs.tf)
-output "sql_password" {
-  value     = random_password.sql_password.result
-  sensitive = true
-}
+# Output moved to outputs.tf
+
