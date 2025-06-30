@@ -10,7 +10,6 @@ STORAGE_ACCOUNT=""
 INPUT_CONTAINER=""
 UNIQUE_ID=""
 DATASET_NAME=""
-GITHUB_TOKEN="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"  # Default GitHub token for container registry authentication
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -179,7 +178,7 @@ echo "  Input Container: $INPUT_CONTAINER"
 echo "  Unique ID:       $UNIQUE_ID"
 echo "  Dataset Name:    $DATASET_NAME"
 echo "  Admin Email:     $ADMIN_EMAIL"
-[[ "$GITHUB_TOKEN" != "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" ]] && echo "  GitHub Token:    Custom token provided" || echo "  GitHub Token:    Using default token"
+[[ -n "$GITHUB_TOKEN" ]] && echo "  GitHub Token:    Provided" || echo "  GitHub Token:    Not provided (public image required)"
 echo "========================================================"
 
 # Navigate to the synapse terraform directory
