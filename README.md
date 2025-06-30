@@ -74,7 +74,7 @@ Replace:
 After setting up the MF4-to-Parquet pipeline, you can deploy Synapse to query your Parquet data lake:
 
 ```bash
-chmod +x deploy_synapse.sh && ./deploy_synapse.sh --subid YOUR_SUBSCRIPTION_ID --resourcegroup YOUR_RESOURCE_GROUP --storageaccount YOUR_STORAGE_ACCOUNT --container YOUR_INPUT_CONTAINER_NAME --id YOUR_UNIQUE_ID --dataset YOUR_DATASET_NAME --github-token YOUR_GITHUB_TOKEN
+chmod +x deploy_synapse.sh && ./deploy_synapse.sh --subid YOUR_SUBSCRIPTION_ID --resourcegroup YOUR_RESOURCE_GROUP --storageaccount YOUR_STORAGE_ACCOUNT --container YOUR_INPUT_CONTAINER_NAME --id YOUR_UNIQUE_ID --dataset YOUR_DATASET_NAME
 
 ```
 
@@ -85,7 +85,6 @@ Replace:
 - `YOUR_INPUT_CONTAINER_NAME` with your input container name from step 1 (e.g. `canedge-test-container-20`)
 - `YOUR_UNIQUE_ID` with a short unique identifier (e.g. `datalake1`)
 - `YOUR_DATASET_NAME` with your desired Synapse dataset name (e.g. `dataset1`)
-- `YOUR_GITHUB_TOKEN` with a GitHub Personal Access Token with at least `read:packages` scope (required to pull the private container image)
 
 
 

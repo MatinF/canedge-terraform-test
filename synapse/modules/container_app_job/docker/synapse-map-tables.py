@@ -9,8 +9,11 @@ appropriate external tables in the Synapse workspace.
 
 import os
 import sys
+import re
+import json
 import tempfile
 import logging
+import pyarrow as pa
 import pyarrow.parquet as pq
 from azure.storage.blob import BlobServiceClient
 import time
@@ -43,21 +46,30 @@ def initialize_blob_client(connection_string_output, container_output):
         sys.exit(1)
 
 def list_device_message_folders(container_client):
-    """List all device/message folders in the container"""
-    logger.info("Scanning for device/message folders...")
+    """List all device/message folders in the container and identify unique device IDs"""
+    logger.info("Scanning for device/message folders and unique device IDs...")
     try:
         blobs = container_client.list_blobs()
         device_message_folders = set()
+        prefixes = set()
+        devices = set()
+        
         for blob in blobs:
             parts = blob.name.split('/')
-            if len(parts) == 5:  # Expected path structure
-                device_message_folders.add('/'.join(parts[:2]))
+            if len(parts) >= 3:
+                top_prefix, message = parts[:2]
+                if re.match(r"^[0-9A-F]{8}$", top_prefix):  # Ensure only valid device IDs
+                    prefixes.add(f"{top_prefix}/{message}")
+                    devices.add(top_prefix)
+                    if len(parts) == 5:  # Expected path structure for data tables
+                        device_message_folders.add('/'.join(parts[:2]))
         
         logger.info(f"Found {len(device_message_folders)} device/message folders")
-        return list(device_message_folders)
+        logger.info(f"Found {len(devices)} unique device IDs")
+        return list(device_message_folders), list(prefixes), list(devices)
     except Exception as e:
         logger.error(f"Failed to list folders: {e}")
-        return []
+        return [], [], []
 
 def get_parquet_schema(container_client, folder_path):
     """Extract schema from the first Parquet file in a folder"""
@@ -177,12 +189,44 @@ def execute_sql(synapse_server, synapse_user, synapse_password, database, sql_qu
         logger.error(f"Failed to execute SQL: {e}")
         return None
 
+def drop_all_tables_in_database(synapse_server, synapse_user, synapse_password, synapse_database):
+    """Drop all existing tables in the database"""
+    try:
+        logger.info(f"Deleting all existing tables in database {synapse_database}...")
+        
+        # Get list of all external tables
+        list_tables_query = """
+        SELECT name FROM sys.external_tables
+        """
+        result = execute_sql(synapse_server, synapse_user, synapse_password, synapse_database, list_tables_query)
+        
+        if not result or 'results' not in result:
+            logger.warning("Could not retrieve table list")
+            return 0
+        
+        tables = [row[0] for row in result['results']]
+        logger.info(f"Found {len(tables)} existing tables")
+        
+        # Drop each table
+        deleted_count = 0
+        for table in tables:
+            try:
+                drop_sql = f"DROP EXTERNAL TABLE [{table}]"
+                execute_sql(synapse_server, synapse_user, synapse_password, synapse_database, drop_sql)
+                logger.info(f"- Deleted table {table}")
+                deleted_count += 1
+            except Exception as e:
+                logger.warning(f"Failed to delete table {table}: {e}")
+        
+        logger.info(f"Deleted {deleted_count} existing tables from database {synapse_database}")
+        return deleted_count
+    except Exception as e:
+        logger.error(f"Error dropping tables: {e}")
+        return 0
+
 def create_database_and_objects(synapse_server, synapse_user, synapse_password, synapse_database, storage_account_name, container_output, master_key_password):
     """Create database and required objects in Synapse using REST API and SQL queries"""
-    try:
-        # Use the original database name passed to the function
-        # No override needed as we fixed the connection approach
-        
+    try:        
         # Check if the database exists by trying to use it
         logger.info(f"Checking if database {synapse_database} exists in {synapse_server}")
         
@@ -282,8 +326,8 @@ def main():
     # Initialize container client
     container_client = initialize_blob_client(storage_connection_string, container_output)
     
-    # List all device/message folders
-    folders = list_device_message_folders(container_client)
+    # List all device/message folders and get unique device IDs
+    folders, prefixes, devices = list_device_message_folders(container_client)
     if not folders:
         logger.warning("No device/message folders found. No tables will be created.")
         sys.exit(0)
@@ -291,6 +335,119 @@ def main():
     # Create database and required objects
     create_database_and_objects(synapse_server, synapse_user, synapse_password, synapse_database, 
                                storage_account, container_output, master_key_password)
+    
+    # First drop all existing tables for clean slate
+    drop_all_tables_in_database(synapse_server, synapse_user, synapse_password, synapse_database)
+    
+    # Process metadata and create devicemeta table
+    logger.info("Processing device metadata...")
+    metadata_list = []
+    for device_id in devices:
+        device_json_path = f"{device_id}/device.json"
+        metaname = device_id.upper()
+        
+        try:
+            # Get the device.json blob if it exists
+            blob_client = container_client.get_blob_client(device_json_path)
+            if blob_client.exists():
+                downloaded_blob = blob_client.download_blob().readall()
+                device_meta = json.loads(downloaded_blob)
+                log_meta = device_meta.get("log_meta", "")
+                if log_meta:
+                    metaname = f"{log_meta} ({device_id.upper()})"
+        except Exception as e:
+            logger.warning(f"Unable to extract meta data from device.json for {device_id}: {e}")
+        
+        metadata_list.append({"MetaName": metaname, "DeviceId": device_id})
+    
+    # Save devicemeta to Parquet and create table
+    if metadata_list:
+        meta_path = "aggregations/devicemeta/2024/01/01/devicemeta.parquet"
+        meta_table_name = "aggregations_devicemeta"
+        
+        # Create the metadata Parquet file
+        meta_table = pa.Table.from_pydict({
+            "MetaName": [item['MetaName'] for item in metadata_list],
+            "DeviceId": [item['DeviceId'] for item in metadata_list]
+        })
+        
+        with tempfile.NamedTemporaryFile(suffix=".parquet", delete=False) as temp_file:
+            pq.write_table(meta_table, temp_file.name, compression='snappy')
+            temp_file_path = temp_file.name
+        
+        # Upload to blob storage
+        try:
+            blob_client = container_client.get_blob_client(meta_path)
+            with open(temp_file_path, "rb") as data:
+                blob_client.upload_blob(data, overwrite=True)
+            logger.info(f"Device meta Parquet file written to {meta_path}")
+            os.remove(temp_file_path)
+            
+            # Create external table for devicemeta
+            devicemeta_sql = f"""
+            CREATE EXTERNAL TABLE [tbl_{meta_table_name}]
+            (
+                [MetaName] VARCHAR(255),
+                [DeviceId] VARCHAR(8)
+            )
+            WITH
+            (
+                LOCATION = '/{meta_path}',
+                DATA_SOURCE = [ParquetDataLake],
+                FILE_FORMAT = [ParquetFormat]
+            )
+            """
+            if create_external_table(synapse_server, synapse_user, synapse_password, synapse_database, devicemeta_sql, meta_table_name):
+                logger.info(f"- Created devicemeta table tbl_{meta_table_name}")
+            
+        except Exception as e:
+            logger.error(f"Failed to upload devicemeta Parquet file: {e}")
+    
+    # Process messages table for each device
+    logger.info("Creating messages tables for each device...")
+    for device_id in devices:
+        messages = set()
+        for prefix in prefixes:
+            if prefix.startswith(device_id):
+                _, message = prefix.split('/')
+                messages.add(message)
+        
+        messages_list = list(messages)
+        messages_path = f"{device_id}/messages/2024/01/01/messages.parquet"
+        messages_table_name = f"{device_id}_messages"
+        
+        # Create and upload messages Parquet file
+        messages_table = pa.Table.from_pydict({"MessageName": messages_list})
+        with tempfile.NamedTemporaryFile(suffix=".parquet", delete=False) as temp_file:
+            pq.write_table(messages_table, temp_file.name, compression='snappy')
+            temp_file_path = temp_file.name
+        
+        # Upload to blob storage
+        try:
+            blob_client = container_client.get_blob_client(messages_path)
+            with open(temp_file_path, "rb") as data:
+                blob_client.upload_blob(data, overwrite=True)
+            logger.info(f"Messages Parquet file written to {messages_path}")
+            os.remove(temp_file_path)
+            
+            # Create external table for messages
+            messages_sql = f"""
+            CREATE EXTERNAL TABLE [tbl_{messages_table_name}]
+            (
+                [MessageName] VARCHAR(255)
+            )
+            WITH
+            (
+                LOCATION = '/{messages_path}',
+                DATA_SOURCE = [ParquetDataLake],
+                FILE_FORMAT = [ParquetFormat]
+            )
+            """
+            if create_external_table(synapse_server, synapse_user, synapse_password, synapse_database, messages_sql, messages_table_name):
+                logger.info(f"- Created messages table tbl_{messages_table_name}")
+            
+        except Exception as e:
+            logger.error(f"Failed to upload messages Parquet file: {e}")
     
     # Create tables for each folder using REST API
     tables_created = 0
