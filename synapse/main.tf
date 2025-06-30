@@ -74,6 +74,7 @@ module "container_app_job" {
   output_container_name = local.output_container_name
   synapse_server        = module.synapse.synapse_workspace_endpoint
   synapse_sql_password  = module.synapse.sql_password
+  github_token          = var.github_token
   
   # Add tags for resource management
   tags = {

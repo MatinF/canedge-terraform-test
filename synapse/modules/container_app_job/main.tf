@@ -15,6 +15,13 @@ resource "azurerm_container_app_environment" "job_env" {
   resource_group_name        = var.resource_group_name
   log_analytics_workspace_id = azurerm_log_analytics_workspace.container_app.id
   tags                       = var.tags
+
+  # Add registry credentials for GitHub Container Registry
+  registry {
+    server               = "ghcr.io"
+    username             = var.github_username
+    password_secret_name = "github-token"
+  }
 }
 
 # Generate a secure master key password
@@ -117,5 +124,11 @@ resource "azurerm_container_app_job" "map_tables" {
   secret {
     name  = "master-key-password"
     value = random_password.master_key.result
+  }
+
+  # GitHub Container Registry authentication token
+  secret {
+    name  = "github-token"
+    value = var.github_token
   }
 }

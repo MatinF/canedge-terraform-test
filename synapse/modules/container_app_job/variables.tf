@@ -46,6 +46,18 @@ variable "synapse_sql_password" {
   sensitive   = true
 }
 
+variable "github_username" {
+  description = "GitHub username for container registry authentication"
+  type        = string
+  default     = "MatinF"
+}
+
+variable "github_token" {
+  description = "GitHub Personal Access Token with read:packages scope for container registry authentication"
+  type        = string
+  sensitive   = true
+}
+
 variable "tags" {
   description = "Tags to apply to resources"
   type        = map(string)
