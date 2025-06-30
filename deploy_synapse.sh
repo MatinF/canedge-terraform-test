@@ -10,7 +10,7 @@ STORAGE_ACCOUNT=""
 INPUT_CONTAINER=""
 UNIQUE_ID=""
 DATASET_NAME=""
-# GitHub token is now hardcoded in variables.tf
+GITHUB_TOKEN=""  # GitHub token for container registry authentication
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -44,6 +44,11 @@ while [[ $# -gt 0 ]]; do
 
     --dataset)
       DATASET_NAME="$2"
+      shift
+      shift
+      ;;
+    --github-token)
+      GITHUB_TOKEN="$2"
       shift
       shift
       ;;
@@ -174,7 +179,7 @@ echo "  Input Container: $INPUT_CONTAINER"
 echo "  Unique ID:       $UNIQUE_ID"
 echo "  Dataset Name:    $DATASET_NAME"
 echo "  Admin Email:     $ADMIN_EMAIL"
-echo "  GitHub Token:    Using hardcoded value in variables.tf"
+[[ -n "$GITHUB_TOKEN" ]] && echo "  GitHub Token:    Provided" || echo "  GitHub Token:    Not provided (public image required)"
 echo "========================================================"
 
 # Navigate to the synapse terraform directory
@@ -200,6 +205,7 @@ resource_group_name = "$RESOURCE_GROUP"
 storage_account_name = "$STORAGE_ACCOUNT"
 input_container_name = "$INPUT_CONTAINER"
 unique_id = "$UNIQUE_ID"
+github_token = "$GITHUB_TOKEN"
 dataset_name = "$DATASET_NAME"
 EOF
 
@@ -211,7 +217,6 @@ export TF_VAR_input_container_name="$INPUT_CONTAINER"
 export TF_VAR_unique_id="$UNIQUE_ID"
 export TF_VAR_dataset_name="$DATASET_NAME"
 export TF_IN_AUTOMATION="true"  # This prevents interactive prompts
-# Note: GitHub token is now hardcoded in variables.tf
 
 # Construct the Azure resource ID for the filesystem
 STORAGE_ACCOUNT_ID="/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT"
