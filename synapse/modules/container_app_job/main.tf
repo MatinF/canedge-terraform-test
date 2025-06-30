@@ -77,7 +77,6 @@ resource "azurerm_container_app_job" "map_tables" {
       
       env {
         name  = "STORAGE_CONNECTION_STRING"
-        value = "DefaultEndpointsProtocol=https;AccountName=${var.storage_account_name};AccountKey=${data.azurerm_storage_account.storage.primary_access_key};EndpointSuffix=core.windows.net"
         secret_name = "storage-connection-string"
       }
       
@@ -88,15 +87,22 @@ resource "azurerm_container_app_job" "map_tables" {
       
       env {
         name  = "SYNAPSE_PASSWORD"
-        value = var.synapse_sql_password
         secret_name = "synapse-password"
       }
       
       env {
         name  = "MASTER_KEY_PASSWORD"
-        value = random_password.master_key.result
         secret_name = "master-key-password"
       }
+      
+      # Add debug environment variable
+      env {
+        name  = "DEBUG"
+        value = "true"
+      }
+      
+      # Define explicit command with debug flag
+      command = ["sh", "-c", "echo 'Starting container' && env | grep -v PASSWORD && python -u synapse-map-tables.py"]
       
       env {
         name  = "SYNAPSE_DATABASE"
