@@ -260,7 +260,7 @@ def main():
     """Main function to map Synapse tables"""
     logger.info("Starting Synapse table mapping process")
     
-    Get environment variables
+    # Get environment variables
     try:
         storage_account = os.environ["STORAGE_ACCOUNT"]
         container_output = os.environ["CONTAINER_OUTPUT"]
