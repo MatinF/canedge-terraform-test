@@ -23,8 +23,8 @@ variable "storage_data_lake_gen2_filesystem_id" {
   type        = string
 }
 
-variable "dataset_name" {
-  description = "The name of the dataset to be created in Synapse"
+variable "database_name" {
+  description = "The name of the database to be created in Synapse"
   type        = string
 }
 

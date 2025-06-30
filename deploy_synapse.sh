@@ -9,7 +9,7 @@ RESOURCE_GROUP=""
 STORAGE_ACCOUNT=""
 INPUT_CONTAINER=""
 UNIQUE_ID=""
-DATASET_NAME=""
+DATABASE_NAME=""
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -42,7 +42,7 @@ while [[ $# -gt 0 ]]; do
       ;;
 
     --dataset)
-      DATASET_NAME="$2"
+      DATABASE_NAME="$2"
       shift
       shift
       ;;
@@ -149,9 +149,9 @@ echo "Output container $OUTPUT_CONTAINER exists"
 
 
 
-if [[ -z "$DATASET_NAME" ]]; then
-  DATASET_NAME="canedge"
-  echo "Using default dataset name: $DATASET_NAME"
+if [[ -z "$DATABASE_NAME" ]]; then
+  DATABASE_NAME="canedge"
+  echo "Using default dataset name: $DATABASE_NAME"
 fi
 
 # Auto-detect the current user's email address using Azure CLI
@@ -176,7 +176,7 @@ echo "  Resource Group:  $RESOURCE_GROUP"
 echo "  Storage Account: $STORAGE_ACCOUNT"
 echo "  Input Container: $INPUT_CONTAINER"
 echo "  Unique ID:       $UNIQUE_ID"
-echo "  Dataset Name:    $DATASET_NAME"
+echo "  Database Name:   $DATABASE_NAME"
 echo "  Admin Email:     $ADMIN_EMAIL"
 [[ -n "$GITHUB_TOKEN" ]] && echo "  GitHub Token:    Provided" || echo "  GitHub Token:    Not provided (public image required)"
 echo "========================================================"
@@ -205,7 +205,7 @@ storage_account_name = "$STORAGE_ACCOUNT"
 input_container_name = "$INPUT_CONTAINER"
 unique_id = "$UNIQUE_ID"
 github_token = "$GITHUB_TOKEN"
-dataset_name = "$DATASET_NAME"
+database_name = "$DATABASE_NAME"
 EOF
 
 # Set environment variables for Terraform to use
@@ -214,7 +214,7 @@ export TF_VAR_resource_group_name="$RESOURCE_GROUP"
 export TF_VAR_storage_account_name="$STORAGE_ACCOUNT"
 export TF_VAR_input_container_name="$INPUT_CONTAINER"
 export TF_VAR_unique_id="$UNIQUE_ID"
-export TF_VAR_dataset_name="$DATASET_NAME"
+export TF_VAR_database_name="$DATABASE_NAME"
 export TF_IN_AUTOMATION="true"  # This prevents interactive prompts
 
 # Construct the Azure resource ID for the filesystem
@@ -245,7 +245,7 @@ terraform apply -auto-approve \
   -var "storage_account_name=$STORAGE_ACCOUNT" \
   -var "input_container_name=$INPUT_CONTAINER" \
   -var "unique_id=$UNIQUE_ID" \
-  -var "dataset_name=$DATASET_NAME" \
+  -var "database_name=$DATABASE_NAME" \
   -var "admin_email=$ADMIN_EMAIL"
 
 TERRAFORM_EXIT_CODE=$?

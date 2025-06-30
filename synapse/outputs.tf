@@ -26,7 +26,7 @@ output "synapse_connection_details" {
 
 Name: Microsoft SQL Server
 Host: ${module.synapse.serverless_sql_endpoint}
-Database: ${var.dataset_name}
+Database: ${var.database_name}
 Authentication: SQL Server Authentication
 User: sqladminuser
 Password: ${module.synapse.sql_admin_password}

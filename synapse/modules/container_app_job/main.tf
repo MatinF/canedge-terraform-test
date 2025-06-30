@@ -43,7 +43,7 @@ resource "azurerm_container_app_job" "map_tables" {
   tags                         = var.tags
   
   # Required field
-  replica_timeout_in_seconds   = 1800
+  replica_timeout_in_seconds   = 900
   
   # Manual trigger configuration
   manual_trigger_config {
@@ -106,7 +106,7 @@ resource "azurerm_container_app_job" "map_tables" {
       
       env {
         name  = "SYNAPSE_DATABASE"
-        value = "parquetdatalake"
+        value = var.database_name
       }
       
       env {

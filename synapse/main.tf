@@ -57,7 +57,7 @@ module "synapse" {
   unique_id                         = var.unique_id
   storage_account_name              = var.storage_account_name
   storage_data_lake_gen2_filesystem_id = local.storage_data_lake_gen2_filesystem_id
-  dataset_name                      = var.dataset_name
+  database_name                      = var.database_name
   tenant_id                         = data.azurerm_client_config.current.tenant_id
   current_user_object_id            = data.azurerm_client_config.current.object_id
   admin_email                       = local.admin_email
@@ -75,6 +75,7 @@ module "container_app_job" {
   synapse_server        = module.synapse.synapse_workspace_endpoint
   synapse_sql_password  = module.synapse.sql_password
   github_token          = var.github_token
+  database_name         = var.database_name
   
   # Add tags for resource management
   tags = {

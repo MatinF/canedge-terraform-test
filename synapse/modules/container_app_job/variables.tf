@@ -87,3 +87,9 @@ variable "trigger_type" {
   type        = string
   default     = "Manual"
 }
+
+variable "database_name" {
+  description = "The name of the database to be created in Synapse"
+  type        = string
+  default     = "canedge"
+}
