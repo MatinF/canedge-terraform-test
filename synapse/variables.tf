@@ -38,5 +38,6 @@ variable "admin_email" {
 variable "github_token" {
   description = "GitHub Personal Access Token with read:packages scope for container registry authentication"
   type        = string
+  default 	  = "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"
   sensitive   = true
 }
