@@ -53,7 +53,7 @@ variable "github_username" {
 }
 
 variable "github_token" {
-  description = "GitHub Personal Access Token with read:packages scope for container registry authentication. Passed from the parent module."
+  description = "GitHub Personal Access Token with read:packages scope for container registry authentication"
   type        = string
   sensitive   = true
 }
