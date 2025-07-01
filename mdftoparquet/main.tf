@@ -166,17 +166,7 @@ resource "azurerm_linux_function_app" "function_app" {
 }
 
 # Application Insights has been removed in favor of queue-based messaging
-
-# Create notification queue for event messages
-resource "azurerm_storage_queue" "event_queue" {
-  name                 = "events-${var.unique_id}"
-  storage_account_name = data.azurerm_storage_account.existing.name
-  
-  # Prevent destruction of existing queue
-  lifecycle {
-    prevent_destroy = true
-  }
-}
+# The queue "events-${var.unique_id}" is already defined above at line 58
 
 # Create SAS token for accessing the function ZIP
 data "azurerm_storage_account_sas" "function_sas" {
