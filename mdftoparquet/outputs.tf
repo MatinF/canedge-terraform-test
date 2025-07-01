@@ -43,5 +43,7 @@ output "eventgrid_topic_name" {
   value       = azurerm_eventgrid_system_topic.storage_events.name
 }
 
-# Event Grid subscription output moved to event_grid_outputs.tf
-# This allows for conditional inclusion of the output based on deployment phase
+output "eventgrid_subscription_name" {
+  description = "Name of the Event Grid Subscription"
+  value       = azurerm_eventgrid_system_topic_event_subscription.input_events.name
+}

@@ -240,7 +240,7 @@ echo "Setting up Terraform state storage..."
 # The state file itself will be created when Terraform initializes
 # No need to create placeholder files as Azure Blob handles this automatically
 
-# Initialize and apply Terraform using the "Terraform Sandwich" approach
+# Initialize and apply Terraform
 cd "$(dirname "$0")/mdftoparquet" || exit 1
 
 echo "Initializing Terraform with remote state..."
@@ -250,15 +250,7 @@ terraform init \
   -backend-config="container_name=$INPUT_CONTAINER_NAME" \
   -backend-config="key=terraform/state/mdftoparquet/default.tfstate"
 
-# STEP 1: Deploy everything EXCEPT the Event Grid subscription (first layer of the sandwich)
-echo "Applying Terraform configuration (first layer) - creating Azure Function infrastructure..."
-
-# For the first phase, we temporarily rename the event_grid_outputs.tf file to prevent Terraform from using it
-if [ -f "event_grid_outputs.tf" ]; then
-  echo "Temporarily hiding event_grid_outputs.tf for first phase..."
-  mv event_grid_outputs.tf event_grid_outputs.tf.temp
-fi
-
+echo "Applying Terraform configuration to create the MDF-to-Parquet pipeline..."
 terraform apply ${AUTO_APPROVE} \
   -var="subscription_id=${SUBSCRIPTION_ID}" \
   -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
@@ -268,48 +260,7 @@ terraform apply ${AUTO_APPROVE} \
   -var="unique_id=${UNIQUE_ID}" \
   -var="email_address=${EMAIL_ADDRESS}" \
   -var="function_zip_name=${FUNCTION_ZIP_NAME}" \
-  -var="function_app_name=${FUNCTION_APP_NAME}" \
-  -var="include_event_grid_subscription=false"
-
-# Store exit code to check if first deployment was successful
-TF_FIRST_EXIT_CODE=$?
-
-# Check if the first deployment was successful
-if [ $TF_FIRST_EXIT_CODE -ne 0 ]; then
-  echo "❌  First layer deployment failed."
-  exit 1
-fi
-
-# STEP 2: Get the Function App name from Terraform output
-FUNCTION_APP=$(terraform output -raw function_app_name 2>/dev/null)
-if [ -z "$FUNCTION_APP" ]; then
-  echo "❌  Failed to retrieve Function App name from Terraform output."
-  exit 1
-fi
-
-echo "Function App '$FUNCTION_APP' deployed successfully."
-echo "Waiting for Function App to be ready before proceeding with event subscription..."
-sleep 30
-
-# STEP 3: Deploy everything INCLUDING the Event Grid subscription (second layer of the sandwich)
-echo "Applying Terraform configuration (second layer) - creating Event Grid subscription..."
-
-# Restore the event_grid_outputs.tf file for the second phase
-if [ -f "event_grid_outputs.tf.temp" ]; then
-  echo "Restoring event_grid_outputs.tf for second phase..."
-  mv event_grid_outputs.tf.temp event_grid_outputs.tf
-fi
-terraform apply ${AUTO_APPROVE} \
-  -var="subscription_id=${SUBSCRIPTION_ID}" \
-  -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
-  -var="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
-  -var="input_container_name=${INPUT_CONTAINER_NAME}" \
-  -var="location=${REGION}" \
-  -var="unique_id=${UNIQUE_ID}" \
-  -var="email_address=${EMAIL_ADDRESS}" \
-  -var="function_zip_name=${FUNCTION_ZIP_NAME}" \
-  -var="function_app_name=${FUNCTION_APP_NAME}" \
-  -var="include_event_grid_subscription=true"
+  -var="function_app_name=${FUNCTION_APP_NAME}"
 
 # Store exit code to check if deployment was successful
 TF_EXIT_CODE=$?

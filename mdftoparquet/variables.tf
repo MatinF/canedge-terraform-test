@@ -49,9 +49,3 @@ variable "function_app_name" {
   type        = string
   default     = ""
 }
-
-variable "include_event_grid_subscription" {
-  description = "Whether to include the Event Grid subscription in the deployment"
-  type        = bool
-  default     = false
-}
