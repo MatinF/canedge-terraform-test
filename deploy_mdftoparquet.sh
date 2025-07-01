@@ -252,6 +252,13 @@ terraform init \
 
 # STEP 1: Deploy everything EXCEPT the Event Grid subscription (first layer of the sandwich)
 echo "Applying Terraform configuration (first layer) - creating Azure Function infrastructure..."
+
+# For the first phase, we temporarily rename the event_grid_outputs.tf file to prevent Terraform from using it
+if [ -f "event_grid_outputs.tf" ]; then
+  echo "Temporarily hiding event_grid_outputs.tf for first phase..."
+  mv event_grid_outputs.tf event_grid_outputs.tf.temp
+fi
+
 terraform apply ${AUTO_APPROVE} \
   -var="subscription_id=${SUBSCRIPTION_ID}" \
   -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
@@ -286,6 +293,12 @@ sleep 30
 
 # STEP 3: Deploy everything INCLUDING the Event Grid subscription (second layer of the sandwich)
 echo "Applying Terraform configuration (second layer) - creating Event Grid subscription..."
+
+# Restore the event_grid_outputs.tf file for the second phase
+if [ -f "event_grid_outputs.tf.temp" ]; then
+  echo "Restoring event_grid_outputs.tf for second phase..."
+  mv event_grid_outputs.tf.temp event_grid_outputs.tf
+fi
 terraform apply ${AUTO_APPROVE} \
   -var="subscription_id=${SUBSCRIPTION_ID}" \
   -var="resource_group_name=${RESOURCE_GROUP_NAME}" \
