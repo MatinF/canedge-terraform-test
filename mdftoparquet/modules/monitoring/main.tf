@@ -29,27 +29,7 @@ resource "azurerm_api_connection" "storage" {
   }
 }
 
-# Create Logic App trigger and email action using ARM template
-# Since Terraform doesn't have direct support for all Logic App actions/triggers,
-# we're using a simpler approach with built-in connections
-resource "azurerm_logic_app_workflow" "event_notification" {
-  name                = "logicapp-${var.unique_id}"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-}
 
-# Use the standard API connection resource for storage queues
-resource "azurerm_api_connection" "storage" {
-  name                = "storage-connection-${var.unique_id}"
-  resource_group_name = var.resource_group_name
-  managed_api_id      = "/subscriptions/${var.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/azurequeues"
-  display_name        = "Azure Storage Queue Connection"
-  
-  parameter_values = {
-    "storageAccountName" = data.azurerm_storage_account.existing.name
-    "accessKey"          = data.azurerm_storage_account.existing.primary_access_key
-  }
-}
 
 # For manual configuration post-deployment
 # The Logic App will need to be configured in the Azure Portal
