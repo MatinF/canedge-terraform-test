@@ -33,10 +33,8 @@ output "function_app_url" {
   value       = "https://${azurerm_linux_function_app.function_app.default_hostname}"
 }
 
-output "application_insights_name" {
-  description = "Name of the Application Insights instance"
-  value       = azurerm_application_insights.insights.name
-}
+# Application Insights has been removed to reduce costs
+# Queue-based notifications are now used instead
 
 output "eventgrid_topic_name" {
   description = "Name of the Event Grid System Topic"
