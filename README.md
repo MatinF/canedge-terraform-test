@@ -4,7 +4,7 @@ This repository provides Terraform configurations to automate the deployment of 
 
 1. **Input Container Deployment**: Creates an input container for storing uploaded CANedge log files
 2. **MF4-to-Parquet Deployment**: Creates an output container and Function for DBC decoding MDF to Parquet
-3. **Synapse Deployment**: Creates Synapse resources for querying Parquet data
+3. **Synapse Deployment**: Creates Synapse resources for querying Parquet data (e.g. from Grafana dashboards)
 
 ----------
 
@@ -95,10 +95,10 @@ If you encounter issues with either deployment:
 
 - Make sure you have proper permissions in your Azure cloud
 - Try refreshing the page and restarting the shell (make sure to select 'Bash' mode)
-- For the MF4-to-Parquet and Synapse deployments, ensure the relevant function ZIP files are uploaded to your input bucket before deployment
+- For the MF4-to-Parquet deployment ensure the function ZIP is uploaded to your input container before deployment
 - Use unique identifiers with the `--id` parameter to avoid resource conflicts
 - When deploying the MF4-to-Parquet pipeline, it can take 5-10 min for the function to be fully deployed. You can then open the 'Logs' tab in the function in one tab and after 1-3 min upload an MF4 test file to your input container to track the decoding results in real-time
-- If your function does not deploy properly within your Function App, check the Monitoring/Logs/KQL mode with below query for details:
+- If your function does not deploy in your Function App, check Monitoring/Logs/KQL mode with below:
 
   ```
   traces

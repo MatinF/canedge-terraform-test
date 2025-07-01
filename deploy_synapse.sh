@@ -260,8 +260,8 @@ fi
 
 # Function to show connection details
 show_connection_details() {
-  echo "======================================================="
-  echo "Deployment complete! Showing connection details..." 
+  echo " "
+  echo " "
   echo "======================================================="
   
   # Get the output and strip sensitive values markers
@@ -278,8 +278,6 @@ show_connection_details() {
 
 # Function to show container app job information
 show_job_information() {
-  echo "======================================================="
-  echo "Container App Job for Synapse Table Mapping" 
   echo "======================================================="
   
   # Get the job instructions output
@@ -304,10 +302,6 @@ if [ $TERRAFORM_EXIT_CODE -eq 0 ]; then
   echo "======================================================="
   exit 0
 else
-  echo "======================================================="
-  echo "Attempting to show connection details despite errors..." 
-  echo "======================================================="
-  show_connection_details
   echo "======================================================="
   echo "Deployment had issues. Please check the output above for more details."
   echo "======================================================="

@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-LABEL org.opencontainers.image.source=https://github.com/MatinF/canedge-terraform-test
+LABEL org.opencontainers.image.source=https://github.com/CSS-Electronics/canedge-azure-cloud-terraform
 
 WORKDIR /app
 

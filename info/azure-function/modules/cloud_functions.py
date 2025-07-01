@@ -365,10 +365,10 @@ def publish_notification(cloud, client, subject, message, logger):
             return False
     elif cloud == "Google":
         # Below will trigger a GCP Metric --> Alert --> Notification based on the payload containing 'NEW EVENT'
-        logger.info(f"NEW EVENT: {message}")
+        logger.warning(f"NEW EVENT: {message}")
     elif cloud == "Azure":
         # Add NEW EVENT log pattern for Azure Monitor to detect
-        logger.info(f"NEW EVENT: {message}")
+        logger.warning(f"NEW EVENT: {message}")
         return True
     else:
         logger.error(f"Unsupported cloud provider: {cloud}")
