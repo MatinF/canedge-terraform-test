@@ -25,7 +25,7 @@ To set up the Logic App for email notifications:
 3. Add a trigger for Azure Queue Storage - "When messages are available in a queue"
 4. Use the following queue information:
    - Storage Account: ${data.azurerm_storage_account.existing.name}
-   - Queue: ${azurerm_storage_queue.notification_queue.name}
+   - Queue: ${var.event_queue_name}
 5. Add a Parse JSON action to parse the message:
    - Content: @{base64ToString(triggerBody()?['ContentData'])}
    - Schema: { "properties": { "message": { "type": "string" }, "subject": { "type": "string" }, "timestamp": { "type": "string" } }, "type": "object" }
