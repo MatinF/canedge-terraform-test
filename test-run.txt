@@ -1,3 +1,6 @@
+NOTE: Deploys logic pap + queue, but not sure if it is triggered properly due to lack of application insights
+
+
 cd ~ && rm -rf canedge-terraform-test && git clone https://github.com/MatinF/canedge-terraform-test.git && cd canedge-terraform-test
 
 chmod +x deploy_input_container.sh && ./deploy_input_container.sh --resourcegroup terraform-group-7 --storageaccount terraformsacc7 --region germanywestcentral --container canedge-test-container-26 --subid 714b7bef-30a3-4e30-9b9f-7a1dcd5f7c7e

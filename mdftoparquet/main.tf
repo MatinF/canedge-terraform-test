@@ -54,20 +54,7 @@ resource "azurerm_storage_container" "output_container" {
   }
 }
 
-# Create storage queue for event notifications
-resource "azurerm_storage_queue" "event_queue" {
-  name                 = "events-${var.unique_id}"
-  storage_account_name = data.azurerm_storage_account.existing.name
-  
-  # Prevent destruction of existing queue
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      name,
-      storage_account_name
-    ]
-  }
-}
+# Storage queue resource has been removed as we'll use Azure Monitor for notifications instead
 
 # Create App Service Plan for Azure Functions (Consumption plan)
 resource "azurerm_service_plan" "function_app_plan" {
@@ -107,7 +94,8 @@ locals {
     "InputContainerName"                = var.input_container_name
     "OutputContainerName"               = local.output_container_name
     "NotificationEmail"                 = var.email_address
-    "EventQueueName"                    = azurerm_storage_queue.event_queue.name
+    "APPINSIGHTS_INSTRUMENTATIONKEY"    = azurerm_application_insights.insights.instrumentation_key
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.insights.connection_string
     "PYTHON_ENABLE_WORKER_EXTENSIONS"   = "1"
     "AzureWebJobsFeatureFlags"          = "EnableWorkerIndexing"
     # Add the ZIP file name to app settings to force deployment when it changes
@@ -146,6 +134,8 @@ resource "azurerm_linux_function_app" "function_app" {
       python_version = "3.11"
     }
     always_on = false
+    application_insights_connection_string = azurerm_application_insights.insights.connection_string
+    application_insights_key               = azurerm_application_insights.insights.instrumentation_key
   }
 
   identity {
@@ -165,8 +155,24 @@ resource "azurerm_linux_function_app" "function_app" {
   }
 }
 
-# Application Insights has been removed in favor of queue-based messaging
-# The queue "events-${var.unique_id}" is already defined above at line 58
+# Create Application Insights for monitoring
+resource "azurerm_application_insights" "insights" {
+  name                = "appinsights-${var.unique_id}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  application_type    = "web"
+  
+  # Prevent destruction of existing insights
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      name,
+      location,
+      resource_group_name,
+      application_type
+    ]
+  }
+}
 
 # Create SAS token for accessing the function ZIP
 data "azurerm_storage_account_sas" "function_sas" {
@@ -274,7 +280,7 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "input_events" {
   }
 }
 
-# Add monitoring and alerting module for email notifications via Logic App
+# Add monitoring and alerting module for email notifications
 module "monitoring" {
   source = "./modules/monitoring"
   
@@ -282,12 +288,10 @@ module "monitoring" {
   location               = var.location
   unique_id              = var.unique_id
   notification_email     = var.email_address
-  storage_account_name   = data.azurerm_storage_account.existing.name
-  event_queue_name       = azurerm_storage_queue.event_queue.name
-  subscription_id        = var.subscription_id
+  application_insights_id = azurerm_application_insights.insights.id
   
   depends_on = [
     azurerm_linux_function_app.function_app,
-    azurerm_storage_queue.event_queue
+    azurerm_application_insights.insights
   ]
 }

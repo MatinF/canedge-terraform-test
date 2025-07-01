@@ -18,17 +18,7 @@ variable "notification_email" {
   type        = string
 }
 
-variable "storage_account_name" {
-  description = "The name of the storage account containing the event queue"
-  type        = string
-}
-
-variable "event_queue_name" {
-  description = "The name of the queue that will trigger the Logic App"
-  type        = string
-}
-
-variable "subscription_id" {
-  description = "The Azure subscription ID"
+variable "application_insights_id" {
+  description = "The ID of the Application Insights instance to monitor"
   type        = string
 }

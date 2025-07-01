@@ -1,12 +1,9 @@
-output "logic_app_id" {
-  description = "The ID of the created Logic App"
-  value       = azurerm_logic_app_workflow.event_notification.id
+output "action_group_id" {
+  description = "The ID of the created Monitor Action Group"
+  value       = azurerm_monitor_action_group.email_alerts.id
 }
 
-output "logic_app_name" {
-  description = "The name of the Logic App for queue-based alerts"
-  value       = azurerm_logic_app_workflow.event_notification.name
+output "event_alert_id" {
+  description = "The ID of the event alert rule"
+  value       = azurerm_monitor_scheduled_query_rules_alert.new_event_alert.id
 }
-
-# The notification queue is now defined in the main module
-# and passed to this module as var.event_queue_name

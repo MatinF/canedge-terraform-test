@@ -298,13 +298,11 @@ echo "The MDF-to-Parquet pipeline has been successfully deployed!"
 echo "Any MF4 files uploaded to the input container will be automatically processed to Parquet format and stored in the output container."
 echo "Notifications will be sent to: $EMAIL_ADDRESS"
 echo
-echo "IMPORTANT: For the Logic App email notifications to work:"
-echo "  1. Go to Azure Portal > Logic Apps > logicapp-$UNIQUE_ID"
-echo "  2. Click on 'Edit' to open the Logic App Designer"
-echo "  3. In the Office 365 Email connection, you will need to authenticate with an email account"
-echo "  4. Authenticate the connection to use your email account for sending notifications"
-echo
-echo "Note: The queue-based event system is now in place. Application Insights has been removed to minimize costs."
+echo "IMPORTANT: If using a non-Azure AD email address for notifications, you must verify it:"
+echo "  1. Go to Azure Portal > Monitor > Action Groups"
+echo "  2. Select 'email-alerts-$UNIQUE_ID'"
+echo "  3. Check if email verification is needed (indicated by a warning icon)"
+echo "  4. The recipient must verify the email address to receive alerts"
 echo
 
 # Restart the function app to ensure changes are recognized
