@@ -1,58 +1,187 @@
 /**
  * Monitoring Module for MDF4-to-Parquet Pipeline in Azure
- * Creates Azure Monitor resources for log-based alerting
+ * Creates Logic App to monitor queue messages and send email notifications
  */
 
-# Action Group for sending email notifications
-# Note: For external emails (not Azure AD accounts), you'll need to verify the email after deployment
-# This verification step must be done manually through the Azure Portal
-resource "azurerm_monitor_action_group" "email_alerts" {
-  name                = "email-alerts-${var.unique_id}"
-  resource_group_name = var.resource_group_name
-  short_name          = "emailalrt"
-
-  email_receiver {
-    name                    = "admin"
-    email_address           = var.notification_email
-    use_common_alert_schema = true
-  }
-  
-  # Note: After deployment, you must check if verification is required:
-  # 1. Go to Azure Portal > Monitor > Action Groups
-  # 2. Select this action group (email-alerts-${var.unique_id})
-  # 3. Check if email verification is needed
-  # 4. If required, ask the email recipient to verify the address
-}
-
-# Alert rule for NEW EVENT log pattern
-resource "azurerm_monitor_scheduled_query_rules_alert" "new_event_alert" {
-  name                = "new-event-alert-${var.unique_id}"
+# Create Logic App to monitor the queue and send emails
+resource "azurerm_logic_app_workflow" "event_notification" {
+  name                = "logicapp-${var.unique_id}"
   resource_group_name = var.resource_group_name
   location            = var.location
+}
 
-  action {
-    action_group           = [azurerm_monitor_action_group.email_alerts.id]
-    email_subject          = "CANedge Log Processing Event"
-  }
+# Get the storage account details from the main module
+data "azurerm_storage_account" "existing" {
+  name                = var.storage_account_name
+  resource_group_name = var.resource_group_name
+}
 
-  data_source_id = var.application_insights_id
-  description    = "Alert when NEW EVENT is detected in function logs"
-  enabled        = true
-
-  # Query to detect the specific log pattern
-  query       = <<-QUERY
-  traces
-  | where message contains "NEW EVENT"
-  | project timestamp, message
-  QUERY
+# Create a Logic App connection to Azure Storage Queue
+resource "azurerm_api_connection" "storage" {
+  name                = "storage-connection-${var.unique_id}"
+  resource_group_name = var.resource_group_name
+  managed_api_id      = "${var.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/azurequeues"
+  display_name        = "Azure Storage Queue Connection"
   
-  severity    = 1
-  frequency   = 5  # Check every 5 minutes
-  time_window = 10 # Look at the past 10 minutes
-  
-  # Trigger if any results are found
-  trigger {
-    operator  = "GreaterThan"
-    threshold = 0
+  parameter_values = {
+    "storageAccountName" = data.azurerm_storage_account.existing.name
+    "accessKey"          = data.azurerm_storage_account.existing.primary_access_key
   }
 }
+
+# Create Logic App trigger and email action using ARM template
+# Since Terraform doesn't have direct support for all Logic App actions/triggers,
+# we're defining the workflow using raw JSON
+resource "azurerm_resource_group_template_deployment" "logic_app_workflow" {
+  name                = "logic-app-deployment-${var.unique_id}"
+  resource_group_name = var.resource_group_name
+  deployment_mode     = "Incremental"
+  parameters_content  = jsonencode({
+    "logicAppName"     = { "value" = azurerm_logic_app_workflow.event_notification.name }
+    "storageConnectionName" = { "value" = azurerm_api_connection.storage.name }
+    "queueName"        = { "value" = var.event_queue_name }
+    "emailRecipient"   = { "value" = var.notification_email }
+  })
+  
+  template_content = <<TEMPLATE
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logicAppName": { "type": "string" },
+    "storageConnectionName": { "type": "string" },
+    "queueName": { "type": "string" },
+    "emailRecipient": { "type": "string" }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Logic/workflows/providers/roleAssignments",
+      "name": "[concat(parameters('logicAppName'), '/Microsoft.Authorization/', guid(parameters('logicAppName')))]",
+      "apiVersion": "2020-04-01-preview",
+      "properties": {
+        "roleDefinitionId": "[concat('/subscriptions/${var.subscription_id}/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "principalId": "[reference(resourceId('Microsoft.Logic/workflows', parameters('logicAppName')), '2019-05-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Logic/workflows', parameters('logicAppName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('logicAppName')]",
+      "location": "${var.location}",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "When_there_are_messages_in_a_queue": {
+              "recurrence": {
+                "frequency": "Minute",
+                "interval": 3
+              },
+              "splitOn": "@triggerBody().$values",
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azurequeues']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/v2/storageAccounts/@{encodeURIComponent(encodeURIComponent('${data.azurerm_storage_account.existing.name}'))}/queues/@{encodeURIComponent('events-${var.unique_id}')}/messages",
+                "queries": {
+                  "peekOnly": false,
+                  "queueMetadata": "none"
+                }
+              }
+            }
+          },
+          "actions": {
+            "Parse_JSON": {
+              "runAfter": {},
+              "type": "ParseJson",
+              "inputs": {
+                "content": "@{base64ToString(triggerBody()?['ContentData'])}",
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "Send_an_email": {
+              "runAfter": {
+                "Parse_JSON": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "body": {
+                  "Body": "<p>A new event was detected in your CANedge log processing pipeline:</p><p>@{body('Parse_JSON')['message']}</p><p>Event Time (UTC): @{body('Parse_JSON')['timestamp']}</p>",
+                  "Subject": "CANedge Alert: @{body('Parse_JSON')['subject']}",
+                  "To": "[parameters('emailRecipient')]"
+                },
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['office365']"
+                  }
+                },
+                "method": "post",
+                "path": "/v2/Mail"
+              }
+            }
+          },
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "azurequeues": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('storageConnectionName'))]",
+                "connectionName": "[parameters('storageConnectionName')]",
+                "id": "[concat('/subscriptions/${var.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/azurequeues')]"
+              },
+              "office365": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', 'office365')]",
+                "connectionName": "office365",
+                "id": "[concat('/subscriptions/${var.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/office365')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
+TEMPLATE
+  
+  depends_on = [
+    azurerm_logic_app_workflow.event_notification,
+    azurerm_api_connection.storage
+  ]
+}
+
